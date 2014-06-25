@@ -1,0 +1,16 @@
+package net.ion.icrawler.utils;
+
+import net.ion.icrawler.utils.IPUtils;
+
+import org.junit.Test;
+
+/**
+ * @author code4crafer@gmail.com
+ */
+public class IPUtilsTest {
+
+	@Test
+	public void testGetFirstNoLoopbackIPAddresses() throws Exception {
+		System.out.println(IPUtils.getFirstNoLoopbackIPAddresses());
+	}
+}
