@@ -11,11 +11,6 @@ import net.ion.icrawler.model.annotation.ExtractByUrl;
 import net.ion.icrawler.model.annotation.HelpUrl;
 import net.ion.icrawler.model.annotation.TargetUrl;
 
-/**
- * <br>
- * 
- * @since 0.3.2
- */
 @TargetUrl("https://github.com/\\w+/\\w+")
 @HelpUrl({ "https://github.com/\\w+\\?tab=repositories", "https://github.com/\\w+", "https://github.com/explore/*" })
 public class GithubRepo implements HasKey {

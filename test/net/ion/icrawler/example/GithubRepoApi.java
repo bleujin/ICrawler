@@ -9,11 +9,6 @@ import net.ion.icrawler.model.OOSpider;
 import net.ion.icrawler.model.annotation.ExtractBy;
 import net.ion.icrawler.model.annotation.ExtractByUrl;
 
-/**
- * <br>
- * 
- * @since 0.4.1
- */
 public class GithubRepoApi implements HasKey {
 
 	@ExtractBy(type = ExtractBy.Type.JsonPath, value = "$.name")

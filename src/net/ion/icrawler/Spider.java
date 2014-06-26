@@ -35,21 +35,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * Every module is a field of Spider. <br>
  * The modules are defined in interface. <br>
  * You can customize a spider with various implementations of them. <br>
- * Examples: <br>
- * <br>
- * A simple crawler: <br>
- * Spider.create(new SimplePageProcessor("http://my.oschina.net/", "http://my.oschina.net/*blog/*")).run();<br>
- * <br>
- * Store results to files by FilePipeline: <br>
- * Spider.create(new SimplePageProcessor("http://my.oschina.net/", "http://my.oschina.net/*blog/*")) <br>
- * .pipeline(new FilePipeline("/data/temp/webmagic/")).run(); <br>
- * <br>
- * Use FileCacheQueueScheduler to store urls and cursor in files, so that a Spider can resume the status when shutdown. <br>
- * Spider.create(new SimplePageProcessor("http://my.oschina.net/", "http://my.oschina.net/*blog/*")) <br>
- * .scheduler(new FileCacheQueueScheduler("/data/temp/webmagic/cache/")).run(); <br>
- * 
- * <br>
- * 
  * @see Downloader
  * @see Scheduler
  * @see PageProcessor
@@ -199,26 +184,6 @@ public class Spider implements Runnable, Task {
 		return this;
 	}
 
-	/**
-	 * add a pipeline for Spider
-	 * 
-	 * @param pipeline
-	 * @return this
-	 * @see #addPipeline(net.ion.icrawler.pipeline.Pipeline)
-	 * @deprecated
-	 */
-	public Spider pipeline(Pipeline pipeline) {
-		return addPipeline(pipeline);
-	}
-
-	/**
-	 * add a pipeline for Spider
-	 * 
-	 * @param pipeline
-	 * @return this
-	 * @see Pipeline
-	 * @since 0.2.1
-	 */
 	public Spider addPipeline(Pipeline pipeline) {
 		checkIfRunning();
 		this.pipelines.add(pipeline);
@@ -247,18 +212,6 @@ public class Spider implements Runnable, Task {
 	public Spider clearPipeline() {
 		pipelines = new ArrayList<Pipeline>();
 		return this;
-	}
-
-	/**
-	 * set the downloader of spider
-	 * 
-	 * @param downloader
-	 * @return this
-	 * @see #setDownloader(net.ion.icrawler.downloader.Downloader)
-	 * @deprecated
-	 */
-	public Spider downloader(Downloader downloader) {
-		return setDownloader(downloader);
 	}
 
 	/**

@@ -19,9 +19,6 @@ import java.io.*;
 
 /**
  * Download file and saved to file for cache.<br>
- * 
- * 
- * @since 0.2.1
  */
 @Experimental
 public class FileCache extends FilePersistentBase implements Downloader, Pipeline, PageProcessor {
@@ -33,7 +30,7 @@ public class FileCache extends FilePersistentBase implements Downloader, Pipelin
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	public FileCache(String startUrl, String urlPattern) {
-		this(startUrl, urlPattern, "/data/webmagic/temp/");
+		this(startUrl, urlPattern, "./resource/temp/");
 	}
 
 	public FileCache(String startUrl, String urlPattern, String path) {

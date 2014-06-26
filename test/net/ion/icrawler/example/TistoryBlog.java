@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import junit.framework.TestCase;
+import net.ion.framework.util.DateUtil;
 import net.ion.framework.util.Debug;
 import net.ion.icrawler.Site;
 import net.ion.icrawler.Spider;
@@ -17,11 +18,6 @@ import net.ion.icrawler.pipeline.PageModelPipeline;
 import net.ion.icrawler.scheduler.MaxLimitScheduler;
 import net.ion.icrawler.scheduler.QueueScheduler;
 
-/**
- * <br>
- * 
- * @since 0.3.2
- */
 @TargetUrl("http://bleujin.tistory.com/\\d+")
 public class TistoryBlog extends TestCase{
 
@@ -35,7 +31,7 @@ public class TistoryBlog extends TestCase{
 	private List<String> tags;
 
 	@ExtractBy("//div[@class='infor']//span[@class='date']/regex('\\d+\\/\\d+\\/\\d+\\s+\\d+:\\d+')")
-	private Date date; // 
+	private String date; // 
 
 	public String getTitle() {
 		return title;
@@ -50,7 +46,7 @@ public class TistoryBlog extends TestCase{
 	}
 
 	public Date getDate() {
-		return date;
+		return DateUtil.stringToDate(date, "yyyy/MM/dd HH:mm");
 	}
 
 	
@@ -60,7 +56,7 @@ public class TistoryBlog extends TestCase{
 
 			@Override
 			public void process(TistoryBlog t, Task task) {
-				Debug.line(t.title, t.date, t.tags);
+				Debug.line(t.title, t.getDate(), t.tags);
 			}
 		}, TistoryBlog.class).addUrl("http://bleujin.tistory.com");
 		spider.setScheduler(new MaxLimitScheduler(new QueueScheduler(), 10)) ;

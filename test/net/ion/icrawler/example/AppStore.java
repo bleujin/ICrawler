@@ -7,10 +7,6 @@ import net.ion.icrawler.model.OOSpider;
 import net.ion.icrawler.model.annotation.ExtractBy;
 import net.ion.icrawler.utils.Experimental;
 
-/**
- * 
- * @since 0.4.1
- */
 @Experimental
 public class AppStore {
 

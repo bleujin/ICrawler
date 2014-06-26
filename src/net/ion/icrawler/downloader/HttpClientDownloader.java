@@ -228,8 +228,7 @@ public class HttpClientDownloader extends AbstractDownloader {
 			Document document = Jsoup.parse(content);
 			Elements links = document.select("meta");
 			for (Element link : links) {
-				// 2.1、html4.01 <meta http-equiv="Content-Type"
-				// content="text/html; charset=UTF-8" />
+				// 2.1、html4.01 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 				String metaContent = link.attr("content");
 				String metaCharset = link.attr("charset");
 				if (metaContent.indexOf("charset") != -1) {

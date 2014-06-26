@@ -31,16 +31,20 @@ class PageModelCollectorPipeline<T> implements CollectorPipeline<T> {
 	@Override
 	public synchronized void process(ResultItems resultItems, Task task) {
 		Object o = resultItems.get(clazz.getCanonicalName());
-		if (o != null) {
-			Annotation annotation = clazz.getAnnotation(ExtractBy.class);
-			if (annotation == null || !((ExtractBy) annotation).multi()) {
-				classPipeline.process((T) o, task);
-			} else {
-				List<Object> list = (List<Object>) o;
-				for (Object o1 : list) {
-					classPipeline.process((T) o1, task);
+		try {
+			if (o != null) {
+				Annotation annotation = clazz.getAnnotation(ExtractBy.class);
+				if (annotation == null || !((ExtractBy) annotation).multi()) {
+					classPipeline.process((T) o, task);
+				} else {
+					List<Object> list = (List<Object>) o;
+					for (Object o1 : list) {
+						classPipeline.process((T) o1, task);
+					}
 				}
 			}
+		} catch (Exception ex) {
+			ex.printStackTrace(); 
 		}
 	}
 }

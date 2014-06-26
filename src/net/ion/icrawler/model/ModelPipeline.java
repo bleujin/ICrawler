@@ -32,19 +32,23 @@ class ModelPipeline implements Pipeline {
 
 	@Override
 	public void process(ResultItems resultItems, Task task) {
-		for (Map.Entry<Class, PageModelPipeline> classPageModelPipelineEntry : pageModelPipelines.entrySet()) {
-			Object o = resultItems.get(classPageModelPipelineEntry.getKey().getCanonicalName());
-			if (o != null) {
-				Annotation annotation = classPageModelPipelineEntry.getKey().getAnnotation(ExtractBy.class);
-				if (annotation == null || !((ExtractBy) annotation).multi()) {
-					classPageModelPipelineEntry.getValue().process(o, task);
-				} else {
-					List<Object> list = (List<Object>) o;
-					for (Object o1 : list) {
-						classPageModelPipelineEntry.getValue().process(o1, task);
+		try {
+			for (Map.Entry<Class, PageModelPipeline> classPageModelPipelineEntry : pageModelPipelines.entrySet()) {
+				Object o = resultItems.get(classPageModelPipelineEntry.getKey().getCanonicalName());
+				if (o != null) {
+					Annotation annotation = classPageModelPipelineEntry.getKey().getAnnotation(ExtractBy.class);
+					if (annotation == null || !((ExtractBy) annotation).multi()) {
+						classPageModelPipelineEntry.getValue().process(o, task);
+					} else {
+						List<Object> list = (List<Object>) o;
+						for (Object o1 : list) {
+							classPageModelPipelineEntry.getValue().process(o1, task);
+						}
 					}
 				}
 			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 }

@@ -15,6 +15,6 @@ public class FileCacheTest {
 	@Test
 	public void test() {
 		FileCache fileCache = new FileCache("http://my.oschina.net/flashsword/blog", "http://my.oschina.net/flashsword/blog/*");
-		Spider.create(fileCache).downloader(fileCache).pipeline(fileCache).run();
+		Spider.create(fileCache).setDownloader(fileCache).addPipeline(fileCache).run();
 	}
 }

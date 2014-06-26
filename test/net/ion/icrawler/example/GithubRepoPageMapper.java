@@ -6,11 +6,6 @@ import net.ion.icrawler.Spider;
 import net.ion.icrawler.model.PageMapper;
 import net.ion.icrawler.processor.PageProcessor;
 
-/**
- * <br>
- * 
- * @since 0.3.2
- */
 public class GithubRepoPageMapper implements PageProcessor {
 
 	private Site site = Site.me().setRetryTimes(3).setSleepTime(0);
