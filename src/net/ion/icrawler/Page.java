@@ -1,5 +1,6 @@
 package net.ion.icrawler;
 
+import net.ion.framework.util.ListUtil;
 import net.ion.icrawler.selector.Html;
 import net.ion.icrawler.selector.Json;
 import net.ion.icrawler.selector.Link;
@@ -19,7 +20,7 @@ import java.util.List;
  * {@link #getHtml()} get content of current page <br>
  * {@link #putField(String, Object)} save extracted result <br>
  * {@link #getResultItems()} get extract results to be used in {@link net.ion.icrawler.pipeline.Pipeline}<br>
- * {@link #addTargetRequests(java.util.List)} {@link #addTargetRequest(String)} add urls to fetch <br>
+ * {@link #addRequests(java.util.List)} {@link #addTarget(String)} add urls to fetch <br>
  * 
  * <br>
  * 
@@ -45,7 +46,7 @@ public class Page {
 
 	private boolean needCycleRetry;
 
-	private List<Request> targetRequests = new ArrayList<Request>();
+	private List<Request> targetRequests = ListUtil.newList();
 
 	public Page() {
 	}
@@ -91,15 +92,7 @@ public class Page {
 		return json;
 	}
 
-	/**
-	 * @param html
-	 * @deprecated since 0.4.0 The html is parse just when first time of calling {@link #getHtml()}, so use {@link #setRawText(String)} instead.
-	 */
-	public void setHtml(Html html) {
-		this.html = html;
-	}
-
-	public List<Request> getTargetRequests() {
+	public List<Request> getTargets() {
 		return targetRequests;
 	}
 
@@ -108,7 +101,7 @@ public class Page {
 	 * 
 	 * @param requests
 	 */
-	public void addTargetRequests(List<String> requests) {
+	public void addRequests(List<String> requests) {
 		synchronized (targetRequests) {
 			for (String s : requests) {
 				if (StringUtils.isBlank(s) || s.equals("#") || s.startsWith("javascript:")) {
@@ -120,10 +113,23 @@ public class Page {
 		}
 	}
 
-	public void addTargetTargets(List<Link> requests) {
+	public void addRequests(List<String> requests, long priority) {
+		synchronized (targetRequests) {
+			for (String s : requests) {
+				if (StringUtils.isBlank(s) || s.equals("#") || s.startsWith("javascript:")) {
+					continue;
+				}
+				s = UrlUtils.canonicalizeUrl(s, url.toString());
+				targetRequests.add(new Request(s, this.request).priority(priority));
+			}
+		}
+	}
+	
+
+	public void addTargets(List<Link> requests) {
 		synchronized (targetRequests) {
 			for (Link link : requests) {
-				String s = link.target() ;
+				String s = link.target();
 				if (StringUtils.isBlank(s) || s.equals("#") || s.startsWith("javascript:")) {
 					continue;
 				}
@@ -131,32 +137,24 @@ public class Page {
 				targetRequests.add(new Request(s, this.getRequest(), link.anchor()));
 			}
 		}
-		
 	}
 
-	/**
-	 * add urls to fetch
-	 * 
-	 * @param requests
-	 */
-	public void addTargetRequests(List<String> requests, long priority) {
+	public void addTargets(List<Link> requests, long priority) {
 		synchronized (targetRequests) {
-			for (String s : requests) {
+			for (Link link : requests) {
+				String s = link.target();
 				if (StringUtils.isBlank(s) || s.equals("#") || s.startsWith("javascript:")) {
 					continue;
 				}
 				s = UrlUtils.canonicalizeUrl(s, url.toString());
-				targetRequests.add(new Request(s, this.request).setPriority(priority));
+				targetRequests.add(new Request(s, this.getRequest(), link.anchor()).priority(priority));
 			}
 		}
 	}
 
-	/**
-	 * add url to fetch
-	 * 
-	 * @param requestString
-	 */
-	public void addTargetRequest(String requestString) {
+
+
+	public void addTarget(String requestString) {
 		if (StringUtils.isBlank(requestString) || requestString.equals("#")) {
 			return;
 		}
@@ -166,12 +164,7 @@ public class Page {
 		}
 	}
 
-	/**
-	 * add requests to fetch
-	 * 
-	 * @param request
-	 */
-	public void addTargetRequest(Request request) {
+	public void addTarget(Request request) {
 		synchronized (targetRequests) {
 			targetRequests.add(request);
 		}
@@ -190,6 +183,11 @@ public class Page {
 		this.url = url;
 	}
 
+	@Deprecated
+	public void setHtml(Html html){
+		this.html = html ;
+	}
+	
 	/**
 	 * get request of current page
 	 * 

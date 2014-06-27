@@ -277,7 +277,7 @@ public class Spider implements Runnable, Task {
 							logger.error("process request " + requestFinal + " error", e);
 						} finally {
 							if (site.getHttpProxyPool() != null && site.getHttpProxyPool().isEnable()) {
-								site.returnHttpProxyToPool((HttpHost) requestFinal.getExtra(Request.PROXY), (Integer) requestFinal.getExtra(Request.STATUS_CODE));
+								site.returnHttpProxyToPool((HttpHost) requestFinal.asObject(Request.PROXY), (Integer) requestFinal.asObject(Request.STATUS_CODE));
 							}
 							pageCount.incrementAndGet();
 							signalNewUrl();
@@ -389,8 +389,8 @@ public class Spider implements Runnable, Task {
 	}
 
 	protected void extractAndAddRequests(Page page, boolean spawnUrl) {
-		if (spawnUrl && CollectionUtils.isNotEmpty(page.getTargetRequests())) {
-			for (Request request : page.getTargetRequests()) {
+		if (spawnUrl && CollectionUtils.isNotEmpty(page.getTargets())) {
+			for (Request request : page.getTargets()) {
 				addRequest(request);
 			}
 		}

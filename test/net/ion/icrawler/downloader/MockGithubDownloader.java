@@ -852,7 +852,7 @@ public class MockGithubDownloader implements Downloader {
 	@Override
 	public Page download(Request request, Task task) {
 		Page page = new Page();
-		page.setHtml(new Html(html));
+		page.setRawText(html);
 		page.setRequest(new Request("https://github.com/code4craft/webmagic"));
 		page.setUrl(new PlainText("https://github.com/code4craft/webmagic"));
 		return page;

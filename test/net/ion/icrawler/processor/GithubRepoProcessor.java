@@ -29,8 +29,8 @@ public class GithubRepoProcessor implements PageProcessor {
 		OOSpider.create(new GithubRepoProcessor()).addPipeline(new Pipeline() {
 			@Override
 			public void process(ResultItems resultItems, Task task) {
-				Assert.assertEquals("78", ((String) resultItems.get("star")).trim());
-				Assert.assertEquals("65", ((String) resultItems.get("fork")).trim());
+				Assert.assertEquals("78", ((String) resultItems.asObject("star")).trim());
+				Assert.assertEquals("65", ((String) resultItems.asObject("fork")).trim());
 			}
 		}).setDownloader(new MockGithubDownloader()).test("https://github.com/code4craft/webmagic");
 	}

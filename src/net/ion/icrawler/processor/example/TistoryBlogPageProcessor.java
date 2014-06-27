@@ -17,9 +17,9 @@ public class TistoryBlogPageProcessor implements PageProcessor {
 	@Override
 	public void process(Page page) {
 		List<String> links = page.getHtml().links().regex("http://bleujin\\.tistory\\.com/\\d+").all();
-		page.addTargetRequests(links);
+		page.addRequests(links);
 		page.putField("title", page.getHtml().xpath("//h2[@class='title']/a/text()").toString());
-		if (page.getResultItems().get("title") == null) {
+		if (page.getResultItems().asObject("title") == null) {
 			// skip this page
 			page.setSkip(true);
 		}

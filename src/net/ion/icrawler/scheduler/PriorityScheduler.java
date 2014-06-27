@@ -28,22 +28,22 @@ public class PriorityScheduler extends DuplicateRemovedScheduler implements Moni
 	private PriorityBlockingQueue<Request> priorityQueuePlus = new PriorityBlockingQueue<Request>(INITIAL_CAPACITY, new Comparator<Request>() {
 		@Override
 		public int compare(Request o1, Request o2) {
-			return -NumberUtils.compareLong(o1.getPriority(), o2.getPriority());
+			return -NumberUtils.compareLong(o1.priority(), o2.priority());
 		}
 	});
 
 	private PriorityBlockingQueue<Request> priorityQueueMinus = new PriorityBlockingQueue<Request>(INITIAL_CAPACITY, new Comparator<Request>() {
 		@Override
 		public int compare(Request o1, Request o2) {
-			return -NumberUtils.compareLong(o1.getPriority(), o2.getPriority());
+			return -NumberUtils.compareLong(o1.priority(), o2.priority());
 		}
 	});
 
 	@Override
 	public void pushWhenNoDuplicate(Request request, Task task) {
-		if (request.getPriority() == 0) {
+		if (request.priority() == 0) {
 			noPriorityQueue.add(request);
-		} else if (request.getPriority() > 0) {
+		} else if (request.priority() > 0) {
 			priorityQueuePlus.put(request);
 		} else {
 			priorityQueueMinus.put(request);

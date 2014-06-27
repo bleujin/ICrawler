@@ -29,7 +29,7 @@ public class PatternProcessorExample {
 			@Override
 			public RequestMatcher.MatchOther processResult(ResultItems resultItems, Task task) {
 				log.info("Extracting from repo" + resultItems.getRequest());
-				System.out.println("Repo name: " + resultItems.get("reponame"));
+				System.out.println("Repo name: " + resultItems.asObject("reponame"));
 				return RequestMatcher.MatchOther.YES;
 			}
 		};
@@ -39,15 +39,15 @@ public class PatternProcessorExample {
 			@Override
 			public RequestMatcher.MatchOther processPage(Page page) {
 				log.info("Extracting from " + page.getUrl());
-				page.addTargetRequests(page.getHtml().links().regex("https://github\\.com/[\\w\\-]+/[\\w\\-]+").all());
-				page.addTargetRequests(page.getHtml().links().regex("https://github\\.com/[\\w\\-]+").all());
+				page.addRequests(page.getHtml().links().regex("https://github\\.com/[\\w\\-]+/[\\w\\-]+").all());
+				page.addRequests(page.getHtml().links().regex("https://github\\.com/[\\w\\-]+").all());
 				page.putField("username", page.getHtml().xpath("//span[@class='vcard-fullname']/text()").toString());
 				return RequestMatcher.MatchOther.YES;
 			}
 
 			@Override
 			public RequestMatcher.MatchOther processResult(ResultItems resultItems, Task task) {
-				System.out.println("User name: " + resultItems.get("username"));
+				System.out.println("User name: " + resultItems.asObject("username"));
 				return RequestMatcher.MatchOther.YES;
 			}
 		};

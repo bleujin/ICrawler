@@ -1,4 +1,4 @@
-package net.ion.bleujin;
+package net.ion.icrawler.bleujin;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -12,10 +12,17 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.restlet.data.Method;
 
 import net.ion.framework.util.Debug;
 import net.ion.framework.util.IOUtil;
 import net.ion.framework.util.StringUtil;
+import net.ion.radon.aclient.NewClient;
+import net.ion.radon.aclient.Realm;
+import net.ion.radon.aclient.Request;
+import net.ion.radon.aclient.RequestBuilder;
+import net.ion.radon.aclient.Response;
+import net.ion.radon.aclient.Realm.RealmBuilder;
 import junit.framework.TestCase;
 
 public class TestUrl extends TestCase{
@@ -57,7 +64,6 @@ public class TestUrl extends TestCase{
             System.out.println(String.format("* %s : %s", link.attr("abs:href"), link.ownText()));
         }
 	}
-	
 	
 	
 }

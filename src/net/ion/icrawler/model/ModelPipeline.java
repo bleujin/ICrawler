@@ -34,7 +34,7 @@ class ModelPipeline implements Pipeline {
 	public void process(ResultItems resultItems, Task task) {
 		try {
 			for (Map.Entry<Class, PageModelPipeline> classPageModelPipelineEntry : pageModelPipelines.entrySet()) {
-				Object o = resultItems.get(classPageModelPipelineEntry.getKey().getCanonicalName());
+				Object o = resultItems.asObject(classPageModelPipelineEntry.getKey().getCanonicalName());
 				if (o != null) {
 					Annotation annotation = classPageModelPipelineEntry.getKey().getAnnotation(ExtractBy.class);
 					if (annotation == null || !((ExtractBy) annotation).multi()) {

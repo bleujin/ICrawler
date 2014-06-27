@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.restlet.data.Method;
 
+import net.ion.framework.util.ObjectUtil;
 import net.ion.icrawler.utils.Experimental;
 import net.ion.radon.aclient.simple.HeaderConstant;
 
@@ -59,7 +60,7 @@ public class Request implements Serializable {
 
 
 	
-	public long getPriority() {
+	public long priority() {
 		return priority;
 	}
 
@@ -72,19 +73,26 @@ public class Request implements Serializable {
 	 * @param priority
 	 * @return this
 	 */
+	
 	@Experimental
-	public Request setPriority(long priority) {
+	public Request priority(long priority) {
 		this.priority = priority;
 		return this;
 	}
 
-	public Object getExtra(String key) {
+	public <T> T asObject(String key) {
 		if (extras == null) {
 			return null;
 		}
-		return extras.get(key);
+		return (T)extras.get(key);
 	}
 
+	
+	public String asString(String key) {
+		return ObjectUtil.toString(asObject(key));
+	}
+
+	
 	public Request putExtra(String key, Object value) {
 		if (extras == null) {
 			extras = new HashMap<String, Object>();
@@ -129,13 +137,7 @@ public class Request implements Serializable {
 		this.url = url;
 	}
 
-	/**
-	 * The http method of the request. Get for default.
-	 * 
-	 * @return httpMethod
-	 * @see net.ion.icrawler.utils.HttpConstant.Method
-	 * @since 0.5.0
-	 */
+
 	public Method getMethod() {
 		return method;
 	}

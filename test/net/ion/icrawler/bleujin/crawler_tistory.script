@@ -15,7 +15,7 @@ new function(){
 		return new PageProcessor({
 			process : function(page){
 				var requests = page.getHtml().links().regex(urlPattern).targets();
-				page.addTargetTargets(requests); // add urls to fetch
+				page.addTargets(requests); // add urls to fetch
 				page.putField("title", page.getHtml().xpath("//h2[@class='title']/a/text()")); // extract by XPath
 				page.putField("date", page.getHtml().xpath("//div[@class='infor']//span[@class='date']/regex('\\d+\\/\\d+\\/\\d+\\s+\\d+:\\d+')"));
 				page.putField("content", page.getHtml().smartContent()); // extract by Readability

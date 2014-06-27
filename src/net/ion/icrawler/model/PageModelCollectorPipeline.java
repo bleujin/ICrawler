@@ -30,7 +30,7 @@ class PageModelCollectorPipeline<T> implements CollectorPipeline<T> {
 
 	@Override
 	public synchronized void process(ResultItems resultItems, Task task) {
-		Object o = resultItems.get(clazz.getCanonicalName());
+		Object o = resultItems.asObject(clazz.getCanonicalName());
 		try {
 			if (o != null) {
 				Annotation annotation = clazz.getAnnotation(ExtractBy.class);

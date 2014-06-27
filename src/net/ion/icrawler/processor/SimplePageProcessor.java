@@ -31,7 +31,7 @@ public class SimplePageProcessor implements PageProcessor {
 	public void process(Page page) {
 		List<Link> requests = page.getHtml().links().regex(urlPattern).targets();
 		// add urls to fetch
-		page.addTargetTargets(requests);
+		page.addTargets(requests);
 		// extract by XPath
 		page.putField("title", page.getHtml().xpath("//title"));
 		page.putField("html", page.getHtml().toString());

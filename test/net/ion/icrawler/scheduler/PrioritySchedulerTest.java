@@ -30,18 +30,18 @@ public class PrioritySchedulerTest {
 	@Test
 	public void testDifferentPriority() {
 		Request request = new Request("a");
-		request.setPriority(100);
+		request.priority(100);
 		priorityScheduler.push(request, task);
 
 		request = new Request("b");
-		request.setPriority(900);
+		request.priority(900);
 		priorityScheduler.push(request, task);
 
 		request = new Request("c");
 		priorityScheduler.push(request, task);
 
 		request = new Request("d");
-		request.setPriority(-900);
+		request.priority(-900);
 		priorityScheduler.push(request, task);
 
 		Request poll = priorityScheduler.poll(task);

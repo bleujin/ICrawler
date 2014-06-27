@@ -9,7 +9,6 @@ import java.util.Set;
 import net.ion.icrawler.Page;
 import net.ion.icrawler.Request;
 import net.ion.icrawler.Site;
-import net.ion.icrawler.Site.HeaderConst;
 import net.ion.icrawler.Task;
 import net.ion.icrawler.selector.PlainText;
 import net.ion.icrawler.utils.UrlUtils;
@@ -158,7 +157,7 @@ public class HttpClientDownloader extends AbstractDownloader {
 			return RequestBuilder.get();
 		} else if (method == Method.POST) {
 			RequestBuilder requestBuilder = RequestBuilder.post();
-			NameValuePair[] nameValuePair = (NameValuePair[]) request.getExtra("nameValuePair");
+			NameValuePair[] nameValuePair = (NameValuePair[]) request.asObject("nameValuePair");
 			if (nameValuePair.length > 0) {
 				requestBuilder.addParameters(nameValuePair);
 			}
