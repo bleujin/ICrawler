@@ -16,7 +16,7 @@ public class GithubRepoTest {
 
 	@Test
 	public void test() {
-		OOSpider.create(Site.me().addStartUrl("https://github.com/bleujin/ICrawler").setSleepTime(0), new PageModelPipeline<GithubRepo>() {
+		OOSpider.create(Site.me().addStartUrl("https://github.com/bleujin/ICrawler").sleepTime(0), new PageModelPipeline<GithubRepo>() {
 			@Override
 			public void process(GithubRepo o, Task task) {
 				Assert.assertEquals(86, o.getStar());

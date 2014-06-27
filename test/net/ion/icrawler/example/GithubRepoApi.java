@@ -2,6 +2,7 @@ package net.ion.icrawler.example;
 
 import java.util.List;
 
+import net.ion.framework.util.Debug;
 import net.ion.icrawler.Site;
 import net.ion.icrawler.model.ConsolePageModelPipeline;
 import net.ion.icrawler.model.HasKey;
@@ -30,7 +31,12 @@ public class GithubRepoApi implements HasKey {
 	private String url;
 
 	public static void main(String[] args) {
-		OOSpider.create(Site.me().setSleepTime(100), new ConsolePageModelPipeline(), GithubRepoApi.class).addUrl("https://api.github.com/repos/bleujin/ICrawler").run();
+		GithubRepoApi api = Site.me().sleepTime(100).createOOSpider(new ConsolePageModelPipeline(), GithubRepoApi.class).<GithubRepoApi> get("https://api.github.com/repos/bleujin/ICrawler");
+		
+		Debug.line(api.getAuthor());
+		
+		// Site.me().sleepTime(100).createOOSpider(new ConsolePageModelPipeline(), GithubRepoApi.class).addUrl("https://api.github.com/repos/bleujin/ICrawler").run();
+		// OOSpider.create(Site.me().sleepTime(100), new ConsolePageModelPipeline(), GithubRepoApi.class).addUrl("https://api.github.com/repos/bleujin/ICrawler").run();
 	}
 
 	@Override

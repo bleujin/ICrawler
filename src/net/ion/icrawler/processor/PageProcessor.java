@@ -19,19 +19,7 @@ import net.ion.icrawler.Site;
  * @since 0.1.0
  */
 public interface PageProcessor {
-
-	/**
-	 * process the page, extract urls to fetch, extract the data and store
-	 * 
-	 * @param page
-	 */
+	
 	public void process(Page page);
 
-	/**
-	 * get the site settings
-	 * 
-	 * @return site
-	 * @see Site
-	 */
-	public Site getSite();
 }

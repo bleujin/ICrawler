@@ -13,12 +13,9 @@ import net.ion.icrawler.processor.PageProcessor;
  */
 public class CompositePageProcessor implements PageProcessor {
 
-	private Site site;
-
 	private List<SubPageProcessor> subPageProcessors = new ArrayList<SubPageProcessor>();
 
-	public CompositePageProcessor(Site site) {
-		this.site = site;
+	public CompositePageProcessor() {
 	}
 
 	@Override
@@ -32,12 +29,6 @@ public class CompositePageProcessor implements PageProcessor {
 			}
 		}
 	}
-
-	public CompositePageProcessor setSite(Site site) {
-		this.site = site;
-		return this;
-	}
-
 	public CompositePageProcessor addSubPageProcessor(SubPageProcessor subPageProcessor) {
 		this.subPageProcessors.add(subPageProcessor);
 		return this;
@@ -51,8 +42,4 @@ public class CompositePageProcessor implements PageProcessor {
 		return this;
 	}
 
-	@Override
-	public Site getSite() {
-		return site;
-	}
 }

@@ -9,7 +9,6 @@ new function(){
 	}, 
 	
 	this.processor = function(){
-		var site = Site.me().addStartUrl("http://bleujin.tistory.com/")
 		var urlPattern = "(" + "http://bleujin.tistory.com/\\d+".replace(".", "\\.").replace("*", "[^\"'#]*") + ")";
 		
 		return new PageProcessor({
@@ -19,17 +18,12 @@ new function(){
 				page.putField("title", page.getHtml().xpath("//h2[@class='title']/a/text()")); // extract by XPath
 				page.putField("date", page.getHtml().xpath("//div[@class='infor']//span[@class='date']/regex('\\d+\\/\\d+\\/\\d+\\s+\\d+:\\d+')"));
 				page.putField("content", page.getHtml().smartContent()); // extract by Readability
-			}, 
-			
-			getSite : function(){
-				return site ;
 			}
 		});
 	}, 
 	
 	this.handle = function(){
-		var spider = Spider.create(this.processor()).scheduler(this.scheduler());
-		spider.getSite().setSleepTime(50);
+		var spider = Site.create("http://bleujin.tistory.com/").sleepTime(50).createSpider(this.processor()).scheduler(this.scheduler());
 
 		spider.run();	
 	}

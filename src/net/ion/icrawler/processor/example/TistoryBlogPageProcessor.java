@@ -12,8 +12,6 @@ import net.ion.icrawler.processor.PageProcessor;
  */
 public class TistoryBlogPageProcessor implements PageProcessor {
 
-	private Site site = Site.me().setDomain("bleujin.tistory.com");
-
 	@Override
 	public void process(Page page) {
 		List<String> links = page.getHtml().links().regex("http://bleujin\\.tistory\\.com/\\d+").all();
@@ -27,13 +25,8 @@ public class TistoryBlogPageProcessor implements PageProcessor {
 		page.putField("tags", page.getHtml().xpath("//div[@class='tagTrail']/a/text()").all());
 	}
 
-	@Override
-	public Site getSite() {
-		return site;
-
-	}
 
 	public static void main(String[] args) throws Exception{
-		Spider.create(new TistoryBlogPageProcessor()).addUrl("http://bleujin.tistory.com").run();
+		Site.me().setDomain("bleujin.tistory.com").createSpider(new TistoryBlogPageProcessor()).addUrl("http://bleujin.tistory.com").run();
 	}
 }

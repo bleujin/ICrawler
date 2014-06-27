@@ -274,7 +274,8 @@ class PageModelExtractor {
 						break;
 					case Html:
 						if (isRaw) {
-							value = page.getHtml().selectDocumentForList(fieldExtractor.getSelector());
+							value = page.getJson().selectList(fieldExtractor.getSelector()).all() ;
+//							value = page.getHtml().selectDocumentForList(fieldExtractor.getSelector());
 						} else {
 							value = fieldExtractor.getSelector().selectList(html);
 						}
@@ -302,7 +303,8 @@ class PageModelExtractor {
 						break;
 					case Html:
 						if (isRaw) {
-							value = page.getHtml().selectDocument(fieldExtractor.getSelector());
+							value = page.getJson().select(fieldExtractor.getSelector()).get();
+//							value = page.getHtml().selectDocument(fieldExtractor.getSelector());
 						} else {
 							value = fieldExtractor.getSelector().select(html);
 						}

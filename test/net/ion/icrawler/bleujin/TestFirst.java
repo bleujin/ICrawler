@@ -41,13 +41,14 @@ import com.google.common.net.HttpHeaders;
 public class TestFirst extends TestCase {
 
 	public void testSimple() throws Exception {
-		SimplePageProcessor processor = new SimplePageProcessor("http://bleujin.tistory.com", "http://bleujin.tistory.com/*");
-		Spider spider = Spider.create(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
-		spider.getSite().setSleepTime(50);
+		SimplePageProcessor processor = new SimplePageProcessor("http://bleujin.tistory.com/*");
+		Spider spider = Site.create("http://bleujin.tistory.com").sleepTime(50).createSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
 
 		spider.addPipeline(new DebugPipeline()).run();
 	}
 
+	
+	
 	public void testRunWithScript() throws Exception {
 		ScriptEngineManager manager = new ScriptEngineManager();
 		ScriptEngine sengine = manager.getEngineByName("JavaScript");
@@ -69,21 +70,20 @@ public class TestFirst extends TestCase {
 	}
 
 	public void testModelWithScript() throws Exception {
-		Spider spider = OOSpider.create(Site.me(), new PageModelPipeline<TistoryBlog>() {
+		Spider spider = Site.me().sleepTime(50).createOOSpider(new PageModelPipeline<TistoryBlog>() {
 			@Override
 			public void process(TistoryBlog t, Task task) {
 				Debug.line(t.getTitle(), t.getDate(), t.getTags());
 			}
 		}, TistoryBlog.class).addUrl("http://bleujin.tistory.com");
 		spider.setScheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
-		spider.getSite().setSleepTime(50);
 		spider.run();
 	}
 
+	
+	
 	public void testViewJsoupDocument() throws Exception {
 		PageProcessor processor = new PageProcessor() {
-			private Site site = Site.me().addStartUrl("http://bleujin.tistory.com/");
-
 			public void process(Page page) {
 				Document doc = page.getHtml().getDocument();
 				Elements links = doc.select("a[href]");
@@ -98,23 +98,17 @@ public class TestFirst extends TestCase {
 				if (page.getRequest().getUrl().endsWith("/"))
 					page.setSkip(true);
 			}
-
-			public Site getSite() {
-				return site;
-			}
 		};
 
-		Spider spider = Spider.create(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
-		spider.getSite().setSleepTime(50);
+		Spider spider = Site.create("http://bleujin.tistory.com/").createSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
+		spider.getSite().sleepTime(50);
 		spider.run();
 
 	}
 
 	public void testJsonFilePipeline() throws Exception {
 		PageProcessor processor = new PageProcessor() {
-			private Site site = Site.me().addStartUrl("http://bleujin.tistory.com/");
 			private String urlPattern = "(" + "http://bleujin.tistory.com/\\d+".replace(".", "\\.").replace("*", "[^\"'#]*") + ")";
-
 			public void process(Page page) {
 				List<Link> requests = page.getHtml().links().regex(urlPattern).targets();
 
@@ -123,18 +117,13 @@ public class TestFirst extends TestCase {
 				page.putField("subject", page.getHtml().xpath("//h2[@class='title']/a/text()")); // extract by XPath
 				page.putField("date", page.getHtml().xpath("//div[@class='infor']//span[@class='date']/regex('\\d+\\/\\d+\\/\\d+\\s+\\d+:\\d+')"));
 				page.putField("content", page.getHtml().smartContent()); // extract by Readability
-
 				if (page.getRequest().getUrl().endsWith("/"))
 					page.setSkip(true);
 			}
-
-			public Site getSite() {
-				return site;
-			}
 		};
 
-		Spider spider = Spider.create(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
-		spider.getSite().setSleepTime(50);
+		Spider spider = Site.create("http://bleujin.tistory.com/").createSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
+		spider.getSite().sleepTime(50);
 
 		File file = new File("./resource/temp/tistory.json");
 		if (!file.getParentFile().exists())

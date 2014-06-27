@@ -3,7 +3,9 @@ package net.ion.icrawler.downloader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import net.ion.icrawler.Page;
@@ -12,6 +14,7 @@ import net.ion.icrawler.Site;
 import net.ion.icrawler.Task;
 import net.ion.icrawler.selector.PlainText;
 import net.ion.icrawler.utils.UrlUtils;
+import net.ion.radon.aclient.FluentStringsMap;
 import net.ion.radon.aclient.simple.HeaderConstant;
 
 import org.apache.commons.io.IOUtils;
@@ -140,6 +143,16 @@ public class HttpClientDownloader extends AbstractDownloader {
 				requestBuilder.addHeader(headerEntry.getKey(), headerEntry.getValue());
 			}
 		}
+		
+		FluentStringsMap params = request.getParameters() ;
+		if (params != null){
+			for (Entry<String, List<String>> entry : params.entrySet()) {
+				for (String value : entry.getValue()){
+					requestBuilder.addParameter(entry.getKey(), value) ;
+				}
+			}
+		}
+		
 		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom().setConnectionRequestTimeout(site.getTimeOut()).setSocketTimeout(site.getTimeOut()).setConnectTimeout(site.getTimeOut()).setCookieSpec(CookieSpecs.BEST_MATCH);
 		if (site.getHttpProxyPool() != null && site.getHttpProxyPool().isEnable()) {
 			HttpHost host = site.getHttpProxyFromPool();
@@ -176,7 +189,7 @@ public class HttpClientDownloader extends AbstractDownloader {
 
 	protected Page handleResponse(Request request, String charset, HttpResponse httpResponse, Task task) throws IOException {
 		Header contentType = httpResponse.getFirstHeader(HeaderConstant.HEADER_CONTENT_TYPE) ;
-		if (contentType.getValue().indexOf("text") == -1){
+		if (contentType.getValue().indexOf("text") == -1 && contentType.getValue().indexOf("json") == -1){
 			Page page = new Page();
 			page.setUrl(new PlainText(request.getUrl()));
 			page.setRequest(request);

@@ -8,10 +8,7 @@ import net.ion.icrawler.processor.PageProcessor;
 
 public class GithubRepoPageMapper implements PageProcessor {
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(0);
-
 	private PageMapper<GithubRepo> githubRepoPageMapper = new PageMapper<GithubRepo>(GithubRepo.class);
-
 	@Override
 	public void process(Page page) {
 		page.addRequests(page.getHtml().links().regex("(https://github\\.com/\\w+/\\w+)").all());
@@ -25,12 +22,8 @@ public class GithubRepoPageMapper implements PageProcessor {
 
 	}
 
-	@Override
-	public Site getSite() {
-		return site;
-	}
 
 	public static void main(String[] args) {
-		Spider.create(new GithubRepoPageMapper()).addUrl("https://github.com/bleujin").thread(5).run();
+		Site.create("https://github.com/bleujin").setRetryTimes(3).sleepTime(0).createSpider(new GithubRepoPageMapper()).thread(5).run();
 	}
 }

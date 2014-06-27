@@ -1,5 +1,6 @@
 package net.ion.icrawler.monitor;
 
+import net.ion.icrawler.Site;
 import net.ion.icrawler.Spider;
 import net.ion.icrawler.monitor.SpiderMonitor;
 import net.ion.icrawler.monitor.SpiderStatusMXBean;
@@ -23,8 +24,8 @@ public class SpiderMonitorTest {
 			}
 		};
 
-		Spider oschinaSpider = Spider.create(new TistoryBlogPageProcessor()).addUrl("http://my.oschina.net/flashsword/blog").thread(2);
-		Spider githubSpider = Spider.create(new GithubRepoPageProcessor()).addUrl("https://github.com/code4craft");
+		Spider oschinaSpider = Site.test().createSpider(new TistoryBlogPageProcessor()).addUrl("http://my.oschina.net/flashsword/blog").thread(2).setUUID("blog");
+		Spider githubSpider = Site.create("https://github.com/code4craft").createSpider(new GithubRepoPageProcessor()).addUrl("https://github.com/code4craft").setUUID("github");
 
 		spiderMonitor.register(oschinaSpider, githubSpider);
 

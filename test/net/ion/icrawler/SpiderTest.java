@@ -26,7 +26,7 @@ public class SpiderTest {
 	@Ignore("long time")
 	@Test
 	public void testStartAndStop() throws InterruptedException {
-		Spider spider = Spider.create(new SimplePageProcessor("http://www.oschina.net/", "http://www.oschina.net/*")).addPipeline(new Pipeline() {
+		Spider spider = Site.create("http://www.oschina.net/").createSpider(new SimplePageProcessor("http://www.oschina.net/*")).addPipeline(new Pipeline() {
 			@Override
 			public void process(ResultItems resultItems, Task task) {
 				System.out.println(1);
@@ -50,18 +50,13 @@ public class SpiderTest {
 	}
 
 	private void testRound() {
-		Spider spider = Spider.create(new PageProcessor() {
+		Spider spider = Site.me().sleepTime(0).createSpider(new PageProcessor() {
 
 			private AtomicInteger count = new AtomicInteger();
 
 			@Override
 			public void process(Page page) {
 				page.setSkip(true);
-			}
-
-			@Override
-			public Site getSite() {
-				return Site.me().setSleepTime(0);
 			}
 		}).setDownloader(new Downloader() {
 			@Override

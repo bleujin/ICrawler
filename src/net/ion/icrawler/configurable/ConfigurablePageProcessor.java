@@ -13,12 +13,9 @@ import net.ion.icrawler.utils.Experimental;
 @Experimental
 public class ConfigurablePageProcessor implements PageProcessor {
 
-	private Site site;
-
 	private List<ExtractRule> extractRules;
 
-	public ConfigurablePageProcessor(Site site, List<ExtractRule> extractRules) {
-		this.site = site;
+	public ConfigurablePageProcessor(List<ExtractRule> extractRules) {
 		this.extractRules = extractRules;
 	}
 
@@ -41,11 +38,6 @@ public class ConfigurablePageProcessor implements PageProcessor {
 				}
 			}
 		}
-	}
-
-	@Override
-	public Site getSite() {
-		return site;
 	}
 
 }

@@ -12,7 +12,7 @@ import net.ion.icrawler.processor.PageProcessor;
  */
 public class GithubRepoPageProcessor implements PageProcessor {
 
-	private Site site = Site.me().setRetryTimes(3).setSleepTime(0);
+	private Site site = Site.me().setRetryTimes(3).sleepTime(0);
 
 	@Override
 	public void process(Page page) {
@@ -27,12 +27,8 @@ public class GithubRepoPageProcessor implements PageProcessor {
 		page.putField("readme", page.getHtml().xpath("//div[@id='readme']/tidyText()"));
 	}
 
-	@Override
-	public Site getSite() {
-		return site;
-	}
 
 	public static void main(String[] args) {
-		Spider.create(new GithubRepoPageProcessor()).addUrl("https://github.com/bleujin").thread(5).run();
+		Site.me().setRetryTimes(3).sleepTime(0).createSpider(new GithubRepoPageProcessor()).addUrl("https://github.com/bleujin").thread(5).run();
 	}
 }

@@ -3,6 +3,11 @@ package net.ion.icrawler;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
+import net.ion.icrawler.model.ModelPageProcessor;
+import net.ion.icrawler.model.OOSpider;
+import net.ion.icrawler.pipeline.PageModelPipeline;
+import net.ion.icrawler.processor.PageProcessor;
+import net.ion.icrawler.processor.SimplePageProcessor;
 import net.ion.icrawler.proxy.ProxyPool;
 import net.ion.icrawler.utils.UrlUtils;
 
@@ -35,7 +40,7 @@ public class Site {
 	 */
 	private List<Request> startRequests = new ArrayList<Request>();
 
-	private int sleepTime = 5000;
+	private int sleepTime = 1000;
 
 	private int retryTimes = 0;
 
@@ -55,6 +60,8 @@ public class Site {
 
 	private boolean useGzip = true;
 
+	private Request loginRequest;
+
 	static {
 		DEFAULT_STATUS_CODE_SET.add(200);
 	}
@@ -68,107 +75,76 @@ public class Site {
 		return new Site();
 	}
 
-	/**
-	 * Add a cookie with domain {@link #getDomain()}
-	 * 
-	 * @param name
-	 * @param value
-	 * @return this
-	 */
+	public static Site create(String domain) {
+		return me().setDomain(domain);
+	}
+
+	public static Site test(){
+		return create("http://bleujin.tistory.com/") ;
+	}
+
+	public Site loginRequest(Request login) {
+		this.loginRequest = login ;
+		return this;
+	}
+	
+
+	public Spider createSpider(PageProcessor processor) {
+		return Spider.create(this, processor).startUrls(domain);
+	}
+
+	public <T> OOSpider<T> createOOSpider(PageModelPipeline processor, Class<T> clz) {
+		return OOSpider.create(this, processor, clz) ;
+	}
+
+	public <T> OOSpider<T> createOOSpider(Class... pageModel) {
+		return OOSpider.create(this, pageModel);
+	}
+
+	
+
 	public Site addCookie(String name, String value) {
 		defaultCookies.put(name, value);
 		return this;
 	}
 
-	/**
-	 * Add a cookie with specific domain.
-	 * 
-	 * @param domain
-	 * @param name
-	 * @param value
-	 * @return
-	 */
 	public Site addCookie(String domain, String name, String value) {
 		cookies.put(domain, name, value);
 		return this;
 	}
 
-	/**
-	 * set user agent
-	 * 
-	 * @param userAgent
-	 *            userAgent
-	 * @return this
-	 */
+	public Map<String, String> getCookies() {
+		return defaultCookies;
+	}
+
+	public Map<String, Map<String, String>> getAllCookies() {
+		return cookies.rowMap();
+	}
+
+	public String getUserAgent() {
+		return userAgent;
+	}
+
 	public Site setUserAgent(String userAgent) {
 		this.userAgent = userAgent;
 		return this;
 	}
 
-	/**
-	 * get cookies
-	 * 
-	 * @return get cookies
-	 */
-	public Map<String, String> getCookies() {
-		return defaultCookies;
-	}
-
-	/**
-	 * get cookies of all domains
-	 * 
-	 * @return get cookies
-	 */
-	public Map<String, Map<String, String>> getAllCookies() {
-		return cookies.rowMap();
-	}
-
-	/**
-	 * get user agent
-	 * 
-	 * @return user agent
-	 */
-	public String getUserAgent() {
-		return userAgent;
-	}
-
-	/**
-	 * get domain
-	 * 
-	 * @return get domain
-	 */
+	
 	public String getDomain() {
 		return domain;
 	}
 
-	/**
-	 * set the domain of site.
-	 * 
-	 * @param domain
-	 * @return this
-	 */
 	public Site setDomain(String domain) {
 		this.domain = domain;
 		return this;
 	}
 
-	/**
-	 * Set charset of page manually.<br>
-	 * When charset is not set or set to null, it can be auto detected by Http header.
-	 * 
-	 * @param charset
-	 * @return this
-	 */
 	public Site setCharset(String charset) {
 		this.charset = charset;
 		return this;
 	}
 
-	/**
-	 * get charset set manually
-	 * 
-	 * @return charset
-	 */
 	public String getCharset() {
 		return charset;
 	}
@@ -177,35 +153,16 @@ public class Site {
 		return timeOut;
 	}
 
-	/**
-	 * set timeout for downloader in ms
-	 * 
-	 * @param timeOut
-	 */
 	public Site setTimeOut(int timeOut) {
 		this.timeOut = timeOut;
 		return this;
 	}
 
-	/**
-	 * Set acceptStatCode.<br>
-	 * When status code of http response is in acceptStatCodes, it will be processed.<br>
-	 * {200} by default.<br>
-	 * It is not necessarily to be set.<br>
-	 * 
-	 * @param acceptStatCode
-	 * @return this
-	 */
 	public Site setAcceptStatCode(Set<Integer> acceptStatCode) {
 		this.acceptStatCode = acceptStatCode;
 		return this;
 	}
 
-	/**
-	 * get acceptStatCode
-	 * 
-	 * @return acceptStatCode
-	 */
 	public Set<Integer> getAcceptStatCode() {
 		return acceptStatCode;
 	}
@@ -256,25 +213,13 @@ public class Site {
 		return this;
 	}
 
-	/**
-	 * Set the interval between the processing of two pages.<br>
-	 * Time unit is micro seconds.<br>
-	 * 
-	 * @param sleepTime
-	 * @return this
-	 */
-	public Site setSleepTime(int sleepTime) {
+	
+	public Site sleepTime(int sleepTime) {
 		this.sleepTime = sleepTime;
 		return this;
 	}
 
-	/**
-	 * Get the interval between the processing of two pages.<br>
-	 * Time unit is micro seconds.<br>
-	 * 
-	 * @return the interval between the processing of two pages,
-	 */
-	public int getSleepTime() {
+	public int sleepTime() {
 		return sleepTime;
 	}
 
@@ -468,5 +413,11 @@ public class Site {
 		this.httpProxyPool.setReuseInterval(reuseInterval);
 		return this;
 	}
+
+
+
+
+
+
 
 }

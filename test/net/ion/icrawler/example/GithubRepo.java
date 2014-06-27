@@ -37,7 +37,7 @@ public class GithubRepo implements HasKey {
 	private String url;
 
 	public static void main(String[] args) {
-		OOSpider.create(Site.me().setSleepTime(100), new ConsolePageModelPipeline(), GithubRepo.class).addUrl("https://github.com/bleujin").thread(10).run();
+		Site.me().sleepTime(100).createOOSpider(new ConsolePageModelPipeline(), GithubRepo.class).addUrl("https://github.com/bleujin").thread(10).run();
 	}
 
 	@Override

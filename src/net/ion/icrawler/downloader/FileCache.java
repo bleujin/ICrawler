@@ -29,12 +29,12 @@ public class FileCache extends FilePersistentBase implements Downloader, Pipelin
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	public FileCache(String startUrl, String urlPattern) {
-		this(startUrl, urlPattern, "./resource/temp/");
+	public FileCache(String urlPattern) {
+		this(urlPattern, "./resource/temp/");
 	}
 
-	public FileCache(String startUrl, String urlPattern, String path) {
-		this.pageProcessor = new SimplePageProcessor(startUrl, urlPattern);
+	public FileCache(String urlPattern, String path) {
+		this.pageProcessor = new SimplePageProcessor(urlPattern);
 		setPath(path);
 		downloaderWhenFileMiss = new HttpClientDownloader();
 	}
@@ -115,8 +115,4 @@ public class FileCache extends FilePersistentBase implements Downloader, Pipelin
 		pageProcessor.process(page);
 	}
 
-	@Override
-	public Site getSite() {
-		return pageProcessor.getSite();
-	}
 }

@@ -9,19 +9,11 @@ import net.ion.icrawler.utils.UrlUtils;
 
 /**
  * A simple PageProcessor.
- * 
- * <br>
- * 
- * @since 0.1.0
  */
 public class SimplePageProcessor implements PageProcessor {
 
 	private String urlPattern;
-
-	private Site site;
-
-	public SimplePageProcessor(String startUrl, String urlPattern) {
-		this.site = Site.me().addStartUrl(startUrl).setDomain(UrlUtils.getDomain(startUrl));
+	public SimplePageProcessor(String urlPattern) {
 		// compile "*" expression to regex
 		this.urlPattern = "(" + urlPattern.replace(".", "\\.").replace("*", "[^\"'#]*") + ")";
 
@@ -37,11 +29,5 @@ public class SimplePageProcessor implements PageProcessor {
 		page.putField("html", page.getHtml().toString());
 		// extract by Readability
 		page.putField("content", page.getHtml().smartContent());
-	}
-
-	@Override
-	public Site getSite() {
-		// settings
-		return site;
 	}
 }

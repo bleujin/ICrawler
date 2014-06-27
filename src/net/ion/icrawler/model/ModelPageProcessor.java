@@ -18,14 +18,12 @@ import net.ion.icrawler.selector.Selector;
  * 
  * @since 0.2.0
  */
-class ModelPageProcessor implements PageProcessor {
+public class ModelPageProcessor implements PageProcessor {
 
 	private List<PageModelExtractor> pageModelExtractorList = new ArrayList<PageModelExtractor>();
 
-	private Site site;
-
-	public static ModelPageProcessor create(Site site, Class... clazzs) {
-		ModelPageProcessor modelPageProcessor = new ModelPageProcessor(site);
+	public static ModelPageProcessor create(Class... clazzs) {
+		ModelPageProcessor modelPageProcessor = new ModelPageProcessor();
 		for (Class clazz : clazzs) {
 			modelPageProcessor.addPageModel(clazz);
 		}
@@ -38,8 +36,7 @@ class ModelPageProcessor implements PageProcessor {
 		return this;
 	}
 
-	private ModelPageProcessor(Site site) {
-		this.site = site;
+	private ModelPageProcessor() {
 	}
 
 	@Override
@@ -79,8 +76,4 @@ class ModelPageProcessor implements PageProcessor {
 	protected void postProcessPageModel(Class clazz, Object object) {
 	}
 
-	@Override
-	public Site getSite() {
-		return site;
-	}
 }

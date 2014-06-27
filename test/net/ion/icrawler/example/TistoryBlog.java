@@ -52,7 +52,7 @@ public class TistoryBlog extends TestCase{
 	
 	public void testRun() throws Exception {
 		// results will be saved to "/data/webmagic/" in json format
-		Spider spider = OOSpider.create(Site.me(), new PageModelPipeline<TistoryBlog>(){
+		Spider spider = Site.me().createOOSpider(new PageModelPipeline<TistoryBlog>(){
 
 			@Override
 			public void process(TistoryBlog t, Task task) {
@@ -60,7 +60,7 @@ public class TistoryBlog extends TestCase{
 			}
 		}, TistoryBlog.class).addUrl("http://bleujin.tistory.com");
 		spider.setScheduler(new MaxLimitScheduler(new QueueScheduler(), 10)) ;
-		spider.getSite().setSleepTime(50) ;
+		spider.getSite().sleepTime(50) ;
 		spider.run();
 	}
 

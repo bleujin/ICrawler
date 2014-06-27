@@ -51,14 +51,17 @@ public class PatternProcessorExample {
 				return RequestMatcher.MatchOther.YES;
 			}
 		};
+		
+		
 
-		CompositePageProcessor pageProcessor = new CompositePageProcessor(Site.me().setDomain("github.com").setRetryTimes(3));
+		CompositePageProcessor pageProcessor = new CompositePageProcessor();
 		CompositePipeline pipeline = new CompositePipeline();
 
 		pageProcessor.setSubPageProcessors(githubRepoProcessor, githubUserProcessor);
 		pipeline.setSubPipeline(githubRepoProcessor, githubUserProcessor);
 
-		Spider.create(pageProcessor).addUrl("https://github.com/bleujin").thread(5).addPipeline(pipeline).runAsync();
+		
+		Site.create("http://github.com").setRetryTimes(3).createSpider(pageProcessor).addUrl("https://github.com/bleujin").thread(5).addPipeline(pipeline).runAsync();
 	}
 
 }

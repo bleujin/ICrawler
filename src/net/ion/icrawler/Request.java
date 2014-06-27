@@ -8,6 +8,7 @@ import org.restlet.data.Method;
 
 import net.ion.framework.util.ObjectUtil;
 import net.ion.icrawler.utils.Experimental;
+import net.ion.radon.aclient.FluentStringsMap;
 import net.ion.radon.aclient.simple.HeaderConstant;
 
 /**
@@ -42,6 +43,8 @@ public class Request implements Serializable {
 	 * @see net.ion.icrawler.scheduler.PriorityScheduler
 	 */
 	private long priority;
+
+	private FluentStringsMap params;
 
 	public Request(String url) {
 		this.url = url;
@@ -132,6 +135,15 @@ public class Request implements Serializable {
 	public void setExtras(Map<String, Object> extras) {
 		this.extras = extras;
 	}
+	
+	public Request addParameter(String name, String... values){
+		if (params == null){
+			params = new FluentStringsMap() ;
+		}
+		params.add(name, values) ;
+		
+		return this ;
+	}
 
 	public void setUrl(String url) {
 		this.url = url;
@@ -149,5 +161,9 @@ public class Request implements Serializable {
 	@Override
 	public String toString() {
 		return "Request{" + "url='" + url + '\'' + ", method='" + method + '\'' + ", extras=" + extras + ", priority=" + priority + '}';
+	}
+
+	public FluentStringsMap getParameters() {
+		return params;
 	}
 }

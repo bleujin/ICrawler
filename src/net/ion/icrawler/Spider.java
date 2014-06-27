@@ -2,6 +2,7 @@ package net.ion.icrawler;
 
 import com.google.common.collect.Lists;
 
+import net.ion.framework.util.ListUtil;
 import net.ion.icrawler.downloader.Downloader;
 import net.ion.icrawler.downloader.HttpClientDownloader;
 import net.ion.icrawler.pipeline.CollectorPipeline;
@@ -91,86 +92,41 @@ public class Spider implements Runnable, Task {
 
 	private int emptySleepTime = 30000;
 
-	/**
-	 * create a spider with pageProcessor.
-	 * 
-	 * @param pageProcessor
-	 * @return new spider
-	 * @see PageProcessor
-	 */
-	public static Spider create(PageProcessor pageProcessor) {
-		return new Spider(pageProcessor);
+
+	public static Spider create(Site site, PageProcessor pageProcessor) {
+		return new Spider(site, pageProcessor);
 	}
 
-	/**
-	 * create a spider with pageProcessor.
-	 * 
-	 * @param pageProcessor
-	 */
-	public Spider(PageProcessor pageProcessor) {
+	public Spider(Site site, PageProcessor pageProcessor) {
+		this.site = site ;
 		this.pageProcessor = pageProcessor;
-		this.site = pageProcessor.getSite();
-		this.startRequests = pageProcessor.getSite().getStartRequests();
+		this.startRequests = ListUtil.newList();
 	}
 
-	/**
-	 * Set startUrls of Spider.<br>
-	 * Prior to startUrls of Site.
-	 * 
-	 * @param startUrls
-	 * @return this
-	 */
-	public Spider startUrls(List<String> startUrls) {
+
+	
+	public Spider startUrls(String... startUrls) {
 		checkIfRunning();
-		this.startRequests = UrlUtils.convertToRequests(startUrls);
+		this.startRequests = UrlUtils.convertToRequests(ListUtil.toList(startUrls));
 		return this;
 	}
 
-	/**
-	 * Set startUrls of Spider.<br>
-	 * Prior to startUrls of Site.
-	 * 
-	 * @param startRequests
-	 * @return this
-	 */
 	public Spider startRequest(List<Request> startRequests) {
 		checkIfRunning();
 		this.startRequests = startRequests;
 		return this;
 	}
 
-	/**
-	 * Set an uuid for spider.<br>
-	 * Default uuid is domain of site.<br>
-	 * 
-	 * @param uuid
-	 * @return this
-	 */
 	public Spider setUUID(String uuid) {
 		this.uuid = uuid;
 		return this;
 	}
+	
 
-	/**
-	 * set scheduler for Spider
-	 * 
-	 * @param scheduler
-	 * @return this
-	 * @Deprecated
-	 * @see #setScheduler(net.ion.icrawler.scheduler.Scheduler)
-	 */
 	public Spider scheduler(Scheduler scheduler) {
 		return setScheduler(scheduler);
 	}
 
-	/**
-	 * set scheduler for Spider
-	 * 
-	 * @param scheduler
-	 * @return this
-	 * @see Scheduler
-	 * @since 0.2.1
-	 */
 	public Spider setScheduler(Scheduler scheduler) {
 		checkIfRunning();
 		Scheduler oldScheduler = this.scheduler;
@@ -190,37 +146,17 @@ public class Spider implements Runnable, Task {
 		return this;
 	}
 
-	/**
-	 * set pipelines for Spider
-	 * 
-	 * @param pipelines
-	 * @return this
-	 * @see Pipeline
-	 * @since 0.4.1
-	 */
 	public Spider setPipelines(List<Pipeline> pipelines) {
 		checkIfRunning();
 		this.pipelines = pipelines;
 		return this;
 	}
 
-	/**
-	 * clear the pipelines set
-	 * 
-	 * @return this
-	 */
 	public Spider clearPipeline() {
 		pipelines = new ArrayList<Pipeline>();
 		return this;
 	}
 
-	/**
-	 * set the downloader of spider
-	 * 
-	 * @param downloader
-	 * @return this
-	 * @see Downloader
-	 */
 	public Spider setDownloader(Downloader downloader) {
 		checkIfRunning();
 		this.downloader = downloader;
@@ -274,6 +210,7 @@ public class Spider implements Runnable, Task {
 							onSuccess(requestFinal);
 						} catch (Exception e) {
 							onError(requestFinal);
+							e.printStackTrace();
 							logger.error("process request " + requestFinal + " error", e);
 						} finally {
 							if (site.getHttpProxyPool() != null && site.getHttpProxyPool().isEnable()) {
@@ -340,12 +277,6 @@ public class Spider implements Runnable, Task {
 		}
 	}
 
-	/**
-	 * Process specific urls without url discovering.
-	 * 
-	 * @param urls
-	 *            urls to process
-	 */
 	public void test(String... urls) {
 		initComponent();
 		if (urls.length > 0) {
@@ -357,15 +288,16 @@ public class Spider implements Runnable, Task {
 
 	protected void processRequest(Request request) {
 		Page page = downloader.download(request, this);
+		
 		if (page == null) {
-			sleep(site.getSleepTime());
+			sleep(site.sleepTime());
 			onError(request);
 			return;
 		}
 		// for cycle retry
 		if (page.isNeedCycleRetry()) {
 			extractAndAddRequests(page, true);
-			sleep(site.getSleepTime());
+			sleep(site.sleepTime());
 			return;
 		}
 		pageProcessor.process(page);
@@ -377,7 +309,7 @@ public class Spider implements Runnable, Task {
 		}
 		// for proxy status management
 		request.putExtra(Request.STATUS_CODE, page.getStatusCode());
-		sleep(site.getSleepTime());
+		sleep(site.sleepTime());
 	}
 
 	protected void sleep(int time) {
@@ -415,12 +347,7 @@ public class Spider implements Runnable, Task {
 		thread.start();
 	}
 
-	/**
-	 * Add urls to crawl. <br/>
-	 * 
-	 * @param urls
-	 * @return
-	 */
+
 	public Spider addUrl(String... urls) {
 		for (String url : urls) {
 			addRequest(new Request(url));
@@ -681,8 +608,7 @@ public class Spider implements Runnable, Task {
 	 * Set wait time when no url is polled.<br>
 	 * </br>
 	 * 
-	 * @param emptySleepTime
-	 *            In MILLISECONDS.
+	 * @param emptySleepTime In MILLISECONDS.
 	 */
 	public void setEmptySleepTime(int emptySleepTime) {
 		this.emptySleepTime = emptySleepTime;

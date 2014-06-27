@@ -19,14 +19,10 @@ public class GithubRepoProcessor implements PageProcessor {
 		page.putField("fork", page.getHtml().xpath("//ul[@class='pagehead-actions']/li[3]//a[@class='social-count']/text()").toString());
 	}
 
-	@Override
-	public Site getSite() {
-		return Site.me().addStartUrl("https://github.com/code4craft/webmagic");
-	}
-
 	@Test
 	public void test() {
-		OOSpider.create(new GithubRepoProcessor()).addPipeline(new Pipeline() {
+		
+		Site.create("https://github.com/code4craft/webmagic").createSpider(new GithubRepoProcessor()).addPipeline(new Pipeline() {
 			@Override
 			public void process(ResultItems resultItems, Task task) {
 				Assert.assertEquals("78", ((String) resultItems.asObject("star")).trim());

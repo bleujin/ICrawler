@@ -3,11 +3,13 @@ package net.ion.icrawler.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.ion.framework.util.ListUtil;
 import net.ion.icrawler.Site;
 import net.ion.icrawler.Spider;
 import net.ion.icrawler.pipeline.CollectorPipeline;
 import net.ion.icrawler.pipeline.PageModelPipeline;
 import net.ion.icrawler.processor.PageProcessor;
+import net.ion.icrawler.utils.UrlUtils;
 
 /**
  * The spider for page model extractor.<br>
@@ -52,24 +54,17 @@ public class OOSpider<T> extends Spider {
 
 	private List<Class> pageModelClasses = new ArrayList<Class>();
 
-	protected OOSpider(ModelPageProcessor modelPageProcessor) {
-		super(modelPageProcessor);
+	protected OOSpider(Site site, ModelPageProcessor modelPageProcessor) {
+		super(site, modelPageProcessor);
 		this.modelPageProcessor = modelPageProcessor;
 	}
 
-	public OOSpider(PageProcessor pageProcessor) {
-		super(pageProcessor);
+	public OOSpider(Site site, PageProcessor pageProcessor) {
+		super(site, pageProcessor);
 	}
 
-	/**
-	 * create a spider
-	 * 
-	 * @param site
-	 * @param pageModelPipeline
-	 * @param pageModels
-	 */
 	public OOSpider(Site site, PageModelPipeline pageModelPipeline, Class... pageModels) {
-		this(ModelPageProcessor.create(site, pageModels));
+		this(site, ModelPageProcessor.create(pageModels));
 		this.modelPipeline = new ModelPipeline();
 		super.addPipeline(modelPipeline);
 		for (Class pageModel : pageModels) {
@@ -80,10 +75,11 @@ public class OOSpider<T> extends Spider {
 		}
 	}
 
-	@Override
-	protected CollectorPipeline getCollectorPipeline() {
-		return new PageModelCollectorPipeline<T>(pageModelClasses.get(0));
+	public OOSpider startUrls(String... startUrls) {
+		super.startUrls(startUrls) ;
+		return this;
 	}
+	
 
 	public static OOSpider create(Site site, Class... pageModels) {
 		return new OOSpider(site, null, pageModels);
@@ -91,6 +87,11 @@ public class OOSpider<T> extends Spider {
 
 	public static OOSpider create(Site site, PageModelPipeline pageModelPipeline, Class... pageModels) {
 		return new OOSpider(site, pageModelPipeline, pageModels);
+	}
+
+	@Override
+	protected CollectorPipeline getCollectorPipeline() {
+		return new PageModelCollectorPipeline<T>(pageModelClasses.get(0));
 	}
 
 	public OOSpider addPageModel(PageModelPipeline pageModelPipeline, Class... pageModels) {
