@@ -9,10 +9,11 @@ crawler with script
 <pre>public class TestFirst extends TestCase {
 
 	public void testSimple() throws Exception {
-		SimplePageProcessor processor = new SimplePageProcessor("http://bleujin.tistory.com", "http://bleujin.tistory.com/*");
-		Spider spider = Spider.create(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
-		spider.getSite().setSleepTime(50);
-
+		Site site = Site.create("http://bleujin.tistory.com").sleepTime(50) ;
+		
+		Spider spider = site.createSpider(new SimplePageProcessor("http://bleujin.tistory.com/\\d+"))
+				.startUrls("http://bleujin.tistory.com/").scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
+		
 		spider.addPipeline(new DebugPipeline()).run();
 	}
 
