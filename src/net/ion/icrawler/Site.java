@@ -83,11 +83,6 @@ public class Site {
 		return create("http://bleujin.tistory.com/") ;
 	}
 
-	public Site loginRequest(Request login) {
-		this.loginRequest = login ;
-		return this;
-	}
-	
 
 	public Spider createSpider(PageProcessor processor) {
 		return Spider.create(this, processor).startUrls(domain);
@@ -102,6 +97,15 @@ public class Site {
 	}
 
 	
+
+	public Site loginRequest(Request login) {
+		this.loginRequest = login ;
+		return this;
+	}
+	
+	public Request loginRequest(){
+		return loginRequest ;
+	}
 
 	public Site addCookie(String name, String value) {
 		defaultCookies.put(name, value);
@@ -167,53 +171,6 @@ public class Site {
 		return acceptStatCode;
 	}
 
-	/**
-	 * get start urls
-	 * 
-	 * @return start urls
-	 * @see #getStartRequests
-	 * @deprecated
-	 */
-	@Deprecated
-	public List<String> getStartUrls() {
-		return UrlUtils.convertToUrls(startRequests);
-	}
-
-	public List<Request> getStartRequests() {
-		return startRequests;
-	}
-
-	/**
-	 * Add a url to start url.<br>
-	 * Because urls are more a Spider's property than Site, move it to {@link Spider#addUrl(String...)}
-	 * 
-	 * @param startUrl
-	 * @return this
-	 * @see Spider#addUrl(String...)
-	 * @deprecated
-	 */
-	public Site addStartUrl(String startUrl) {
-		return addStartRequest(new Request(startUrl));
-	}
-
-	/**
-	 * Add a url to start url.<br>
-	 * Because urls are more a Spider's property than Site, move it to {@link Spider#addRequest(Request...)}
-	 * 
-	 * @param startRequest
-	 * @return this
-	 * @see Spider#addRequest(Request...)
-	 * @deprecated
-	 */
-	public Site addStartRequest(Request startRequest) {
-		this.startRequests.add(startRequest);
-		if (domain == null && startRequest.getUrl() != null) {
-			domain = UrlUtils.getDomain(startRequest.getUrl());
-		}
-		return this;
-	}
-
-	
 	public Site sleepTime(int sleepTime) {
 		this.sleepTime = sleepTime;
 		return this;
@@ -223,11 +180,6 @@ public class Site {
 		return sleepTime;
 	}
 
-	/**
-	 * Get retry times immediately when download fail, 0 by default.<br>
-	 * 
-	 * @return retry times when download fail
-	 */
 	public int getRetryTimes() {
 		return retryTimes;
 	}
@@ -236,45 +188,20 @@ public class Site {
 		return headers;
 	}
 
-	/**
-	 * Put an Http header for downloader. <br/>
-	 * Use {@link #addCookie(String, String)} for cookie and {@link #setUserAgent(String)} for user-agent. <br/>
-	 * 
-	 * @param key
-	 *            key of http header, there are some keys constant in {@link HeaderConst}
-	 * @param value
-	 *            value of header
-	 * @return
-	 */
 	public Site addHeader(String key, String value) {
 		headers.put(key, value);
 		return this;
 	}
 
-	/**
-	 * Set retry times when download fail, 0 by default.<br>
-	 * 
-	 * @return this
-	 */
 	public Site setRetryTimes(int retryTimes) {
 		this.retryTimes = retryTimes;
 		return this;
 	}
 
-	/**
-	 * When cycleRetryTimes is more than 0, it will add back to scheduler and try download again. <br>
-	 * 
-	 * @return retry times when download fail
-	 */
 	public int getCycleRetryTimes() {
 		return cycleRetryTimes;
 	}
 
-	/**
-	 * Set cycleRetryTimes times when download fail, 0 by default. Only work in RedisScheduler. <br>
-	 * 
-	 * @return this
-	 */
 	public Site setCycleRetryTimes(int cycleRetryTimes) {
 		this.cycleRetryTimes = cycleRetryTimes;
 		return this;
@@ -284,12 +211,6 @@ public class Site {
 		return httpProxy;
 	}
 
-	/**
-	 * set up httpProxy for this site
-	 * 
-	 * @param httpProxy
-	 * @return
-	 */
 	public Site setHttpProxy(HttpHost httpProxy) {
 		this.httpProxy = httpProxy;
 		return this;
@@ -299,13 +220,6 @@ public class Site {
 		return useGzip;
 	}
 
-	/**
-	 * Whether use gzip. <br>
-	 * Default is true, you can set it to false to disable gzip.
-	 * 
-	 * @param useGzip
-	 * @return
-	 */
 	public Site setUseGzip(boolean useGzip) {
 		this.useGzip = useGzip;
 		return this;
@@ -352,8 +266,6 @@ public class Site {
 			return false;
 		if (headers != null ? !headers.equals(site.headers) : site.headers != null)
 			return false;
-		if (startRequests != null ? !startRequests.equals(site.startRequests) : site.startRequests != null)
-			return false;
 		if (userAgent != null ? !userAgent.equals(site.userAgent) : site.userAgent != null)
 			return false;
 
@@ -366,7 +278,6 @@ public class Site {
 		result = 31 * result + (userAgent != null ? userAgent.hashCode() : 0);
 		result = 31 * result + (defaultCookies != null ? defaultCookies.hashCode() : 0);
 		result = 31 * result + (charset != null ? charset.hashCode() : 0);
-		result = 31 * result + (startRequests != null ? startRequests.hashCode() : 0);
 		result = 31 * result + sleepTime;
 		result = 31 * result + retryTimes;
 		result = 31 * result + cycleRetryTimes;
@@ -378,7 +289,7 @@ public class Site {
 
 	@Override
 	public String toString() {
-		return "Site{" + "domain='" + domain + '\'' + ", userAgent='" + userAgent + '\'' + ", cookies=" + defaultCookies + ", charset='" + charset + '\'' + ", startRequests=" + startRequests + ", sleepTime=" + sleepTime + ", retryTimes=" + retryTimes + ", cycleRetryTimes=" + cycleRetryTimes
+		return "Site{" + "domain='" + domain + '\'' + ", userAgent='" + userAgent + '\'' + ", cookies=" + defaultCookies + ", charset='" + charset + '\'' + ", sleepTime=" + sleepTime + ", retryTimes=" + retryTimes + ", cycleRetryTimes=" + cycleRetryTimes
 				+ ", timeOut=" + timeOut + ", acceptStatCode=" + acceptStatCode + ", headers=" + headers + '}';
 	}
 

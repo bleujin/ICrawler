@@ -30,6 +30,9 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.params.AbstractHttpParams;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -96,6 +99,7 @@ public class HttpClientDownloader extends AbstractDownloader {
 		int statusCode = 0;
 		try {
 			HttpUriRequest httpUriRequest = getHttpUriRequest(request, site, headers);
+
 			httpResponse = getHttpClient(site).execute(httpUriRequest);
 			statusCode = httpResponse.getStatusLine().getStatusCode();
 			request.putExtra(Request.STATUS_CODE, statusCode);
@@ -143,16 +147,7 @@ public class HttpClientDownloader extends AbstractDownloader {
 				requestBuilder.addHeader(headerEntry.getKey(), headerEntry.getValue());
 			}
 		}
-		
-		FluentStringsMap params = request.getParameters() ;
-		if (params != null){
-			for (Entry<String, List<String>> entry : params.entrySet()) {
-				for (String value : entry.getValue()){
-					requestBuilder.addParameter(entry.getKey(), value) ;
-				}
-			}
-		}
-		
+
 		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom().setConnectionRequestTimeout(site.getTimeOut()).setSocketTimeout(site.getTimeOut()).setConnectTimeout(site.getTimeOut()).setCookieSpec(CookieSpecs.BEST_MATCH);
 		if (site.getHttpProxyPool() != null && site.getHttpProxyPool().isEnable()) {
 			HttpHost host = site.getHttpProxyFromPool();
@@ -160,7 +155,18 @@ public class HttpClientDownloader extends AbstractDownloader {
 			request.putExtra(Request.PROXY, host);
 		}
 		requestBuilder.setConfig(requestConfigBuilder.build());
-		return requestBuilder.build();
+
+		HttpUriRequest result = requestBuilder.build();
+
+		NameValuePair[] params = request.getParameters();
+		if (params != null && params.length > 0) {
+			BasicHttpParams bp = new BasicHttpParams(); // add Parameter
+			for (NameValuePair pair : params) {
+				bp.setParameter(pair.getName(), pair.getValue());
+			}
+			result.setParams(bp);
+		}
+		return result;
 	}
 
 	protected RequestBuilder selectRequestMethod(Request request) {
@@ -168,36 +174,33 @@ public class HttpClientDownloader extends AbstractDownloader {
 		if (method == null || method == Method.GET) {
 			// default get
 			return RequestBuilder.get();
-		} else if (method == Method.POST) {
+		} else if (method.equals(Method.POST)) {
 			RequestBuilder requestBuilder = RequestBuilder.post();
-			NameValuePair[] nameValuePair = (NameValuePair[]) request.asObject("nameValuePair");
-			if (nameValuePair.length > 0) {
-				requestBuilder.addParameters(nameValuePair);
-			}
+			requestBuilder.addParameters(request.getParameters());
 			return requestBuilder;
-		} else if (method == Method.HEAD) {
+		} else if (method.equals(Method.HEAD)) {
 			return RequestBuilder.head();
-		} else if (method == Method.PUT) {
+		} else if (method.equals(Method.PUT)) {
 			return RequestBuilder.put();
-		} else if (method == Method.DELETE) {
+		} else if (method.equals(Method.DELETE)) {
 			return RequestBuilder.delete();
-		} else if (method == Method.TRACE) {
+		} else if (method.equals(Method.TRACE)) {
 			return RequestBuilder.trace();
 		}
 		throw new IllegalArgumentException("Illegal HTTP Method " + method);
 	}
 
 	protected Page handleResponse(Request request, String charset, HttpResponse httpResponse, Task task) throws IOException {
-		Header contentType = httpResponse.getFirstHeader(HeaderConstant.HEADER_CONTENT_TYPE) ;
-		if (contentType.getValue().indexOf("text") == -1 && contentType.getValue().indexOf("json") == -1){
+		Header contentType = httpResponse.getFirstHeader(HeaderConstant.HEADER_CONTENT_TYPE);
+		if (contentType.getValue().indexOf("text") == -1 && contentType.getValue().indexOf("json") == -1) {
 			Page page = new Page();
 			page.setUrl(new PlainText(request.getUrl()));
 			page.setRequest(request);
 			page.setStatusCode(httpResponse.getStatusLine().getStatusCode());
-			page.setSkip(true) ;
+			page.setSkip(true);
 			return page;
 		}
-		
+
 		String content = getContent(charset, httpResponse);
 		Page page = new Page();
 		page.setRawText(content);

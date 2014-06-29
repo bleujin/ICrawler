@@ -2,10 +2,14 @@ package net.ion.icrawler;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.restlet.data.Method;
 
+import net.ion.framework.util.ListUtil;
 import net.ion.framework.util.ObjectUtil;
 import net.ion.icrawler.utils.Experimental;
 import net.ion.radon.aclient.FluentStringsMap;
@@ -44,10 +48,15 @@ public class Request implements Serializable {
 	 */
 	private long priority;
 
-	private FluentStringsMap params;
+	private List<NameValuePair> params;
 
 	public Request(String url) {
 		this.url = url;
+	}
+
+	public Request(String url, Method method) {
+		this.url = url;
+		this.method = method ;
 	}
 
 	public Request(String url, Request referer) {
@@ -95,6 +104,9 @@ public class Request implements Serializable {
 		return ObjectUtil.toString(asObject(key));
 	}
 
+	public int asInt(String key) {
+		return asObject(key);
+	}
 	
 	public Request putExtra(String key, Object value) {
 		if (extras == null) {
@@ -138,15 +150,20 @@ public class Request implements Serializable {
 	
 	public Request addParameter(String name, String... values){
 		if (params == null){
-			params = new FluentStringsMap() ;
+			params = ListUtil.newList() ;
+			this.putExtra("_parameters", params) ;
 		}
-		params.add(name, values) ;
+		
+		for (String value : values) {
+			params.add(new BasicNameValuePair(name, value)) ;
+		}
 		
 		return this ;
 	}
 
-	public void setUrl(String url) {
+	public Request setUrl(String url) {
 		this.url = url;
+		return this ;
 	}
 
 
@@ -154,8 +171,9 @@ public class Request implements Serializable {
 		return method;
 	}
 
-	public void setMethod(String method) {
+	public Request setMethod(String method) {
 		this.method = Method.valueOf(method);
+		return this ;
 	}
 
 	@Override
@@ -163,7 +181,8 @@ public class Request implements Serializable {
 		return "Request{" + "url='" + url + '\'' + ", method='" + method + '\'' + ", extras=" + extras + ", priority=" + priority + '}';
 	}
 
-	public FluentStringsMap getParameters() {
-		return params;
+	public NameValuePair[] getParameters() {
+		return params == null ? new NameValuePair[0] : params.toArray(new NameValuePair[0]);
 	}
+
 }

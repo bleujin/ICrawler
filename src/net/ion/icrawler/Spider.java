@@ -2,6 +2,7 @@ package net.ion.icrawler;
 
 import com.google.common.collect.Lists;
 
+import net.ion.framework.util.Debug;
 import net.ion.framework.util.ListUtil;
 import net.ion.icrawler.downloader.Downloader;
 import net.ion.icrawler.downloader.HttpClientDownloader;
@@ -192,6 +193,16 @@ public class Spider implements Runnable, Task {
 		checkRunningStat();
 		initComponent();
 		logger.info("Spider " + getUUID() + " started!");
+		
+		Request loginRequest = site.loginRequest();
+		if (loginRequest != null){
+			Page page = downloader.download(loginRequest, this);
+			if (loginRequest.asInt(Request.STATUS_CODE) != 200) {
+				Debug.line(loginRequest.asInt(Request.STATUS_CODE), page);
+			}
+		}
+		
+		
 		while (!Thread.currentThread().isInterrupted() && stat.get() == STAT_RUNNING) {
 			Request request = scheduler.poll(this);
 			if (request == null) {

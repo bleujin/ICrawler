@@ -21,5 +21,5 @@ public interface Pipeline {
 	 * @param resultItems
 	 * @param task
 	 */
-	public void process(ResultItems resultItems, Task task);
+	public void process(ResultItems ritems, Task task);
 }
