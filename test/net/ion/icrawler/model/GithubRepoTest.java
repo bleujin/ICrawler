@@ -17,7 +17,7 @@ public class GithubRepoTest {
 
 	@Test
 	public void test() {
-		Site.me().sleepTime(0).createOOSpider(new PageModelPipeline<GithubRepo>() {
+		Site.create().sleepTime(0).createOOSpider(new PageModelPipeline<GithubRepo>() {
 			@Override
 			public void process(GithubRepo o, Task task) {
 				Assert.assertEquals(86, o.getStar());

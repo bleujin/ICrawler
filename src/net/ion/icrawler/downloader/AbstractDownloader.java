@@ -13,26 +13,14 @@ import net.ion.icrawler.selector.Html;
  */
 public abstract class AbstractDownloader implements Downloader {
 
-	/**
-	 * A simple method to download a url.
-	 * 
-	 * @param url
-	 * @return html
-	 */
-	public Html download(String url) {
-		return download(url, null);
-	}
 
-	/**
-	 * A simple method to download a url.
-	 * 
-	 * @param url
-	 * @return html
-	 */
-	public Html download(String url, String charset) {
-		Page page = download(new Request(url), Site.me().setCharset(charset).toTask());
-		return (Html) page.getHtml();
-	}
+//	public Html download(String url) {
+//		return download(url, null);
+//	}
+//	public Html download(String url, String charset) {
+//		Page page = download(new Request(url), Site.create().setCharset(charset).toTask());
+//		return (Html) page.getHtml();
+//	}
 
 	protected void onSuccess(Request request) {
 	}

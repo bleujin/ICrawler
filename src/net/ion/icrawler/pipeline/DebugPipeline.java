@@ -7,8 +7,9 @@ import net.ion.icrawler.Task;
 public class DebugPipeline implements Pipeline {
 
 	@Override
-	public void process(ResultItems resultItems, Task task) {
-		Debug.line(resultItems.getRequest());
+	public void process(ResultItems ritems, Task task) {
+		
+		Debug.line(ritems.getRequest());
 	}
 
 }

@@ -1,6 +1,7 @@
 package net.ion.icrawler.downloader;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
@@ -8,15 +9,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.ion.framework.util.ObjectUtil;
 import net.ion.icrawler.Page;
 import net.ion.icrawler.Request;
 import net.ion.icrawler.Site;
 import net.ion.icrawler.Task;
+import net.ion.icrawler.processor.BinaryHandler;
 import net.ion.icrawler.selector.PlainText;
 import net.ion.icrawler.utils.UrlUtils;
 import net.ion.radon.aclient.FluentStringsMap;
 import net.ion.radon.aclient.simple.HeaderConstant;
 
+import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
@@ -142,6 +146,7 @@ public class HttpClientDownloader extends AbstractDownloader {
 	}
 
 	protected HttpUriRequest getHttpUriRequest(Request request, Site site, Map<String, String> headers) {
+
 		RequestBuilder requestBuilder = selectRequestMethod(request).setUri(request.getUrl());
 		if (headers != null) {
 			for (Map.Entry<String, String> headerEntry : headers.entrySet()) {
@@ -194,23 +199,33 @@ public class HttpClientDownloader extends AbstractDownloader {
 
 	protected Page handleResponse(Request request, String charset, HttpResponse httpResponse, Task task) throws IOException {
 		Header contentType = httpResponse.getFirstHeader(HeaderConstant.HEADER_CONTENT_TYPE);
-		if (contentType.getValue().indexOf("text") == -1 && contentType.getValue().indexOf("json") == -1 && contentType.getValue().indexOf("xml") == -1) {
-			Page page = new Page();
+		
+		Page page = new Page();
+		if (contentType.getValue().indexOf("text") > -1 || contentType.getValue().indexOf("json") > -1 || contentType.getValue().indexOf("xml") > -1) {
+			String content = getContent(charset, httpResponse);
+			page.setRawText(content);
+		} else {
+			BinaryHandler bhandler = task.getSite().getBinaryHandler() ;
 			page.setRawText("") ;
-			page.setUrl(new PlainText(request.getUrl()));
-			page.setRequest(request);
-			page.setStatusCode(httpResponse.getStatusLine().getStatusCode());
-			page.setSkip(true);
-			return page;
+			if (bhandler != null && bhandler != BinaryHandler.BLANK ){
+				Object result = bhandler.handle(request, getHeaders(httpResponse.getAllHeaders()), httpResponse.getEntity().getContent());
+				page.putField(BinaryHandler.class.getCanonicalName(), result) ;
+			}
 		}
 
-		String content = getContent(charset, httpResponse);
-		Page page = new Page();
-		page.setRawText(content);
 		page.setUrl(new PlainText(request.getUrl()));
 		page.setRequest(request);
 		page.setStatusCode(httpResponse.getStatusLine().getStatusCode());
 		return page;
+	}
+
+	private MultiValueMap getHeaders(Header[] headers) {
+		MultiValueMap result = new MultiValueMap() ;
+		for (Header header : headers) {
+			result.put(header.getName(), header.getValue()) ;
+		} 
+		
+		return result;
 	}
 
 	protected String getContent(String charset, HttpResponse httpResponse) throws IOException {

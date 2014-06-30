@@ -12,8 +12,6 @@ import net.ion.icrawler.processor.PageProcessor;
  */
 public class GithubRepoPageProcessor implements PageProcessor {
 
-	private Site site = Site.me().setRetryTimes(3).sleepTime(0);
-
 	@Override
 	public void process(Page page) {
 		page.addRequests(page.getHtml().links().regex("(https://github\\.com/\\w+/\\w+)").all());
@@ -29,6 +27,6 @@ public class GithubRepoPageProcessor implements PageProcessor {
 
 
 	public static void main(String[] args) {
-		Site.me().setRetryTimes(3).sleepTime(0).newSpider(new GithubRepoPageProcessor()).addUrl("https://github.com/bleujin").thread(5).run();
+		Site.create("https://github.com/bleujin").setRetryTimes(3).sleepTime(0).newSpider(new GithubRepoPageProcessor()).addUrl("https://github.com/bleujin").thread(5).run();
 	}
 }

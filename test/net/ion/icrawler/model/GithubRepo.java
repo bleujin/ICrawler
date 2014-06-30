@@ -20,7 +20,7 @@ public class GithubRepo extends BaseRepo {
 	private int fork;
 
 	public static void main(String[] args) {
-		OOSpider.create(Site.me().sleepTime(100), new ConsolePageModelPipeline(), GithubRepo.class).addUrl("https://github.com/bleujin").thread(10).run();
+		OOSpider.create(Site.create().sleepTime(100), new ConsolePageModelPipeline(), GithubRepo.class).addUrl("https://github.com/bleujin").thread(10).run();
 	}
 
 	public int getStar() {

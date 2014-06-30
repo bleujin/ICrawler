@@ -70,7 +70,7 @@ public class TestFirst extends TestCase {
 	}
 
 	public void testModelWithScript() throws Exception {
-		Spider spider = Site.me().sleepTime(50).createOOSpider(new PageModelPipeline<TistoryBlog>() {
+		Spider spider = Site.create().sleepTime(50).createOOSpider(new PageModelPipeline<TistoryBlog>() {
 			@Override
 			public void process(TistoryBlog t, Task task) {
 				Debug.line(t.getTitle(), t.getDate(), t.getTags());

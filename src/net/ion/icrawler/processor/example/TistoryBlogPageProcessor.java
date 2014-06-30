@@ -27,6 +27,6 @@ public class TistoryBlogPageProcessor implements PageProcessor {
 
 
 	public static void main(String[] args) throws Exception{
-		Site.me().setDomain("bleujin.tistory.com").newSpider(new TistoryBlogPageProcessor()).addUrl("http://bleujin.tistory.com").run();
+		Site.create("bleujin.tistory.com").newSpider(new TistoryBlogPageProcessor()).addUrl("http://bleujin.tistory.com").run();
 	}
 }

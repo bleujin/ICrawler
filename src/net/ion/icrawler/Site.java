@@ -6,6 +6,7 @@ import com.google.common.collect.Table;
 import net.ion.icrawler.model.ModelPageProcessor;
 import net.ion.icrawler.model.OOSpider;
 import net.ion.icrawler.pipeline.PageModelPipeline;
+import net.ion.icrawler.processor.BinaryHandler;
 import net.ion.icrawler.processor.PageProcessor;
 import net.ion.icrawler.processor.SimplePageProcessor;
 import net.ion.icrawler.proxy.ProxyPool;
@@ -62,21 +63,21 @@ public class Site {
 
 	private Request loginRequest;
 
+	private BinaryHandler bhandler = BinaryHandler.BLANK;
+
 	static {
 		DEFAULT_STATUS_CODE_SET.add(200);
 	}
 
 	/**
 	 * new a Site
-	 * 
-	 * @return new site
 	 */
-	public static Site me() {
+	public static Site create() {
 		return new Site();
 	}
 
 	public static Site create(String domain) {
-		return me().setDomain(domain);
+		return new Site().setDomain(domain);
 	}
 
 	public static Site test(){
@@ -322,6 +323,15 @@ public class Site {
 
 	public Site setProxyReuseInterval(int reuseInterval) {
 		this.httpProxyPool.setReuseInterval(reuseInterval);
+		return this;
+	}
+
+	public BinaryHandler getBinaryHandler() {
+		return bhandler;
+	}
+
+	public Site binaryHandler(BinaryHandler binaryHandler) {
+		this.bhandler = binaryHandler ;
 		return this;
 	}
 

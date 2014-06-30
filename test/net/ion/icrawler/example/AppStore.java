@@ -26,8 +26,7 @@ public class AppStore {
 	private List<String> supportedDevices;
 
 	public static void main(String[] args) {
-		// AppStore appStore = Site.me().createOOSpider(AppStore.class).<AppStore> get("http://itunes.apple.com/lookup?id=653350791&country=cn&entity=software");
-		AppStore appStore = OOSpider.create(Site.me(), AppStore.class).<AppStore> get("http://itunes.apple.com/lookup?id=653350791&country=cn&entity=software");
+		AppStore appStore = Site.create().createOOSpider(AppStore.class).<AppStore> get("http://itunes.apple.com/lookup?id=653350791&country=cn&entity=software");
 		System.out.println(appStore.trackName);
 		System.out.println(appStore.description);
 		System.out.println(appStore.userRatingCount);

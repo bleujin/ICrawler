@@ -28,7 +28,7 @@ public class Request implements Serializable {
 	private static final long serialVersionUID = 2062192774891352043L;
 
 	public static final String CYCLE_TRIED_TIMES = "_cycle_tried_times";
-	public static final String STATUS_CODE = "statusCode";
+	public static final String STATUS_CODE = "StatusCode";
 	public static final String PROXY = "proxy";
 
 	private String url;

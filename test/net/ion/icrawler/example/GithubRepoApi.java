@@ -31,7 +31,7 @@ public class GithubRepoApi implements HasKey {
 	private String url;
 
 	public static void main(String[] args) {
-		GithubRepoApi api = Site.me().sleepTime(100).createOOSpider(new ConsolePageModelPipeline(), GithubRepoApi.class).<GithubRepoApi> get("https://api.github.com/repos/bleujin/ICrawler");
+		GithubRepoApi api = Site.create().sleepTime(100).createOOSpider(new ConsolePageModelPipeline(), GithubRepoApi.class).<GithubRepoApi> get("https://api.github.com/repos/bleujin/ICrawler");
 		
 		Debug.line(api.getAuthor());
 		

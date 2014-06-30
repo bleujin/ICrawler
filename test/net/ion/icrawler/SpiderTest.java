@@ -50,7 +50,7 @@ public class SpiderTest {
 	}
 
 	private void testRound() {
-		Spider spider = Site.me().sleepTime(0).newSpider(new PageProcessor() {
+		Spider spider = Site.create().sleepTime(0).newSpider(new PageProcessor() {
 
 			private AtomicInteger count = new AtomicInteger();
 

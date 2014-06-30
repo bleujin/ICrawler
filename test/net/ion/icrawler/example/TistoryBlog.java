@@ -52,7 +52,7 @@ public class TistoryBlog extends TestCase{
 	
 	public void testRun() throws Exception {
 		// results will be saved to "/data/webmagic/" in json format
-		Spider spider = Site.me().createOOSpider(new PageModelPipeline<TistoryBlog>(){
+		Spider spider = Site.create().createOOSpider(new PageModelPipeline<TistoryBlog>(){
 
 			@Override
 			public void process(TistoryBlog t, Task task) {
