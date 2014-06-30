@@ -84,7 +84,7 @@ public class Site {
 	}
 
 
-	public Spider createSpider(PageProcessor processor) {
+	public Spider newSpider(PageProcessor processor) {
 		return Spider.create(this, processor).startUrls(domain);
 	}
 
@@ -299,7 +299,7 @@ public class Site {
 	 * @return this
 	 */
 	public Site setHttpProxyPool(List<String[]> httpProxyList) {
-		this.httpProxyPool = new ProxyPool(httpProxyList);
+		this.httpProxyPool = new ProxyPool(httpProxyList, false);
 		return this;
 	}
 

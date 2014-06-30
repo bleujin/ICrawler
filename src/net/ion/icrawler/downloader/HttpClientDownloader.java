@@ -117,6 +117,7 @@ public class HttpClientDownloader extends AbstractDownloader {
 				return addToCycleRetry(request, site);
 			}
 			onError(request);
+			e.printStackTrace(); 
 			return null;
 		} finally {
 			request.putExtra(Request.STATUS_CODE, statusCode);
@@ -150,9 +151,10 @@ public class HttpClientDownloader extends AbstractDownloader {
 
 		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom().setConnectionRequestTimeout(site.getTimeOut()).setSocketTimeout(site.getTimeOut()).setConnectTimeout(site.getTimeOut()).setCookieSpec(CookieSpecs.BEST_MATCH);
 		if (site.getHttpProxyPool() != null && site.getHttpProxyPool().isEnable()) {
-			HttpHost host = site.getHttpProxyFromPool();
-			requestConfigBuilder.setProxy(host);
-			request.putExtra(Request.PROXY, host);
+			HttpHost proxyHost = site.getHttpProxyFromPool();
+//			HttpHost proxyHost = new HttpHost("127.0.0.1", 8118, "http") ;
+			requestConfigBuilder.setProxy(proxyHost);
+			request.putExtra(Request.PROXY, proxyHost);
 		}
 		requestBuilder.setConfig(requestConfigBuilder.build());
 
@@ -192,8 +194,9 @@ public class HttpClientDownloader extends AbstractDownloader {
 
 	protected Page handleResponse(Request request, String charset, HttpResponse httpResponse, Task task) throws IOException {
 		Header contentType = httpResponse.getFirstHeader(HeaderConstant.HEADER_CONTENT_TYPE);
-		if (contentType.getValue().indexOf("text") == -1 && contentType.getValue().indexOf("json") == -1) {
+		if (contentType.getValue().indexOf("text") == -1 && contentType.getValue().indexOf("json") == -1 && contentType.getValue().indexOf("xml") == -1) {
 			Page page = new Page();
+			page.setRawText("") ;
 			page.setUrl(new PlainText(request.getUrl()));
 			page.setRequest(request);
 			page.setStatusCode(httpResponse.getStatusLine().getStatusCode());

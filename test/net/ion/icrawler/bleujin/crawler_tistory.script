@@ -23,7 +23,7 @@ new function(){
 	}, 
 	
 	this.handle = function(){
-		var spider = Site.create("http://bleujin.tistory.com/").sleepTime(50).createSpider(this.processor()).scheduler(this.scheduler());
+		var spider = Site.create("http://bleujin.tistory.com/").sleepTime(50).newSpider(this.processor()).scheduler(this.scheduler());
 
 		spider.run();	
 	}

@@ -61,7 +61,7 @@ public class PatternProcessorExample {
 		pipeline.setSubPipeline(githubRepoProcessor, githubUserProcessor);
 
 		
-		Site.create("http://github.com").setRetryTimes(3).createSpider(pageProcessor).addUrl("https://github.com/bleujin").thread(5).addPipeline(pipeline).runAsync();
+		Site.create("http://github.com").setRetryTimes(3).newSpider(pageProcessor).addUrl("https://github.com/bleujin").thread(5).addPipeline(pipeline).runAsync();
 	}
 
 }

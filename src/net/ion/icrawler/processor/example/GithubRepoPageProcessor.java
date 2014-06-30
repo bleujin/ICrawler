@@ -29,6 +29,6 @@ public class GithubRepoPageProcessor implements PageProcessor {
 
 
 	public static void main(String[] args) {
-		Site.me().setRetryTimes(3).sleepTime(0).createSpider(new GithubRepoPageProcessor()).addUrl("https://github.com/bleujin").thread(5).run();
+		Site.me().setRetryTimes(3).sleepTime(0).newSpider(new GithubRepoPageProcessor()).addUrl("https://github.com/bleujin").thread(5).run();
 	}
 }

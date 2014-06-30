@@ -33,7 +33,7 @@ public class Request implements Serializable {
 
 	private String url;
 
-	private Method method;
+	private Method method = Method.GET;
 
 	/**
 	 * Store additional information in extras.

@@ -10,8 +10,8 @@ public class MonitorExample {
 
 	public static void main(String[] args) throws Exception {
 
-		Spider tistory = Site.create("http://bleujin.tistory.com").createSpider(new TistoryBlogPageProcessor()).setUUID("tistory");
-		Spider githubSpider = Site.create("https://github.com/bleujin").createSpider(new GithubRepoPageProcessor()).setUUID("github");
+		Spider tistory = Site.create("http://bleujin.tistory.com").newSpider(new TistoryBlogPageProcessor()).setUUID("tistory");
+		Spider githubSpider = Site.create("https://github.com/bleujin").newSpider(new GithubRepoPageProcessor()).setUUID("github");
 
 		SpiderMonitor.instance().register(tistory);
 		SpiderMonitor.instance().register(githubSpider);

@@ -24,8 +24,8 @@ public class SpiderMonitorTest {
 			}
 		};
 
-		Spider oschinaSpider = Site.test().createSpider(new TistoryBlogPageProcessor()).addUrl("http://my.oschina.net/flashsword/blog").thread(2).setUUID("blog");
-		Spider githubSpider = Site.create("https://github.com/code4craft").createSpider(new GithubRepoPageProcessor()).addUrl("https://github.com/code4craft").setUUID("github");
+		Spider oschinaSpider = Site.test().newSpider(new TistoryBlogPageProcessor()).addUrl("http://my.oschina.net/flashsword/blog").thread(2).setUUID("blog");
+		Spider githubSpider = Site.create("https://github.com/code4craft").newSpider(new GithubRepoPageProcessor()).addUrl("https://github.com/code4craft").setUUID("github");
 
 		spiderMonitor.register(oschinaSpider, githubSpider);
 

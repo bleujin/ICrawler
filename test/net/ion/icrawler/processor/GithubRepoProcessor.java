@@ -22,7 +22,7 @@ public class GithubRepoProcessor implements PageProcessor {
 	@Test
 	public void test() {
 		
-		Site.create("https://github.com/code4craft/webmagic").createSpider(new GithubRepoProcessor()).addPipeline(new Pipeline() {
+		Site.create("https://github.com/code4craft/webmagic").newSpider(new GithubRepoProcessor()).addPipeline(new Pipeline() {
 			@Override
 			public void process(ResultItems resultItems, Task task) {
 				Assert.assertEquals("78", ((String) resultItems.asObject("star")).trim());

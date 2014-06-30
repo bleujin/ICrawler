@@ -64,5 +64,4 @@ public class TistoryBlog extends TestCase{
 		spider.run();
 	}
 
-
 }

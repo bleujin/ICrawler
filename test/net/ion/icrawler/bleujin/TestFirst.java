@@ -42,7 +42,7 @@ public class TestFirst extends TestCase {
 
 	public void testSimple() throws Exception {
 		SimplePageProcessor processor = new SimplePageProcessor("http://bleujin.tistory.com/*");
-		Spider spider = Site.create("http://bleujin.tistory.com").sleepTime(50).createSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
+		Spider spider = Site.create("http://bleujin.tistory.com").sleepTime(50).newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
 
 		spider.addPipeline(new DebugPipeline()).run();
 	}
@@ -100,7 +100,7 @@ public class TestFirst extends TestCase {
 			}
 		};
 
-		Spider spider = Site.create("http://bleujin.tistory.com/").createSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
+		Spider spider = Site.create("http://bleujin.tistory.com/").newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
 		spider.getSite().sleepTime(50);
 		spider.run();
 
@@ -122,7 +122,7 @@ public class TestFirst extends TestCase {
 			}
 		};
 
-		Spider spider = Site.create("http://bleujin.tistory.com/").createSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
+		Spider spider = Site.create("http://bleujin.tistory.com/").newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
 		spider.getSite().sleepTime(50);
 
 		File file = new File("./resource/temp/tistory.json");

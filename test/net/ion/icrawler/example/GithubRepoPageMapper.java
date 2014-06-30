@@ -24,6 +24,6 @@ public class GithubRepoPageMapper implements PageProcessor {
 
 
 	public static void main(String[] args) {
-		Site.create("https://github.com/bleujin").setRetryTimes(3).sleepTime(0).createSpider(new GithubRepoPageMapper()).thread(5).run();
+		Site.create("https://github.com/bleujin").setRetryTimes(3).sleepTime(0).newSpider(new GithubRepoPageMapper()).thread(5).run();
 	}
 }

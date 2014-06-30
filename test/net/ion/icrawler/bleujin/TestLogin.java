@@ -58,7 +58,7 @@ public class TestLogin extends TestCase {
 					page.putField("content", page.getHtml().xpath("//div[@class='container']"));
 				}			
 		};
-		Spider spider = site.createSpider(processor).startUrls("http://bleujin.tistory.com/") .scheduler(new MaxLimitScheduler(new QueueScheduler(), 5));
+		Spider spider = site.newSpider(processor).startUrls("http://bleujin.tistory.com/") .scheduler(new MaxLimitScheduler(new QueueScheduler(), 5));
 
 		spider.addPipeline(new Pipeline(){
 			@Override
