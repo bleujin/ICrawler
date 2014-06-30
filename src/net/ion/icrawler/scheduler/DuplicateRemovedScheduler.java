@@ -10,10 +10,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Remove duplicate urls and only push urls which are not duplicate.<br>
- * </br>
- * 
- * @author code4crafer@gmail.com
- * @since 0.5.0
  */
 public abstract class DuplicateRemovedScheduler implements Scheduler {
 

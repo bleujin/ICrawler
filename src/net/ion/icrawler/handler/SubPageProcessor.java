@@ -2,10 +2,6 @@ package net.ion.icrawler.handler;
 
 import net.ion.icrawler.Page;
 
-/**
- * 
- * @date 14-4-5
- */
 public interface SubPageProcessor extends RequestMatcher {
 
 	/**

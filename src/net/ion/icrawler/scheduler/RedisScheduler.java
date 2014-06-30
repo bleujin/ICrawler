@@ -14,10 +14,6 @@ import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Use Redis as url scheduler for distributed crawlers.<br>
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 public class RedisScheduler extends DuplicateRemovedScheduler implements MonitorableScheduler, DuplicateRemover {
 

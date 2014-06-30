@@ -11,9 +11,6 @@ import java.util.regex.Pattern;
  * A character queue with parsing helpers.
  * <p/>
  * Most code borrowed from {@link org.jsoup.parser.TokenQueue}
- * 
- * @author Jonathan Hedley
- * @see org.jsoup.parser.TokenQueue
  */
 public class XTokenQueue {
 	private String queue;

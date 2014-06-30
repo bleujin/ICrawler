@@ -4,10 +4,6 @@ import java.lang.reflect.Field;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- * 
- * @since 0.5.0
- */
 public abstract class ClassUtils {
 
 	public static Set<Field> getFieldsIncludeSuperClass(Class clazz) {

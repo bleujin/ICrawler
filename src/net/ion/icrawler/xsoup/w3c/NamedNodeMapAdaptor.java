@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class NamedNodeMapAdaptor implements NamedNodeMap {
 
 	private List<? extends Node> nodeList;

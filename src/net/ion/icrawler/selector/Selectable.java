@@ -4,10 +4,6 @@ import java.util.List;
 
 /**
  * Selectable text.<br>
- * 
- * <br>
- * 
- * @since 0.1.0
  */
 public interface Selectable {
 

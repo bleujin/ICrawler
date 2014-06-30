@@ -6,10 +6,6 @@ import java.util.List;
 
 /**
  * Selector(extractor) for html elements.<br>
- * 
- * <br>
- * 
- * @since 0.3.0
  */
 public interface ElementSelector {
 

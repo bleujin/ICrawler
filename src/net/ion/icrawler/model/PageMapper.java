@@ -4,10 +4,6 @@ import java.util.List;
 
 import net.ion.icrawler.Page;
 
-/**
- * @author code4crafer@gmail.com
- * @since 0.5.2
- */
 public class PageMapper<T> {
 
 	private Class<T> clazz;

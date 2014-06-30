@@ -6,10 +6,6 @@ import org.apache.commons.lang.SystemUtils;
 
 /**
  * Base object of file persistence.
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 public class FilePersistentBase {
 

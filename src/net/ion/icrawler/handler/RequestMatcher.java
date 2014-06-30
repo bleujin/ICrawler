@@ -2,10 +2,6 @@ package net.ion.icrawler.handler;
 
 import net.ion.icrawler.Request;
 
-/**
- * @author code4crafer@gmail.com
- * @since 0.5.0
- */
 public interface RequestMatcher {
 
 	/**
@@ -13,7 +9,6 @@ public interface RequestMatcher {
 	 * </br> Please DO NOT change page status in this method.
 	 * 
 	 * @param page
-	 * 
 	 * @return
 	 */
 	public boolean match(Request page);

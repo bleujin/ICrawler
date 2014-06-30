@@ -7,10 +7,6 @@ import java.lang.annotation.Target;
 /**
  * Define the url patterns for class. <br>
  * All urls matching the pattern will be crawled and extracted for new objects. <br>
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })

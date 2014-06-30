@@ -17,20 +17,13 @@ import java.io.PrintWriter;
  * Store results objects (page models) to files in plain format.<br>
  * Use model.getKey() as file name if the model implements HasKey.<br>
  * Otherwise use SHA1 as file name.
- * 
- * <br>
- * 
- * @since 0.3.0
  */
 public class FilePageModelPipeline extends FilePersistentBase implements PageModelPipeline {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	/**
-	 * new JsonFilePageModelPipeline with default path "/data/webmagic/"
-	 */
 	public FilePageModelPipeline() {
-		setPath("/data/webmagic/");
+		setPath("./resource/temp/");
 	}
 
 	public FilePageModelPipeline(String path) {

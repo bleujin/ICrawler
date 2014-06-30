@@ -17,21 +17,14 @@ import java.util.Map;
 
 /**
  * Store results in files.<br>
- * 
- * <br>
- * 
- * @since 0.1.0
  */
 @ThreadSafe
 public class FilePipeline extends FilePersistentBase implements Pipeline {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	/**
-	 * create a FilePipeline with default path"/data/webmagic/"
-	 */
 	public FilePipeline() {
-		setPath("/data/webmagic/");
+		setPath("./resource/temp/");
 	}
 
 	public FilePipeline(String path) {

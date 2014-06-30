@@ -3,10 +3,6 @@ package net.ion.icrawler.model.formatter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * 
- * @since 0.3.2
- */
 public class ObjectFormatters {
 
 	private static Map<Class, Class<? extends ObjectFormatter>> formatterMap = new ConcurrentHashMap<Class, Class<? extends ObjectFormatter>>();

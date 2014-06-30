@@ -2,9 +2,6 @@ package net.ion.icrawler.xsoup.w3c;
 
 import org.w3c.dom.*;
 
-/**
- * @author code4crafer@gmail.com
- */
 public abstract class NodeAdaptor implements Node {
 
 	@Override

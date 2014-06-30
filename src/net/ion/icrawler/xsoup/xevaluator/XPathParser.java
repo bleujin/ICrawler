@@ -12,8 +12,6 @@ import java.util.regex.Pattern;
 
 /**
  * Parser of XPath.
- * 
- * @author code4crafter@gmail.com
  */
 public class XPathParser {
 

@@ -28,9 +28,6 @@ public class JsonFilePageModelPipeline extends FilePersistentBase implements Pag
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	/**
-	 * new JsonFilePageModelPipeline with default path "./resource/temp"
-	 */
 	public JsonFilePageModelPipeline() {
 		setPath("./resource/temp");
 	}

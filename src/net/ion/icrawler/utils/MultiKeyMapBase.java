@@ -9,8 +9,6 @@ import java.util.Map;
 
 /**
  * multi-key map, some basic objects *
- * 
- * @author yihua.huang
  */
 public abstract class MultiKeyMapBase {
 

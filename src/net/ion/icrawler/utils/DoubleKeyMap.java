@@ -2,9 +2,6 @@ package net.ion.icrawler.utils;
 
 import java.util.Map;
 
-/**
-
- */
 public class DoubleKeyMap<K1, K2, V> extends MultiKeyMapBase {
 	private Map<K1, Map<K2, V>> map;
 

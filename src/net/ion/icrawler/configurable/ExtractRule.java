@@ -4,10 +4,6 @@ import net.ion.icrawler.selector.JsonPathSelector;
 import net.ion.icrawler.selector.Selector;
 import static net.ion.icrawler.selector.Selectors.*;
 
-/**
- * 
- * @date 14-4-5
- */
 public class ExtractRule {
 
 	private String fieldName;

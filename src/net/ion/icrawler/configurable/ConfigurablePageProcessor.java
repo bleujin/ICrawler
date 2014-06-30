@@ -7,9 +7,6 @@ import net.ion.icrawler.Site;
 import net.ion.icrawler.processor.PageProcessor;
 import net.ion.icrawler.utils.Experimental;
 
-/**
- * <br>
- */
 @Experimental
 public class ConfigurablePageProcessor implements PageProcessor {
 

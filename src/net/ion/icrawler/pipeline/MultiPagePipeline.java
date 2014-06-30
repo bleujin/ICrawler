@@ -13,10 +13,6 @@ import net.ion.icrawler.utils.Experimental;
  * A pipeline combines the result in more than one page together.<br>
  * Used for news and articles containing more than one web page. <br>
  * MultiPagePipeline will store parts of object and output them when all parts are extracted.<br>
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 @Experimental
 public class MultiPagePipeline implements Pipeline {

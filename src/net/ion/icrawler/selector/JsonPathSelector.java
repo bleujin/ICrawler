@@ -8,10 +8,6 @@ import java.util.List;
 /**
  * JsonPath selector.<br>
  * Used to extract content from JSON.<br>
- * 
- * <br>
- * 
- * @since 0.2.1
  */
 public class JsonPathSelector implements Selector {
 

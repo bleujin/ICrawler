@@ -6,8 +6,6 @@ import net.ion.icrawler.Request;
 
 /**
  * Created with IntelliJ IDEA. User: Sebastian MA Date: April 03, 2014 Time: 10:00
- * <p>
- * </p>
  * A PatternHandler is in charge of both page extraction and data processing by implementing its two abstract methods.
  */
 public abstract class PatternRequestMatcher implements RequestMatcher {
@@ -19,10 +17,6 @@ public abstract class PatternRequestMatcher implements RequestMatcher {
 
 	private Pattern patternCompiled;
 
-	/**
-	 * @param pattern
-	 *            url pattern to handle
-	 */
 	public PatternRequestMatcher(String pattern) {
 		this.pattern = pattern;
 		this.patternCompiled = Pattern.compile(pattern);

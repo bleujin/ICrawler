@@ -5,9 +5,6 @@ import org.w3c.dom.NodeList;
 
 import java.util.List;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class NodeListAdaptor implements NodeList {
 
 	private List<? extends org.jsoup.nodes.Node> nodes;

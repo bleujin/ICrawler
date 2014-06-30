@@ -8,10 +8,6 @@ import net.ion.icrawler.model.formatter.ObjectFormatter;
 
 /**
  * Define how the result string is convert to an object for field.
- * 
- * <br>
- * 
- * @since 0.3.2
  */
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })

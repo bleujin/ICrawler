@@ -3,12 +3,7 @@ package net.ion.icrawler.scheduler.component;
 import net.ion.icrawler.Request;
 import net.ion.icrawler.Task;
 
-/**
- * Remove duplicate requests.
- * 
- * @author code4crafer@gmail.com
- * @since 0.5.1
- */
+
 public interface DuplicateRemover {
 	/**
 	 * 

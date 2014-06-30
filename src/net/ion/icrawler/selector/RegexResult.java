@@ -3,10 +3,6 @@ package net.ion.icrawler.selector;
 /**
  * Object contains regex results.<br>
  * For multi group result extension.<br>
- * 
- * <br>
- * 
- * @since 0.1.0
  */
 class RegexResult {
 

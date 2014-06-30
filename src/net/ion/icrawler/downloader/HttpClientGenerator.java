@@ -20,11 +20,6 @@ import org.apache.http.protocol.HttpContext;
 import java.io.IOException;
 import java.util.Map;
 
-/**
- * <br>
- * 
- * @since 0.4.0
- */
 public class HttpClientGenerator {
 
 	private PoolingHttpClientConnectionManager connectionManager;

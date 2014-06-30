@@ -2,9 +2,6 @@ package net.ion.icrawler.xsoup.w3c;
 
 import org.w3c.dom.*;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class HtmlDocumentType extends NodeAdaptor implements DocumentType {
 
 	private org.jsoup.nodes.Document document;

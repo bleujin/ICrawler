@@ -5,11 +5,6 @@ import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * 
- * @since 0.3.0
- */
 public abstract class BaseElementSelector implements Selector, ElementSelector {
 
 	@Override

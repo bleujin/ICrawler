@@ -7,9 +7,6 @@ import net.ion.icrawler.ResultItems;
 import net.ion.icrawler.Task;
 import net.ion.icrawler.pipeline.Pipeline;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class CompositePipeline implements Pipeline {
 
 	private List<SubPipeline> subPipelines = new ArrayList<SubPipeline>();

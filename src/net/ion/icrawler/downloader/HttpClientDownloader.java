@@ -50,10 +50,6 @@ import com.google.common.collect.Sets;
 
 /**
  * The http downloader based on HttpClient.
- * 
- * <br>
- * 
- * @since 0.1.0
  */
 @ThreadSafe
 public class HttpClientDownloader extends AbstractDownloader {

@@ -6,10 +6,6 @@ import java.util.List;
 import net.ion.icrawler.ResultItems;
 import net.ion.icrawler.Task;
 
-/**
- * 
- * @since 0.4.0
- */
 public class ResultItemsCollectorPipeline implements CollectorPipeline<ResultItems> {
 
 	private List<ResultItems> collector = new ArrayList<ResultItems>();

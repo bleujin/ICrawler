@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class HtmlNode extends AbstractSelectable {
 
 	private final List<Element> elements;

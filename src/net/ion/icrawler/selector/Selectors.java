@@ -2,10 +2,6 @@ package net.ion.icrawler.selector;
 
 /**
  * Convenient methods for selectors.<br>
- * 
- * <br>
- * 
- * @since 0.2.1
  */
 public abstract class Selectors {
 

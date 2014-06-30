@@ -8,10 +8,6 @@ import net.ion.icrawler.Task;
 /**
  * Write results in console.<br>
  * Usually used in test.
- * 
- * <br>
- * 
- * @since 0.1.0
  */
 public class ConsolePipeline implements Pipeline {
 

@@ -7,9 +7,6 @@ import net.ion.icrawler.selector.Html;
 
 /**
  * Base class of downloader with some common methods.
- * 
- * 
- * @since 0.5.0
  */
 public abstract class AbstractDownloader implements Downloader {
 

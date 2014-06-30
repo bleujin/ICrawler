@@ -3,9 +3,6 @@ package net.ion.icrawler.xsoup.w3c;
 import org.jsoup.nodes.Attribute;
 import org.w3c.dom.*;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class ElementAdaptor extends NodeAdaptor implements Element {
 
 	private org.jsoup.nodes.Element element;

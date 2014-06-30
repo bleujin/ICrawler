@@ -8,10 +8,6 @@ import net.ion.icrawler.selector.*;
 
 /**
  * Tools for annotation converting. <br>
- * 
- * <br>
- * 
- * @since 0.2.1
  */
 public class ExtractorUtils {
 

@@ -6,10 +6,6 @@ import java.util.List;
 /**
  * Selectable plain text.<br>
  * Can not be selected by XPath or CSS Selector.
- * 
- * <br>
- * 
- * @since 0.1.0
  */
 public class PlainText extends AbstractSelectable {
 

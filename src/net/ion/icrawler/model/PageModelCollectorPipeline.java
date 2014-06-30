@@ -9,10 +9,6 @@ import net.ion.icrawler.model.annotation.ExtractBy;
 import net.ion.icrawler.pipeline.CollectorPageModelPipeline;
 import net.ion.icrawler.pipeline.CollectorPipeline;
 
-/**
- * 
- * @since 0.4.0
- */
 class PageModelCollectorPipeline<T> implements CollectorPipeline<T> {
 
 	private final CollectorPageModelPipeline<T> classPipeline = new CollectorPageModelPipeline<T>();

@@ -13,10 +13,6 @@ import net.ion.icrawler.selector.Selector;
 
 /**
  * The extension to PageProcessor for page model extractor.
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 public class ModelPageProcessor implements PageProcessor {
 

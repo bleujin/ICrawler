@@ -8,9 +8,6 @@ import org.w3c.dom.*;
 
 import java.util.List;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class NodeAdaptors {
 
 	public static Node getNode(org.jsoup.nodes.Node node) {

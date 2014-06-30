@@ -6,10 +6,6 @@ import java.lang.annotation.Target;
 
 /**
  * Define a extractor to extract data in url of current page. Only regex can be used. <br>
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })

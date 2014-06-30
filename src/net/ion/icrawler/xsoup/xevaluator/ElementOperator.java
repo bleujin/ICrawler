@@ -11,8 +11,6 @@ import java.util.regex.Pattern;
 
 /**
  * Operate on element to get XPath result.
- * 
- * @author code4crafter@gmail.com
  */
 public abstract class ElementOperator {
 

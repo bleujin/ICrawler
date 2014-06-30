@@ -9,10 +9,6 @@ import net.ion.framework.util.ObjectUtil;
 /**
  * Object contains extract results.<br>
  * It is contained in Page and will be processed in pipeline.
- * 
- * <br>
- * 
- * @since 0.1.0
  * @see Page
  * @see net.ion.icrawler.pipeline.Pipeline
  */

@@ -8,9 +8,6 @@ import org.w3c.dom.Attr;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class AttributesAdaptor {
 
 	private Attributes attributes;

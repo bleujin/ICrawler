@@ -8,8 +8,6 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * parse json
- * 
- * @since 0.5.0
  */
 public class Json extends PlainText {
 

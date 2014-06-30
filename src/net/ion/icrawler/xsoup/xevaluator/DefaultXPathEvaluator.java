@@ -5,9 +5,6 @@ import org.jsoup.select.Collector;
 import org.jsoup.select.Elements;
 import org.jsoup.select.Evaluator;
 
-/**
- * @author code4crafter@gmail.com
- */
 public class DefaultXPathEvaluator implements XPathEvaluator {
 
 	private Evaluator evaluator;

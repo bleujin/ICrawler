@@ -7,9 +7,6 @@ import net.ion.icrawler.Site;
 import net.ion.icrawler.selector.Link;
 import net.ion.icrawler.utils.UrlUtils;
 
-/**
- * A simple PageProcessor.
- */
 public class SimplePageProcessor implements PageProcessor {
 
 	private String urlPattern;

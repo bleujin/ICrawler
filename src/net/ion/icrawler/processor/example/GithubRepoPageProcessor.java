@@ -5,11 +5,6 @@ import net.ion.icrawler.Site;
 import net.ion.icrawler.Spider;
 import net.ion.icrawler.processor.PageProcessor;
 
-/**
- * <br>
- * 
- * @since 0.3.2
- */
 public class GithubRepoPageProcessor implements PageProcessor {
 
 	@Override

@@ -7,10 +7,6 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * Replace selector.<br>
- * 
- * <br>
- * 
- * @since 0.1.0
  */
 public class ReplaceSelector implements Selector {
 

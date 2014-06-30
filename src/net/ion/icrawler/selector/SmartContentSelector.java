@@ -8,11 +8,6 @@ import net.ion.icrawler.utils.Experimental;
 
 /**
  * Borrowed from https://code.google.com/p/cx-extractor/
- * 
- * <br>
- * 
- * @since 0.4.1
- * 
  */
 @Experimental
 public class SmartContentSelector implements Selector {

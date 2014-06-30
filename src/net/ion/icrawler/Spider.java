@@ -41,7 +41,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * @see Scheduler
  * @see PageProcessor
  * @see Pipeline
- * @since 0.1.0
  */
 public class Spider implements Runnable, Task {
 

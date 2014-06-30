@@ -23,10 +23,6 @@ import java.util.regex.Pattern;
 
 /**
  * The main internal logic of page model extractor.
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 class PageModelExtractor {
 

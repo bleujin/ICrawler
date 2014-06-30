@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author code4crafter@gmail.com
- */
 public class CombingXPathEvaluator implements XPathEvaluator {
 
 	private List<XPathEvaluator> xPathEvaluators;

@@ -5,9 +5,6 @@ import java.util.List;
 
 import net.ion.icrawler.Task;
 
-/**
-
- */
 public class CollectorPageModelPipeline<T> implements PageModelPipeline<T> {
 
 	private List<T> collected = new ArrayList<T>();

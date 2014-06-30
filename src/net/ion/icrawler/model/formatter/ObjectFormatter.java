@@ -1,8 +1,5 @@
 package net.ion.icrawler.model.formatter;
 
-/**
-
- */
 public interface ObjectFormatter<T> {
 
 	T format(String raw) throws Exception;

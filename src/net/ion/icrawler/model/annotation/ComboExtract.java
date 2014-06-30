@@ -6,10 +6,6 @@ import java.lang.annotation.Target;
 
 /**
  * Combo 'ExtractBy' extractor with and/or operator.
- * 
- * <br>
- * 
- * @since 0.2.1
  */
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.TYPE })

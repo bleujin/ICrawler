@@ -17,11 +17,7 @@ import net.ion.radon.aclient.simple.HeaderConstant;
 
 /**
  * Object contains url to crawl.<br>
- * It contains some additional information.<br>
- * 
- * <br>
- * 
- * @since 0.1.0
+ * It contains some additional information.
  */
 public class Request implements Serializable {
 

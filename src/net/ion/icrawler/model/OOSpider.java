@@ -13,36 +13,8 @@ import net.ion.icrawler.utils.UrlUtils;
 
 /**
  * The spider for page model extractor.<br>
- * In webmagic, we call a POJO containing extract result as "page model". <br>
+ * In icrawler, we call a POJO containing extract result as "page model". <br>
  * You can customize a crawler by write a page model with annotations. <br>
- * Such as:
- * 
- * <pre>
- * {@literal @}TargetUrl("http://my.oschina.net/flashsword/blog/\\d+")
- *  public class TistoryBlog{
- * 
- *      {@literal @}ExtractBy("//title")
- *      private String title;
- * 
- *      {@literal @}ExtractBy(value = "div.BlogContent",type = ExtractBy.Type.Css)
- *      private String content;
- * 
- *      {@literal @}ExtractBy(value = "//div[@class='BlogTags']/a/text()", multi = true)
- *      private List<String> tags;
- * }
- * </pre>
- * 
- * And start the spider by:
- * 
- * <pre>
- *   OOSpider.create(Site.me().addStartUrl("http://my.oschina.net/flashsword/blog")
- *        ,new JsonFilePageModelPipeline(), TistoryBlog.class).run();
- * }
- * </pre>
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 public class OOSpider<T> extends Spider {
 

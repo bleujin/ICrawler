@@ -4,9 +4,6 @@ import net.ion.icrawler.Task;
 
 /**
  * The scheduler whose requests can be counted for monitor.
- * 
- * 
- * @since 0.5.0
  */
 public interface MonitorableScheduler extends Scheduler {
 

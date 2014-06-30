@@ -4,9 +4,6 @@ import org.w3c.dom.*;
 
 import java.nio.charset.Charset;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class DocumentAdaptor extends ElementAdaptor implements Document {
 
 	private org.jsoup.nodes.Document document;

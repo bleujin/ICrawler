@@ -4,10 +4,6 @@ import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Date;
 
-/**
- * 
- * @since 0.3.2
- */
 public class DateFormatter implements ObjectFormatter<Date> {
 
 	public static final String[] DEFAULT_PATTERN = new String[] { "yyyy-MM-dd HH:mm" };

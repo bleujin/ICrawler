@@ -2,9 +2,6 @@ package net.ion.icrawler.xsoup.w3c;
 
 import org.w3c.dom.TypeInfo;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class DummyTypeInfo implements TypeInfo {
 
 	private static final DummyTypeInfo INSTANCE = new DummyTypeInfo();

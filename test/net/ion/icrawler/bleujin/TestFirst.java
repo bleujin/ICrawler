@@ -42,32 +42,12 @@ public class TestFirst extends TestCase {
 
 	public void testSimple() throws Exception {
 		SimplePageProcessor processor = new SimplePageProcessor("http://bleujin.tistory.com/*");
-		Spider spider = Site.create("http://bleujin.tistory.com").sleepTime(50).newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
+		Site site = Site.create("http://bleujin.tistory.com").sleepTime(50);
+		Spider spider = site.newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
 
 		spider.addPipeline(new DebugPipeline()).run();
 	}
 
-	
-	
-	public void testRunWithScript() throws Exception {
-		ScriptEngineManager manager = new ScriptEngineManager();
-		ScriptEngine sengine = manager.getEngineByName("JavaScript");
-
-		String script = IOUtil.toStringWithClose(getClass().getResourceAsStream("crawler.script"));
-		Object pack = sengine.eval(script);
-
-		Object result = ((Invocable) sengine).invokeMethod(pack, "handle");
-	}
-
-	public void testRunWithScript2() throws Exception {
-		ScriptEngineManager manager = new ScriptEngineManager();
-		ScriptEngine sengine = manager.getEngineByName("JavaScript");
-
-		String script = IOUtil.toStringWithClose(getClass().getResourceAsStream("crawler_tistory.script"));
-		Object pack = sengine.eval(script);
-
-		Object result = ((Invocable) sengine).invokeMethod(pack, "handle");
-	}
 
 	public void testModelWithScript() throws Exception {
 		Spider spider = Site.create().sleepTime(50).createOOSpider(new PageModelPipeline<TistoryBlog>() {
@@ -78,6 +58,8 @@ public class TestFirst extends TestCase {
 		}, TistoryBlog.class).addUrl("http://bleujin.tistory.com");
 		spider.setScheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
 		spider.run();
+		
+		
 	}
 
 	

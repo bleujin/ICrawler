@@ -8,8 +8,6 @@ import java.util.List;
 
 /**
  * XPath results.
- * 
- * @author code4crafter@gmail.com
  */
 public class DefaultXElements extends ArrayList<XElement> implements XElements {
 

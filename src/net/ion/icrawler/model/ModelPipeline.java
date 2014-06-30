@@ -13,10 +13,6 @@ import net.ion.icrawler.pipeline.Pipeline;
 
 /**
  * The extension to Pipeline for page model extractor.
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 class ModelPipeline implements Pipeline {
 

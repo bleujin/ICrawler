@@ -10,10 +10,6 @@ import org.jsoup.nodes.Element;
 
 /**
  * XPath selector based on Xsoup.<br>
- * 
- * <br>
- * 
- * @since 0.3.0
  */
 public class XpathSelector extends BaseElementSelector {
 

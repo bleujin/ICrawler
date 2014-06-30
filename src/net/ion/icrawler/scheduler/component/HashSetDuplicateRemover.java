@@ -8,9 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.ion.icrawler.Request;
 import net.ion.icrawler.Task;
 
-/**
- * @author code4crafer@gmail.com
- */
 public class HashSetDuplicateRemover implements DuplicateRemover {
 
 	private Set<String> urls = Sets.newSetFromMap(new ConcurrentHashMap<String, Boolean>());

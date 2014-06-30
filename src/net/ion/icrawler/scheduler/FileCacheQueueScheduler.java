@@ -18,10 +18,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Store urls and cursor in files so that a Spider can resume the status when shutdown.<br>
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 public class FileCacheQueueScheduler extends DuplicateRemovedScheduler implements MonitorableScheduler {
 

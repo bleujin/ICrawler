@@ -6,10 +6,6 @@ import net.ion.icrawler.utils.Experimental;
 
 /**
  * Extract an object of more than one pages, such as news and articles.<br>
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 @Experimental
 public interface MultiPageModel {

@@ -6,8 +6,6 @@ import org.jsoup.select.Evaluator;
 
 /**
  * Evaluators in Xsoup.
- * 
- * @author code4crafter@gmail.com
  */
 public abstract class XEvaluators {
 

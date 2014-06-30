@@ -18,11 +18,6 @@ import java.util.*;
 
 /**
  * Object contains setting for crawler.<br>
- * 
- * <br>
- * 
- * @see net.ion.icrawler.processor.PageProcessor
- * @since 0.1.0
  */
 public class Site {
 

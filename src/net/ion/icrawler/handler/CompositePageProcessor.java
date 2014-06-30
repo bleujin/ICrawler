@@ -7,10 +7,6 @@ import net.ion.icrawler.Page;
 import net.ion.icrawler.Site;
 import net.ion.icrawler.processor.PageProcessor;
 
-/**
- * 
- * @date 14-4-5
- */
 public class CompositePageProcessor implements PageProcessor {
 
 	private List<SubPageProcessor> subPageProcessors = new ArrayList<SubPageProcessor>();

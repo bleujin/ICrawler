@@ -4,8 +4,6 @@ import net.ion.icrawler.selector.Selector;
 
 /**
  * The object contains 'ExtractBy' information. <br>
- * 
- * @since 0.2.0
  */
 class Extractor {
 

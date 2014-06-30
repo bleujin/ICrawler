@@ -3,10 +3,6 @@ package net.ion.icrawler.model.formatter;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * 
- * @since 0.3.2
- */
 public abstract class BasicTypeFormatter<T> implements ObjectFormatter<T> {
 
 	@Override

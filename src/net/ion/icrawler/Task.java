@@ -2,10 +2,6 @@ package net.ion.icrawler;
 
 /**
  * Interface for identifying different tasks.<br>
- * 
- * <br>
- * 
- * @since 0.1.0
  * @see net.ion.icrawler.scheduler.Scheduler
  * @see net.ion.icrawler.pipeline.Pipeline
  */

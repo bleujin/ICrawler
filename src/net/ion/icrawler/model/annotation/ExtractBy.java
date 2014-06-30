@@ -6,10 +6,6 @@ import java.lang.annotation.Target;
 
 /**
  * Define the extractor for field or class.<br>
- * 
- * <br>
- * 
- * @since 0.2.0
  */
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.TYPE })

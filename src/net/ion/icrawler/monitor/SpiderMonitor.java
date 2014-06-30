@@ -17,10 +17,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * @author code4crafer@gmail.com
- * @since 0.5.0
- */
 @Experimental
 public class SpiderMonitor {
 

@@ -3,10 +3,6 @@ package net.ion.icrawler.monitor;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author code4crafer@gmail.com
- * @since 0.5.0
- */
 public interface SpiderStatusMXBean {
 
 	public String getName();

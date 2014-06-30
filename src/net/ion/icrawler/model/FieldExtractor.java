@@ -8,8 +8,6 @@ import net.ion.icrawler.selector.Selector;
 
 /**
  * Wrapper of field and extractor. <br>
- * 
- * @since 0.2.0
  */
 class FieldExtractor extends Extractor {
 
