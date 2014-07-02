@@ -43,6 +43,10 @@ public class FileCache extends FilePersistentBase implements Downloader, Pipelin
 		this.downloaderWhenFileMiss = downloaderWhenFileMiss;
 		return this;
 	}
+	
+	public boolean login(Request request, Task task){
+		return true ;
+	}
 
 	@Override
 	public Page download(Request request, Task task) {

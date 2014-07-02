@@ -13,6 +13,7 @@ import net.ion.framework.util.ListUtil;
 import net.ion.framework.util.ObjectUtil;
 import net.ion.icrawler.utils.Experimental;
 import net.ion.radon.aclient.FluentStringsMap;
+import net.ion.radon.aclient.Realm;
 import net.ion.radon.aclient.simple.HeaderConstant;
 
 /**
@@ -45,6 +46,8 @@ public class Request implements Serializable {
 	private long priority;
 
 	private List<NameValuePair> params;
+
+	private Realm realm;
 
 	public Request(String url) {
 		this.url = url;
@@ -179,6 +182,15 @@ public class Request implements Serializable {
 
 	public NameValuePair[] getParameters() {
 		return params == null ? new NameValuePair[0] : params.toArray(new NameValuePair[0]);
+	}
+
+	public Request realm(Realm realm) {
+		this.realm = realm ;
+		return this;
+	}
+
+	public Realm realm() {
+		return realm;
 	}
 
 }

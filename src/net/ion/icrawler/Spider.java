@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 
 import net.ion.framework.util.Debug;
 import net.ion.framework.util.ListUtil;
+import net.ion.icrawler.downloader.AClientDownloader;
 import net.ion.icrawler.downloader.Downloader;
 import net.ion.icrawler.downloader.HttpClientDownloader;
 import net.ion.icrawler.pipeline.CollectorPipeline;
@@ -165,7 +166,7 @@ public class Spider implements Runnable, Task {
 
 	protected void initComponent() {
 		if (downloader == null) {
-			this.downloader = new HttpClientDownloader();
+			this.downloader = new AClientDownloader();
 		}
 		if (pipelines.isEmpty()) {
 			pipelines.add(new ConsolePipeline());
@@ -195,9 +196,9 @@ public class Spider implements Runnable, Task {
 		
 		Request loginRequest = site.loginRequest();
 		if (loginRequest != null){
-			Page page = downloader.download(loginRequest, this);
-			if (loginRequest.asInt(Request.STATUS_CODE) != 200) {
-				Debug.line(loginRequest.asInt(Request.STATUS_CODE), page);
+			boolean success = downloader.login(loginRequest, this);
+			if (! success) {
+				throw new IllegalStateException("not logined[request" + loginRequest + "]") ;
 			}
 		}
 		

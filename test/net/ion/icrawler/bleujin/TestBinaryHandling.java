@@ -2,6 +2,7 @@ package net.ion.icrawler.bleujin;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.map.MultiValueMap;
@@ -47,7 +48,7 @@ public class TestBinaryHandling extends TestCase{
 		Spider spider = Site.create().sleepTime(10)
 				.binaryHandler(new BinaryHandler<String>() {
 					@Override
-					public String handle(Request request, MultiValueMap headers, InputStream input) {
+					public String handle(Request request, Map headers, InputStream input) {
 						return request.getUrl();
 					}
 				})

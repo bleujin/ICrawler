@@ -70,13 +70,11 @@ public class TestProxy extends TestCase {
 	}
 
 	public void testWithProxy() throws Exception {
-//		Site site = Site.create("http://display.ad.daum.net").sleepTime(50)
-		Site site = Site.create("http://bleujin.tistory.com/*").sleepTime(50)
+		Site site = Site.create("http://bleujin.tistory.com/").sleepTime(50)
 					.setHttpProxy(new HttpHost("127.0.0.1", 8888)).setHttpProxyPool(ListUtil.create(new String[]{"127.0.0.1", "8888"})); // used fiddler
 
-		SimplePageProcessor processor = new SimplePageProcessor("*");
-//		Spider spider = site.newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 50)).addUrl("http://display.ad.daum.net/imp?slotid=0K905");
-		Spider spider = site.newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 50)).addUrl("http://bleujin.tistory.com");
+		SimplePageProcessor processor = new SimplePageProcessor("http://bleujin.tistory.com/\\d+");
+		Spider spider = site.newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10)).addUrl("http://bleujin.tistory.com");
 		spider.addPipeline(new DebugPipeline()).run();
 	}
 

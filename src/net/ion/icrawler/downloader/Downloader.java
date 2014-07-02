@@ -10,20 +10,16 @@ import net.ion.icrawler.Task;
  */
 public interface Downloader {
 
+	public boolean login(Request loginRequest, Task task);
+
 	/**
 	 * Downloads web pages and store in Page object.
-	 * 
-	 * @param request
-	 * @param task
-	 * @return page
 	 */
 	public Page download(Request request, Task task);
 
 	/**
 	 * Tell the downloader how many threads the spider used.
-	 * 
-	 * @param threadNum
-	 *            number of threads
 	 */
 	public void setThread(int threadNum);
+
 }

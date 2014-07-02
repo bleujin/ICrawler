@@ -849,6 +849,10 @@ public class MockGithubDownloader implements Downloader {
 			+ "    <div id=\"ajax-error-message\" class=\"flash flash-error\">\n" + "      <span class=\"octicon octicon-alert\"></span>\n" + "      <a href=\"#\" class=\"octicon octicon-remove-close close ajax-error-dismiss\"></a>\n"
 			+ "      Something went wrong with that request. Please try again.\n" + "    </div>\n" + "\n" + "  </body>\n" + "</html>\n" + "\n";
 
+	public boolean login(Request request, Task task) {
+		return download(request, task) != null ;
+	}
+	
 	@Override
 	public Page download(Request request, Task task) {
 		Page page = new Page();

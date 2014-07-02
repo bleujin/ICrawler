@@ -60,6 +60,10 @@ public class SpiderTest {
 			}
 		}).setDownloader(new Downloader() {
 			@Override
+			public boolean login(Request request, Task task) {
+				return true;
+			}
+			@Override
 			public Page download(Request request, Task task) {
 				return new Page().setRawText("");
 			}

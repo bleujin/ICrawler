@@ -28,11 +28,15 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.annotation.ThreadSafe;
+import org.apache.http.auth.AuthenticationException;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.params.AbstractHttpParams;
 import org.apache.http.params.BasicHttpParams;
@@ -75,8 +79,52 @@ public class HttpClientDownloader extends AbstractDownloader {
 				}
 			}
 		}
+		
+		
+		
 		return httpClient;
 	}
+	
+	
+	public boolean login(Request request, Task task) {
+		Site site = task.getSite();
+		Set<Integer> acceptStatCode = Sets.newHashSet(200, 302, 304);
+		String charset = site.getCharset();
+		Map<String, String> headers = site.getHeaders();
+		
+		logger.info("login page {}", request.getUrl());
+		CloseableHttpResponse httpResponse = null;
+		int statusCode = 0;
+		try {
+			HttpUriRequest loginRequest = getHttpUriRequest(request, site, headers);
+
+			httpResponse = getHttpClient(site).execute(loginRequest);
+			statusCode = httpResponse.getStatusLine().getStatusCode();
+			request.putExtra(Request.STATUS_CODE, statusCode);
+			if (statusAccept(acceptStatCode, statusCode)) {
+				handleResponse(request, charset, httpResponse, task);
+				return true;
+			} else {
+				logger.warn("code error " + statusCode + "\t" + request.getUrl());
+				return false;
+			}
+		} catch (IOException e) {
+			logger.warn("login page " + request.getUrl() + " error", e);
+			onError(request);
+			e.printStackTrace(); 
+			return false;
+		} finally {
+			request.putExtra(Request.STATUS_CODE, statusCode);
+			try {
+				if (httpResponse != null) {
+					EntityUtils.consume(httpResponse.getEntity());
+				}
+			} catch (IOException e) {
+				logger.warn("close response fail", e);
+			}
+		}
+	}
+
 
 	@Override
 	public Page download(Request request, Task task) {
@@ -195,9 +243,8 @@ public class HttpClientDownloader extends AbstractDownloader {
 
 	protected Page handleResponse(Request request, String charset, HttpResponse httpResponse, Task task) throws IOException {
 		Header contentType = httpResponse.getFirstHeader(HeaderConstant.HEADER_CONTENT_TYPE);
-		
 		Page page = new Page();
-		if (contentType.getValue().indexOf("text") > -1 || contentType.getValue().indexOf("json") > -1 || contentType.getValue().indexOf("xml") > -1) {
+		if (contentType != null && (contentType.getValue().indexOf("text") > -1 || contentType.getValue().indexOf("json") > -1 || contentType.getValue().indexOf("xml") > -1)) {
 			String content = getContent(charset, httpResponse);
 			page.setRawText(content);
 		} else {

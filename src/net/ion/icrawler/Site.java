@@ -1,20 +1,23 @@
 package net.ion.icrawler;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import net.ion.icrawler.model.ModelPageProcessor;
 import net.ion.icrawler.model.OOSpider;
 import net.ion.icrawler.pipeline.PageModelPipeline;
 import net.ion.icrawler.processor.BinaryHandler;
 import net.ion.icrawler.processor.PageProcessor;
-import net.ion.icrawler.processor.SimplePageProcessor;
 import net.ion.icrawler.proxy.ProxyPool;
-import net.ion.icrawler.utils.UrlUtils;
 
 import org.apache.http.HttpHost;
 
-import java.util.*;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 
 /**
  * Object contains setting for crawler.<br>
@@ -23,7 +26,7 @@ public class Site {
 
 	private String domain;
 
-	private String userAgent;
+	private String userAgent = "icrawler/2.0 (i-on.net)";
 
 	private Map<String, String> defaultCookies = new LinkedHashMap<String, String>();
 
