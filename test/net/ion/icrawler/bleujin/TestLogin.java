@@ -39,7 +39,7 @@ public class TestLogin extends TestCase {
 		NewClient nc = NewClient.create();
 		Response response = nc.preparePost("https://www.tistory.com/auth/login")
 				.addParameter("loginId", "bleujin@gmail.com")
-				.addParameter("password", "redfpark")
+				.addParameter("password", System.getProperty("pwd"))
 				.addParameter("redirectUrl", "http://bleujin.tistory.com/")
 				.execute().get() ;
 		Debug.line(response.getStatusCode(), response.getTextBody(), response.getHeaders());
@@ -61,7 +61,7 @@ public class TestLogin extends TestCase {
 		
 		Request login = new Request("https://www.tistory.com/auth/login")
 			.addParameter("loginId", "bleujin@gmail.com")
-			.addParameter("password", "redfpark")
+			.addParameter("password", System.getProperty("pwd"))
 			.addParameter("redirectUrl", "http://bleujin.tistory.com/").setMethod("POST");
 		
 		
@@ -94,7 +94,7 @@ public class TestLogin extends TestCase {
 	
 	public void testRealmAuthAtNewClient() throws Exception {
 		NewClient nc = NewClient.create(ClientConfig.newBuilder().setMaximumConnectionsPerHost(1).build());
-		Realm realm = new RealmBuilder().setPrincipal("bleujin").setPassword("redfpark").build();
+		Realm realm = new RealmBuilder().setPrincipal("bleujin").setPassword(System.getProperty("pwd")).build();
 		RequestBuilder builder = new RequestBuilder();
 		net.ion.radon.aclient.Request request = builder.setUrl("https://im.i-on.net/zeroboard/?s_url=/zeroboard/main.php").setRealm(realm).build() ;
 		Response response = nc.prepareRequest(request).execute().get() ;
@@ -117,14 +117,13 @@ public class TestLogin extends TestCase {
 	}
 	
 	public void testImAuth() throws Exception {
-		Realm realm = new RealmBuilder().setPassword("redfpark").setPrincipal("bleujin").build() ;
+		Realm realm = new RealmBuilder().setPassword(System.getProperty("pwd")).setPrincipal("bleujin").build() ;
 		Request login = new Request("https://im.i-on.net/zeroboard/?s_url=/zeroboard/main.php").realm(realm);
+		Site site = Site.create("https://im.i-on.net/").sleepTime(50).loginRequest(login);
 		
-		
-		Site site = Site.create("https://im.i-on.net/zeroboard/main.php").sleepTime(50).loginRequest(login);
-		
+
 		SimplePageProcessor processor = new SimplePageProcessor("https://im.i-on.net/zeroboard/*");
-		Spider spider = site.newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
+		Spider spider = site.newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10)).addUrl("https://im.i-on.net/zeroboard/main.php");
 
 		spider.addPipeline(new DebugPipeline()).run();
 	}

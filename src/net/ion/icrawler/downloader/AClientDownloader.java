@@ -100,7 +100,7 @@ public class AClientDownloader extends AbstractDownloader {
 					
 					if (statusAccept(acceptStatCode, status)) {
 						String charset = site.getCharset();
-						handleResponse(request, charset, response, task);
+//						handleResponse(request, charset, response, task);
 						List<Cookie> cookies = response.getCookies() ;
 						cookiesPerDomain.put(site.getDomain(), cookies) ;
 						return true;

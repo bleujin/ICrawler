@@ -11,7 +11,9 @@ import org.restlet.data.Method;
 
 import net.ion.framework.util.ListUtil;
 import net.ion.framework.util.ObjectUtil;
+import net.ion.framework.util.StringUtil;
 import net.ion.icrawler.utils.Experimental;
+import net.ion.icrawler.utils.UrlUtils;
 import net.ion.radon.aclient.FluentStringsMap;
 import net.ion.radon.aclient.Realm;
 import net.ion.radon.aclient.simple.HeaderConstant;
@@ -182,6 +184,10 @@ public class Request implements Serializable {
 
 	public NameValuePair[] getParameters() {
 		return params == null ? new NameValuePair[0] : params.toArray(new NameValuePair[0]);
+	}
+	
+	public Map<String, String> getQueryParameter(){
+		return UrlUtils.parseQueryString(StringUtil.substringAfter(url, "?")) ;
 	}
 
 	public Request realm(Realm realm) {

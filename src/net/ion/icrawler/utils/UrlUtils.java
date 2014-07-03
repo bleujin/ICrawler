@@ -1,5 +1,6 @@
 package net.ion.icrawler.utils;
 
+import net.ion.framework.util.MapUtil;
 import net.ion.icrawler.Request;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +11,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +39,7 @@ public class UrlUtils {
 				// the base is unsuitable, but the attribute may be abs on its
 				// own, so try that
 				URL abs = new URL(refer);
+
 				return abs.toExternalForm();
 			}
 			// workaround: java resolves '//path/file + ?foo' to '//path/?foo',
@@ -47,6 +51,21 @@ public class UrlUtils {
 		} catch (MalformedURLException e) {
 			return "";
 		}
+	}
+
+	public static Map<String, String> parseQueryString(String s) {
+		Map<String, String> ht = MapUtil.newMap();
+		StringTokenizer st = new StringTokenizer(s, "&");
+		while (st.hasMoreTokens()) {
+			String pair = st.nextToken();
+			int pos = pair.indexOf('=');
+			if (pos == -1) {
+				ht.put(pair.toLowerCase(), "");
+			} else {
+				ht.put(pair.substring(0, pos).toLowerCase(), pair.substring(pos + 1));
+			}
+		}
+		return ht;
 	}
 
 	/**
