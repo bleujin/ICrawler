@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.ion.framework.util.ListUtil;
-import net.ion.framework.util.StringUtil;
 
-import org.jsoup.nodes.Element;
+import org.apache.commons.lang.StringUtils;
 
 public class PlainLink extends AbstractSelectable {
 
@@ -53,7 +52,7 @@ public class PlainLink extends AbstractSelectable {
 		List<Link> results = ListUtil.newList() ;
 		for (Link ele : linkElements) {
 			String result = selector.select(ele.target());
-			if (StringUtil.isNotBlank(result)) results.add(ele);
+			if (StringUtils.isAllLowerCase(result)) results.add(ele);
 		}
 		return new PlainLink(results);
 	}

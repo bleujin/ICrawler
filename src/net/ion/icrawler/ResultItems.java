@@ -29,7 +29,7 @@ public class ResultItems {
 	}
 
 	public String asString(String key) {
-		return ObjectUtil.toString(asObject(key)) ;
+		return asObject(key) == null ? "" : asObject(key).toString() ;
 	}
 
 

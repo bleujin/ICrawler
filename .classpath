@@ -6,9 +6,6 @@
 	<classpathentry kind="lib" path="lib/reflib/assertj-core-1.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/reflib/commons-codec-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/reflib/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="lib/reflib/commons-io-1.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/reflib/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="lib/reflib/commons-lang3-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/reflib/commons-logging-1.1.3.jar"/>
 	<classpathentry kind="lib" path="lib/reflib/commons-pool-1.5.5.jar"/>
 	<classpathentry kind="lib" path="lib/reflib/fastjson-1.1.37.jar"/>
@@ -26,6 +23,11 @@
 	<classpathentry kind="lib" path="lib/ref/aclient_0.3.jar"/>
 	<classpathentry kind="lib" path="lib/ref/iframework_2.3.jar"/>
 	<classpathentry kind="lib" path="lib/reflib/netty-3.2.7.Final.jar"/>
+	<classpathentry kind="lib" path="lib/reflib/commons-compiler-jdk.jar"/>
+	<classpathentry kind="lib" path="lib/reflib/janino.jar"/>
+	<classpathentry kind="lib" path="lib/reflib/commons-compiler.jar"/>
+	<classpathentry kind="lib" path="lib/reflib/commons-io-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/reflib/commons-lang-2.5.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

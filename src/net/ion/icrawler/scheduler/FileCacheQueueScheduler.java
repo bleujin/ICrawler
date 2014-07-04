@@ -1,12 +1,12 @@
 package net.ion.icrawler.scheduler;
 
-import net.ion.icrawler.Request;
-import net.ion.icrawler.Task;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
@@ -15,6 +15,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import net.ion.icrawler.Request;
+import net.ion.icrawler.Task;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.NumberUtils;
 
 /**
  * Store urls and cursor in files so that a Spider can resume the status when shutdown.<br>
@@ -125,7 +131,7 @@ public class FileCacheQueueScheduler extends DuplicateRemovedScheduler implement
 			String line;
 			// read the last number
 			while ((line = fileCursorReader.readLine()) != null) {
-				cursor = new AtomicInteger(NumberUtils.toInt(line));
+				cursor = new AtomicInteger(NumberUtils.stringToInt(line));
 			}
 		} finally {
 			if (fileCursorReader != null) {

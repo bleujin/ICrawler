@@ -1,8 +1,8 @@
 package net.ion.icrawler.model.formatter;
 
-import org.apache.commons.lang3.time.DateUtils;
-
 import java.util.Date;
+
+import net.ion.framework.util.DateUtil;
 
 public class DateFormatter implements ObjectFormatter<Date> {
 
@@ -11,7 +11,7 @@ public class DateFormatter implements ObjectFormatter<Date> {
 
 	@Override
 	public Date format(String raw) throws Exception {
-		return DateUtils.parseDate(raw, datePatterns);
+		return DateUtil.stringToDate(raw, datePatterns[0]);
 	}
 
 	@Override

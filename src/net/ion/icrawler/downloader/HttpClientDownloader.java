@@ -1,15 +1,12 @@
 package net.ion.icrawler.downloader;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import net.ion.framework.util.ObjectUtil;
+import net.ion.framework.util.StringUtil;
 import net.ion.icrawler.Page;
 import net.ion.icrawler.Request;
 import net.ion.icrawler.Site;
@@ -17,30 +14,22 @@ import net.ion.icrawler.Task;
 import net.ion.icrawler.processor.BinaryHandler;
 import net.ion.icrawler.selector.PlainText;
 import net.ion.icrawler.utils.UrlUtils;
-import net.ion.radon.aclient.FluentStringsMap;
 import net.ion.radon.aclient.simple.HeaderConstant;
 
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.annotation.ThreadSafe;
-import org.apache.http.auth.AuthenticationException;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.params.AbstractHttpParams;
 import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -292,7 +281,7 @@ public class HttpClientDownloader extends AbstractDownloader {
 		// 1、encoding in http header Content-Type
 		String value = httpResponse.getEntity().getContentType().getValue();
 		charset = UrlUtils.getCharset(value);
-		if (StringUtils.isNotBlank(charset)) {
+		if (StringUtil.isNotBlank(charset)) {
 			logger.debug("Auto get charset: {}", charset);
 			return charset;
 		}
@@ -300,7 +289,7 @@ public class HttpClientDownloader extends AbstractDownloader {
 		Charset defaultCharset = Charset.defaultCharset();
 		String content = new String(contentBytes, defaultCharset.name());
 		// 2、charset in meta
-		if (StringUtils.isNotEmpty(content)) {
+		if (StringUtil.isNotEmpty(content)) {
 			Document document = Jsoup.parse(content);
 			Elements links = document.select("meta");
 			for (Element link : links) {
@@ -313,7 +302,7 @@ public class HttpClientDownloader extends AbstractDownloader {
 					break;
 				}
 				// 2.2、html5 <meta charset="UTF-8" />
-				else if (StringUtils.isNotEmpty(metaCharset)) {
+				else if (StringUtil.isNotEmpty(metaCharset)) {
 					charset = metaCharset;
 					break;
 				}

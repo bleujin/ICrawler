@@ -1,22 +1,21 @@
 package net.ion.icrawler.pipeline;
 
-import com.alibaba.fastjson.JSON;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 import net.ion.icrawler.Task;
 import net.ion.icrawler.model.HasKey;
 import net.ion.icrawler.utils.FilePersistentBase;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import com.alibaba.fastjson.JSON;
 
 /**
  * Store results objects (page models) to files in JSON format.<br>

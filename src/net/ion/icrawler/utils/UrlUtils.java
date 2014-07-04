@@ -1,10 +1,5 @@
 package net.ion.icrawler.utils;
 
-import net.ion.framework.util.MapUtil;
-import net.ion.icrawler.Request;
-
-import org.apache.commons.lang3.StringUtils;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -15,6 +10,11 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import net.ion.framework.util.MapUtil;
+import net.ion.icrawler.Request;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * url and html utils.

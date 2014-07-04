@@ -19,7 +19,7 @@ import net.ion.radon.aclient.Realm;
 import net.ion.radon.aclient.simple.HeaderConstant;
 
 /**
- * Object contains url to crawl.<br>
+ * Object contains url to crawl.
  * It contains some additional information.
  */
 public class Request implements Serializable {
@@ -40,8 +40,8 @@ public class Request implements Serializable {
 	private Map<String, Object> extras;
 
 	/**
-	 * Priority of the request.<br>
-	 * The bigger will be processed earlier. <br>
+	 * Priority of the request. 
+	 * The bigger will be processed earlier.  
 	 * 
 	 * @see net.ion.icrawler.scheduler.PriorityScheduler
 	 */
@@ -78,8 +78,8 @@ public class Request implements Serializable {
 	}
 
 	/**
-	 * Set the priority of request for sorting.<br>
-	 * Need a scheduler supporting priority.<br>
+	 * Set the priority of request for sorting. 
+	 * Need a scheduler supporting priority. 
 	 * 
 	 * @see net.ion.icrawler.scheduler.PriorityScheduler
 	 * 

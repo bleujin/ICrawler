@@ -1,6 +1,18 @@
 package net.ion.icrawler.downloader;
 
-import net.ion.icrawler.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import net.ion.framework.util.StringUtil;
+import net.ion.icrawler.Page;
+import net.ion.icrawler.Request;
+import net.ion.icrawler.ResultItems;
+import net.ion.icrawler.Task;
 import net.ion.icrawler.pipeline.Pipeline;
 import net.ion.icrawler.processor.PageProcessor;
 import net.ion.icrawler.processor.SimplePageProcessor;
@@ -11,11 +23,8 @@ import net.ion.icrawler.utils.FilePersistentBase;
 import net.ion.icrawler.utils.UrlUtils;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.*;
 
 /**
  * Download file and saved to file for cache.<br>
@@ -85,7 +94,7 @@ public class FileCache extends FilePersistentBase implements Downloader, Pipelin
 		String line;
 		StringBuilder htmlBuilder = new StringBuilder();
 		line = bufferedReader.readLine();
-		line = StringUtils.removeStart(line, "html:\t");
+		line = StringUtil.removeStart(line, "html:\t");
 		htmlBuilder.append(line);
 		while ((line = bufferedReader.readLine()) != null) {
 			htmlBuilder.append(line);

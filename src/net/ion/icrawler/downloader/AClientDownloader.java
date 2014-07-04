@@ -6,10 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
-import net.ion.framework.util.Debug;
 import net.ion.framework.util.MapUtil;
+import net.ion.framework.util.StringUtil;
 import net.ion.icrawler.Page;
 import net.ion.icrawler.Request;
 import net.ion.icrawler.Site;
@@ -18,8 +17,6 @@ import net.ion.icrawler.processor.BinaryHandler;
 import net.ion.icrawler.selector.PlainText;
 import net.ion.icrawler.utils.UrlUtils;
 import net.ion.radon.aclient.AsyncCompletionHandler;
-import net.ion.radon.aclient.AsyncCompletionHandlerBase;
-import net.ion.radon.aclient.AsyncHandler;
 import net.ion.radon.aclient.ClientConfig;
 import net.ion.radon.aclient.Cookie;
 import net.ion.radon.aclient.NewClient;
@@ -30,19 +27,14 @@ import net.ion.radon.aclient.RequestBuilder;
 import net.ion.radon.aclient.Response;
 import net.ion.radon.aclient.simple.HeaderConstant;
 
-import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
 import org.apache.http.annotation.ThreadSafe;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.restlet.data.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -261,7 +253,7 @@ public class AClientDownloader extends AbstractDownloader {
 		// 1、encoding in http header Content-Type
 		String value = httpResponse.getHeader(HeaderConstant.HEADER_CONTENT_TYPE);
 		charset = UrlUtils.getCharset(value);
-		if (StringUtils.isNotBlank(charset)) {
+		if (StringUtil.isNotBlank(charset)) {
 			logger.debug("Auto get charset: {}", charset);
 			return charset;
 		}
@@ -269,7 +261,7 @@ public class AClientDownloader extends AbstractDownloader {
 		Charset defaultCharset = Charset.defaultCharset();
 		String content = new String(contentBytes, defaultCharset.name());
 		// 2、charset in meta
-		if (StringUtils.isNotEmpty(content)) {
+		if (StringUtil.isNotEmpty(content)) {
 			Document document = Jsoup.parse(content);
 			Elements links = document.select("meta");
 			for (Element link : links) {
@@ -282,7 +274,7 @@ public class AClientDownloader extends AbstractDownloader {
 					break;
 				}
 				// 2.2、html5 <meta charset="UTF-8" />
-				else if (StringUtils.isNotEmpty(metaCharset)) {
+				else if (StringUtil.isNotEmpty(metaCharset)) {
 					charset = metaCharset;
 					break;
 				}

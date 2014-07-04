@@ -1,5 +1,7 @@
 package net.ion.icrawler;
 
+import java.util.List;
+
 import net.ion.framework.util.ListUtil;
 import net.ion.icrawler.selector.Html;
 import net.ion.icrawler.selector.Json;
@@ -7,10 +9,7 @@ import net.ion.icrawler.selector.Link;
 import net.ion.icrawler.selector.Selectable;
 import net.ion.icrawler.utils.UrlUtils;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Object storing extracted result and urls to fetch.<br>

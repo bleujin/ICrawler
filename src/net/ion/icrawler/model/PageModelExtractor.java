@@ -1,18 +1,5 @@
 package net.ion.icrawler.model;
 
-import net.ion.icrawler.Page;
-import net.ion.icrawler.model.annotation.*;
-import net.ion.icrawler.model.formatter.BasicTypeFormatter;
-import net.ion.icrawler.model.formatter.ObjectFormatter;
-import net.ion.icrawler.model.formatter.ObjectFormatters;
-import net.ion.icrawler.selector.*;
-import net.ion.icrawler.utils.ClassUtils;
-import net.ion.icrawler.utils.ExtractorUtils;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -20,6 +7,28 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import net.ion.icrawler.Page;
+import net.ion.icrawler.model.annotation.ComboExtract;
+import net.ion.icrawler.model.annotation.ExtractBy;
+import net.ion.icrawler.model.annotation.ExtractByUrl;
+import net.ion.icrawler.model.annotation.Formatter;
+import net.ion.icrawler.model.annotation.HelpUrl;
+import net.ion.icrawler.model.annotation.TargetUrl;
+import net.ion.icrawler.model.formatter.BasicTypeFormatter;
+import net.ion.icrawler.model.formatter.ObjectFormatter;
+import net.ion.icrawler.model.formatter.ObjectFormatters;
+import net.ion.icrawler.selector.AndSelector;
+import net.ion.icrawler.selector.OrSelector;
+import net.ion.icrawler.selector.RegexSelector;
+import net.ion.icrawler.selector.Selector;
+import net.ion.icrawler.selector.XpathSelector;
+import net.ion.icrawler.utils.ClassUtils;
+import net.ion.icrawler.utils.ExtractorUtils;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The main internal logic of page model extractor.

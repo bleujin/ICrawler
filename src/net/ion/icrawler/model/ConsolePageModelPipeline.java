@@ -3,7 +3,7 @@ package net.ion.icrawler.model;
 import net.ion.icrawler.Task;
 import net.ion.icrawler.pipeline.PageModelPipeline;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Print page model in console.<br>
