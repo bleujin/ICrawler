@@ -1,4 +1,4 @@
-package net.ion.jci.bleujin;
+package net.ion.jci.compilers;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -28,7 +28,6 @@ import net.ion.jci.utils.ConversionUtils;
  * 
  * TODO use META-INF discovery mechanism
  * 
- * @author tcurdt
  */
 public final class JavaCompilerFactory {
 
@@ -52,7 +51,7 @@ public final class JavaCompilerFactory {
      * Tries to guess the class name by convention. So for compilers
      * following the naming convention
      * 
-     *   org.apache.commons.jci.compilers.SomeJavaCompiler
+     *  net.ion.jci.compilers.SomeJavaCompiler
      *   
      * you can use the short-hands "some"/"Some"/"SOME". Otherwise
      * you have to provide the full class name. The compiler is
@@ -65,7 +64,7 @@ public final class JavaCompilerFactory {
         
         final String className;
         if (pHint.indexOf('.') < 0) {
-            className = "org.apache.commons.jci.compilers." + ConversionUtils.toJavaCasing(pHint) + "JavaCompiler";
+            className = "net.ion.jci.compilers." + ConversionUtils.toJavaCasing(pHint) + "JavaCompiler";
         } else {
             className = pHint;
         }

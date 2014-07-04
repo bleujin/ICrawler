@@ -44,9 +44,6 @@ import org.codehaus.janino.util.resource.Resource;
 import org.codehaus.janino.util.resource.ResourceCreator;
 import org.codehaus.janino.util.resource.ResourceFinder;
 
-/**
- * @author tcurdt
- */
 public final class JaninoJavaCompiler extends AbstractJavaCompiler {
 
     private final Log log = LogFactory.getLog(JaninoJavaCompiler.class);

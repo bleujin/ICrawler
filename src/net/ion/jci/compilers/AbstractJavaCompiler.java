@@ -23,10 +23,7 @@ import net.ion.jci.stores.ResourceStore;
 
 
 /**
- * Base class for compiler implementations. Provides just a few
- * convenience methods.
- * 
- * @author tcurdt
+ * Base class for compiler implementations. Provides just a few convenience methods.
  */
 public abstract class AbstractJavaCompiler implements JavaCompiler {
 

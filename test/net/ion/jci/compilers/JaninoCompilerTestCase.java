@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package net.ion.jci.bleujin;
+package net.ion.jci.compilers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +23,7 @@ import java.util.Map;
 import junit.framework.TestCase;
 import net.ion.framework.util.Debug;
 import net.ion.jci.compilers.CompilationResult;
+import net.ion.jci.compilers.JaninoJavaCompiler;
 import net.ion.jci.compilers.JavaCompiler;
 import net.ion.jci.compilers.JavaCompilerFactory;
 import net.ion.jci.compilers.JavaCompilerSettings;
@@ -30,16 +31,17 @@ import net.ion.jci.problems.CompilationProblem;
 import net.ion.jci.readers.ResourceReader;
 import net.ion.jci.stores.MemoryResourceStore;
 
-/**
- * Providing convenience methods for JavaCompiler TestCases
- *
- * @author tcurdt
- */
-public abstract class AbstractCompilerTestCase extends TestCase {
 
-    public abstract JavaCompiler createJavaCompiler();
+public class JaninoCompilerTestCase extends TestCase {
 
-    public abstract String getCompilerName();
+
+    public JavaCompiler createJavaCompiler(){
+    	return new JaninoJavaCompiler() ;
+    }
+
+    public String getCompilerName() {
+    	return "janino" ;
+    };
 
     public void testFactoryCreation() {
         final JavaCompiler factoryCompiler = new JavaCompilerFactory().createCompiler(getCompilerName());

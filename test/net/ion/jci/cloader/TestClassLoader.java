@@ -1,4 +1,4 @@
-package net.ion.jci.bleujin;
+package net.ion.jci.cloader;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -30,7 +30,7 @@ public class TestClassLoader extends TestCase {
 	public void testTraverser() throws Exception {
 
 		DeclarationCounter dc = new DeclarationCounter();
-		File[] files = new File("./src/org/apache/commons/jci/bleujin").listFiles(new FilenameFilter() {
+		File[] files = new File("./src/net/ion/jci/cloader").listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
 				return name.endsWith(".java");
@@ -63,7 +63,6 @@ class DeclarationCounter extends Traverser {
 	@Override
 	public void traverseClassDeclaration(Java.ClassDeclaration cd) {
 		++this.classDeclarationCount;
-		Debug.debug(cd);
 		super.traverseClassDeclaration(cd);
 	}
 
