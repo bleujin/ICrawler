@@ -32,7 +32,7 @@ import net.ion.jci.readers.ResourceReader;
 import net.ion.jci.stores.MemoryResourceStore;
 
 
-public class JaninoCompilerTestCase extends TestCase {
+public class TestJaninoCompiler extends TestCase {
 
 
     public JavaCompiler createJavaCompiler(){
