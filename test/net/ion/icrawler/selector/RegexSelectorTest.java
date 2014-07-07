@@ -1,19 +1,20 @@
 package net.ion.icrawler.selector;
 
-import net.ion.icrawler.selector.RegexSelector;
+import junit.framework.TestCase;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-/**
- * <br>
- */
-public class RegexSelectorTest {
+public class RegexSelectorTest extends TestCase {
 
-	@Test(expected = IllegalArgumentException.class)
+//	@Test(expected = IllegalArgumentException.class)
 	public void testRegexWithSingleLeftBracket() {
-		String regex = "\\d+(";
-		new RegexSelector(regex);
+		try {
+			String regex = "\\d+(";
+			new RegexSelector(regex);
+			fail();
+		} catch (IllegalArgumentException expect) {
+
+		}
 	}
 
 	@Test
@@ -22,6 +23,6 @@ public class RegexSelectorTest {
 		String source = "(hello world";
 		RegexSelector regexSelector = new RegexSelector(regex);
 		String select = regexSelector.select(source);
-		Assertions.assertThat(select).isEqualTo(source);
+		assertEquals(source, select);
 	}
 }

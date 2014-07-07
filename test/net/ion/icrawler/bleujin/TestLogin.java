@@ -3,11 +3,8 @@ package net.ion.icrawler.bleujin;
 import java.io.IOException;
 import java.util.List;
 
-import org.restlet.data.Method;
-
 import junit.framework.TestCase;
 import net.ion.framework.util.Debug;
-import net.ion.framework.util.InfinityThread;
 import net.ion.framework.util.StringUtil;
 import net.ion.icrawler.Page;
 import net.ion.icrawler.Request;
@@ -15,7 +12,6 @@ import net.ion.icrawler.ResultItems;
 import net.ion.icrawler.Site;
 import net.ion.icrawler.Spider;
 import net.ion.icrawler.Task;
-import net.ion.icrawler.downloader.HttpClientDownloader;
 import net.ion.icrawler.pipeline.DebugPipeline;
 import net.ion.icrawler.pipeline.Pipeline;
 import net.ion.icrawler.processor.PageProcessor;

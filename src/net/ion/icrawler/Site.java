@@ -12,9 +12,8 @@ import net.ion.icrawler.model.OOSpider;
 import net.ion.icrawler.pipeline.PageModelPipeline;
 import net.ion.icrawler.processor.BinaryHandler;
 import net.ion.icrawler.processor.PageProcessor;
+import net.ion.icrawler.proxy.HttpHost;
 import net.ion.icrawler.proxy.ProxyPool;
-
-import org.apache.http.HttpHost;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;

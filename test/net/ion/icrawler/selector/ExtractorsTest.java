@@ -1,36 +1,35 @@
 package net.ion.icrawler.selector;
 
-import net.ion.icrawler.selector.OrSelector;
+import static net.ion.icrawler.selector.Selectors.$;
+import static net.ion.icrawler.selector.Selectors.and;
+import static net.ion.icrawler.selector.Selectors.or;
+import static net.ion.icrawler.selector.Selectors.regex;
+import static net.ion.icrawler.selector.Selectors.xpath;
+import junit.framework.TestCase;
 
 import org.junit.Test;
-
-import static net.ion.icrawler.selector.Selectors.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <br>
  */
-public class ExtractorsTest {
+public class ExtractorsTest extends TestCase {
 
 	String html = "<div><h1>test<a href=\"xxx\">aabbcc</a></h1></div>";
-
 	String html2 = "<title>aabbcc</title>";
 
-	@Test
 	public void testEach() {
-		assertThat($("div h1 a").select(html)).isEqualTo("<a href=\"xxx\">aabbcc</a>");
-		assertThat($("div h1 a", "href").select(html)).isEqualTo("xxx");
-		assertThat($("div h1 a", "innerHtml").select(html)).isEqualTo("aabbcc");
-		assertThat(xpath("//a/@href").select(html)).isEqualTo("xxx");
-		assertThat(regex("a href=\"(.*)\"").select(html)).isEqualTo("xxx");
-		assertThat(regex("(a href)=\"(.*)\"", 2).select(html)).isEqualTo("xxx");
+		assertEquals("<a href=\"xxx\">aabbcc</a>", $("div h1 a").select(html));
+		assertEquals("xxx", $("div h1 a", "href").select(html));
+		assertEquals("aabbcc", $("div h1 a", "innerHtml").select(html));
+		assertEquals("xxx", xpath("//a/@href").select(html));
+		assertEquals("xxx", regex("a href=\"(.*)\"").select(html));
+		assertEquals("xxx", regex("(a href)=\"(.*)\"", 2).select(html));
 	}
 
-	@Test
 	public void testCombo() {
-		assertThat(and($("title"), regex("aa(bb)cc")).select(html2)).isEqualTo("bb");
+		assertEquals("bb", and($("title"), regex("aa(bb)cc")).select(html2));
 		OrSelector or = or($("div h1 a", "innerHtml"), xpath("//title"));
-		assertThat(or.select(html)).isEqualTo("aabbcc");
-		assertThat(or.select(html2)).isEqualTo("<title>aabbcc</title>");
+		assertEquals("aabbcc", or.select(html));
+		assertEquals("<title>aabbcc</title>", or.select(html2));
 	}
 }

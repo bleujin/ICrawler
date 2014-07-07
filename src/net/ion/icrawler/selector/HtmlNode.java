@@ -1,5 +1,6 @@
 package net.ion.icrawler.selector;
 
+import net.ion.framework.util.Debug;
 import net.ion.framework.util.ListUtil;
 import net.ion.icrawler.xsoup.xevaluator.ElementOperator;
 
@@ -44,7 +45,7 @@ public class HtmlNode extends AbstractSelectable {
 			Element element = checkElementAndConvert(elementIterator);
 			List<Element> selectList = xpathSelector.selectElements(element);
 			for (Element ele : selectList){
-				resultLinks.add(new Link(HREF.operate(ele), ele.ownText()));
+				resultLinks.add(new Link(HREF.operate(ele), ele.html()));
 			}
 		}
 		return new PlainLink(resultLinks);

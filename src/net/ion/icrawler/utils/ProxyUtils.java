@@ -11,7 +11,8 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.regex.Pattern;
 
-import org.apache.http.HttpHost;
+import net.ion.icrawler.proxy.HttpHost;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

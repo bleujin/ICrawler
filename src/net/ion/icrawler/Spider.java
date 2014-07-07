@@ -1,36 +1,39 @@
 package net.ion.icrawler;
 
-import com.google.common.collect.Lists;
-
-import net.ion.framework.util.Debug;
-import net.ion.framework.util.ListUtil;
-import net.ion.icrawler.downloader.AClientDownloader;
-import net.ion.icrawler.downloader.Downloader;
-import net.ion.icrawler.downloader.HttpClientDownloader;
-import net.ion.icrawler.pipeline.CollectorPipeline;
-import net.ion.icrawler.pipeline.ConsolePipeline;
-import net.ion.icrawler.pipeline.Pipeline;
-import net.ion.icrawler.pipeline.ResultItemsCollectorPipeline;
-import net.ion.icrawler.processor.PageProcessor;
-import net.ion.icrawler.scheduler.QueueScheduler;
-import net.ion.icrawler.scheduler.Scheduler;
-import net.ion.icrawler.selector.thread.CountableThreadPool;
-import net.ion.icrawler.utils.UrlUtils;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.http.HttpHost;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+
+import net.ion.framework.util.Debug;
+import net.ion.framework.util.ListUtil;
+import net.ion.icrawler.downloader.AClientDownloader;
+import net.ion.icrawler.downloader.Downloader;
+import net.ion.icrawler.pipeline.CollectorPipeline;
+import net.ion.icrawler.pipeline.ConsolePipeline;
+import net.ion.icrawler.pipeline.Pipeline;
+import net.ion.icrawler.pipeline.ResultItemsCollectorPipeline;
+import net.ion.icrawler.processor.PageProcessor;
+import net.ion.icrawler.proxy.HttpHost;
+import net.ion.icrawler.scheduler.QueueScheduler;
+import net.ion.icrawler.scheduler.Scheduler;
+import net.ion.icrawler.selector.thread.CountableThreadPool;
+import net.ion.icrawler.utils.UrlUtils;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Lists;
 
 /**
  * Entrance of a crawler.<br>

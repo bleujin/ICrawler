@@ -1,24 +1,23 @@
 package net.ion.icrawler.pipeline;
 
-import net.ion.icrawler.ResultItems;
-import net.ion.icrawler.Task;
-import net.ion.icrawler.utils.FilePersistentBase;
-
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.http.annotation.ThreadSafe;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Map;
 
+import net.ion.icrawler.ResultItems;
+import net.ion.icrawler.Task;
+import net.ion.icrawler.utils.FilePersistentBase;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Store results in files.<br>
  */
-@ThreadSafe
+// @ThreadSafe
 public class FilePipeline extends FilePersistentBase implements Pipeline {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());

@@ -1,20 +1,18 @@
 package net.ion.icrawler.scheduler;
 
-import net.ion.icrawler.Request;
-import net.ion.icrawler.Task;
-import net.ion.icrawler.utils.NumberUtils;
-
-import org.apache.http.annotation.ThreadSafe;
-
 import java.util.Comparator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import net.ion.icrawler.Request;
+import net.ion.icrawler.Task;
+import net.ion.icrawler.utils.NumberUtils;
+
 /**
  * Priority scheduler. Request with higher priority will poll earlier. <br>
  */
-@ThreadSafe
+// @ThreadSafe
 public class PriorityScheduler extends DuplicateRemovedScheduler implements MonitorableScheduler {
 
 	public static final int INITIAL_CAPACITY = 5;

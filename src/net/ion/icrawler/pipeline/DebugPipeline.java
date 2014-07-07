@@ -8,7 +8,6 @@ public class DebugPipeline implements Pipeline {
 
 	@Override
 	public void process(ResultItems ritems, Task task) {
-		
 		Debug.line(ritems.getRequest());
 	}
 

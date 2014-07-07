@@ -5,18 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.restlet.data.Method;
-
 import net.ion.framework.util.ListUtil;
 import net.ion.framework.util.ObjectUtil;
 import net.ion.framework.util.StringUtil;
 import net.ion.icrawler.utils.Experimental;
 import net.ion.icrawler.utils.UrlUtils;
-import net.ion.radon.aclient.FluentStringsMap;
 import net.ion.radon.aclient.Realm;
+import net.ion.radon.aclient.StringPart;
 import net.ion.radon.aclient.simple.HeaderConstant;
+
+import org.restlet.data.Method;
 
 /**
  * Object contains url to crawl.
@@ -47,7 +45,7 @@ public class Request implements Serializable {
 	 */
 	private long priority;
 
-	private List<NameValuePair> params;
+	private List<StringPart> params;
 
 	private Realm realm;
 
@@ -156,7 +154,7 @@ public class Request implements Serializable {
 		}
 		
 		for (String value : values) {
-			params.add(new BasicNameValuePair(name, value)) ;
+			params.add(new StringPart(name, value)) ;
 		}
 		
 		return this ;
@@ -182,8 +180,8 @@ public class Request implements Serializable {
 		return "Request{" + "url='" + url + '\'' + ", method='" + method + '\'' + ", extras=" + extras + ", priority=" + priority + '}';
 	}
 
-	public NameValuePair[] getParameters() {
-		return params == null ? new NameValuePair[0] : params.toArray(new NameValuePair[0]);
+	public StringPart[] getParameters() {
+		return params == null ? new StringPart[0] : params.toArray(new StringPart[0]);
 	}
 	
 	public Map<String, String> getQueryParameter(){

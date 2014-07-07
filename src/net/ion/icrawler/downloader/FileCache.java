@@ -45,7 +45,7 @@ public class FileCache extends FilePersistentBase implements Downloader, Pipelin
 	public FileCache(String urlPattern, String path) {
 		this.pageProcessor = new SimplePageProcessor(urlPattern);
 		setPath(path);
-		downloaderWhenFileMiss = new HttpClientDownloader();
+		downloaderWhenFileMiss = new AClientDownloader();
 	}
 
 	public FileCache setDownloaderWhenFileMiss(Downloader downloaderWhenFileMiss) {

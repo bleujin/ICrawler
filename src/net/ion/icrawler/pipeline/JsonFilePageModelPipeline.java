@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
+import net.ion.framework.parse.gson.JsonParser;
 import net.ion.icrawler.Task;
 import net.ion.icrawler.model.HasKey;
 import net.ion.icrawler.utils.FilePersistentBase;
@@ -14,8 +15,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.alibaba.fastjson.JSON;
 
 /**
  * Store results objects (page models) to files in JSON format.<br>
@@ -50,7 +49,7 @@ public class JsonFilePageModelPipeline extends FilePersistentBase implements Pag
 				file.getParentFile().mkdirs() ;
 			}
 			PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
-			printWriter.write(JSON.toJSONString(o));
+			printWriter.write(JsonParser.fromObject(o).toString());
 			printWriter.close();
 		} catch (IOException e) {
 			logger.warn("write file error", e);

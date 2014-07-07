@@ -1,18 +1,16 @@
 package net.ion.icrawler.scheduler;
 
-import net.ion.icrawler.Request;
-import net.ion.icrawler.Task;
-
-import org.apache.http.annotation.ThreadSafe;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import net.ion.icrawler.Request;
+import net.ion.icrawler.Task;
 
 /**
  * Basic Scheduler implementation.<br>
  * Store urls to fetch in LinkedBlockingQueue and remove duplicate urls by HashMap.
  */
-@ThreadSafe
+//@ThreadSafe
 public class QueueScheduler extends DuplicateRemovedScheduler implements MonitorableScheduler {
 
 	private BlockingQueue<Request> queue = new LinkedBlockingQueue<Request>();

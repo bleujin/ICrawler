@@ -52,7 +52,7 @@ public class PlainLink extends AbstractSelectable {
 		List<Link> results = ListUtil.newList() ;
 		for (Link ele : linkElements) {
 			String result = selector.select(ele.target());
-			if (StringUtils.isAllLowerCase(result)) results.add(ele);
+			if (StringUtils.isNotBlank(result)) results.add(ele);
 		}
 		return new PlainLink(results);
 	}

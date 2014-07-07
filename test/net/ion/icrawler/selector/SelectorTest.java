@@ -1,18 +1,12 @@
 package net.ion.icrawler.selector;
 
-import net.ion.icrawler.selector.Html;
-import net.ion.icrawler.selector.Selectable;
+import java.util.List;
+
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-/**
-
- */
-public class SelectorTest {
+public class SelectorTest extends TestCase{
 
 	private String html = "<div><a href='http://whatever.com/aaa'></a></div><div><a href='http://whatever.com/bbb'></a></div>";
 
@@ -23,14 +17,14 @@ public class SelectorTest {
 		Selectable xpath = selectable.xpath("//div");
 		List<String> linksWithChainFirstCall = xpath.links().all();
 		List<String> linksWithChainSecondCall = xpath.links().all();
-		assertThat(linksWithoutChain).hasSameSizeAs(linksWithChainFirstCall);
-		assertThat(linksWithChainFirstCall).hasSameSizeAs(linksWithChainSecondCall);
+		assertTrue(linksWithoutChain.size() == linksWithChainFirstCall.size());
+		assertTrue(linksWithChainFirstCall.size() == linksWithChainSecondCall.size());
 	}
 
 	@Test
 	public void testNodes() throws Exception {
 		Html selectable = new Html(html);
 		List<Selectable> links = selectable.xpath("//a").nodes();
-		assertThat(links.get(0).links().get()).isEqualTo("http://whatever.com/aaa");
+		assertEquals("http://whatever.com/aaa", links.get(0).links().get());
 	}
 }

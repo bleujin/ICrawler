@@ -1,5 +1,6 @@
 package net.ion.icrawler.scheduler;
 
+import junit.framework.TestCase;
 import net.ion.icrawler.Request;
 import net.ion.icrawler.scheduler.component.BloomFilterDuplicateRemover;
 import net.ion.icrawler.scheduler.component.DuplicateRemover;
@@ -8,30 +9,25 @@ import net.ion.icrawler.scheduler.component.HashSetDuplicateRemover;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-/**
- * @author code4crafer@gmail.com
- */
-public class BloomFilterDuplicateRemoverTest {
+public class BloomFilterDuplicateRemoverTest extends TestCase{
 
 	@Test
 	public void testRemove() throws Exception {
 		BloomFilterDuplicateRemover bloomFilterDuplicateRemover = new BloomFilterDuplicateRemover(10);
 		boolean isDuplicate = bloomFilterDuplicateRemover.isDuplicate(new Request("a"), null);
-		assertThat(isDuplicate).isFalse();
+		assertFalse(isDuplicate);
 		isDuplicate = bloomFilterDuplicateRemover.isDuplicate(new Request("a"), null);
-		assertThat(isDuplicate).isTrue();
+		assertTrue(isDuplicate);
 		isDuplicate = bloomFilterDuplicateRemover.isDuplicate(new Request("b"), null);
-		assertThat(isDuplicate).isFalse();
+		assertFalse(isDuplicate);
 		isDuplicate = bloomFilterDuplicateRemover.isDuplicate(new Request("b"), null);
-		assertThat(isDuplicate).isTrue();
+		assertTrue(isDuplicate);
 
 	}
 
 	@Ignore("long time")
 	@Test
-	public void testMemory() throws Exception {
+	public void xtestMemory() throws Exception {
 		int times = 5000000;
 		DuplicateRemover duplicateRemover = new BloomFilterDuplicateRemover(times, 0.005);
 		long freeMemory = Runtime.getRuntime().freeMemory();
@@ -55,7 +51,7 @@ public class BloomFilterDuplicateRemoverTest {
 
 	@Ignore("long time")
 	@Test
-	public void testMissHit() throws Exception {
+	public void xtestMissHit() throws Exception {
 		int times = 5000000;
 		DuplicateRemover duplicateRemover = new BloomFilterDuplicateRemover(times, 0.01);
 		int right = 0;

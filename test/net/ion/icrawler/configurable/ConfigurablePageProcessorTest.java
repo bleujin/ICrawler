@@ -1,27 +1,16 @@
 package net.ion.icrawler.configurable;
 
-import net.ion.icrawler.ResultItems;
-import net.ion.icrawler.Site;
-import net.ion.icrawler.Spider;
-import net.ion.icrawler.configurable.ConfigurablePageProcessor;
-import net.ion.icrawler.configurable.ExpressionType;
-import net.ion.icrawler.configurable.ExtractRule;
-import net.ion.icrawler.downloader.MockGithubDownloader;
-
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import junit.framework.TestCase;
+import net.ion.icrawler.ResultItems;
+import net.ion.icrawler.Site;
+import net.ion.icrawler.downloader.MockGithubDownloader;
 
-/**
- * 
- * @date 14-4-5
- */
-public class ConfigurablePageProcessorTest {
 
-	@Test
+public class ConfigurablePageProcessorTest extends TestCase{
+
 	public void test() throws Exception {
 		List<ExtractRule> extractRules = new ArrayList<ExtractRule>();
 		ExtractRule extractRule = new ExtractRule();
@@ -35,8 +24,7 @@ public class ConfigurablePageProcessorTest {
 		extractRule.setFieldName("star");
 		extractRules.add(extractRule);
 		ResultItems resultItems = Site.create("").newSpider(new ConfigurablePageProcessor(extractRules)).setDownloader(new MockGithubDownloader()).get("https://github.com/code4craft/webmagic");
-		assertThat(resultItems.getAll()).containsEntry("title", "<title>code4craft/webmagic &middot; GitHub</title>");
-		assertThat(resultItems.getAll()).containsEntry("star", " 86 ");
-
+		assertEquals("<title>code4craft/webmagic &middot; GitHub</title>", resultItems.asObject("title")) ;
+		assertEquals(" 86 ", resultItems.asString("star"));
 	}
 }

@@ -14,6 +14,7 @@ import net.ion.icrawler.Request;
 import net.ion.icrawler.Site;
 import net.ion.icrawler.Task;
 import net.ion.icrawler.processor.BinaryHandler;
+import net.ion.icrawler.proxy.HttpHost;
 import net.ion.icrawler.selector.PlainText;
 import net.ion.icrawler.utils.UrlUtils;
 import net.ion.radon.aclient.AsyncCompletionHandler;
@@ -21,16 +22,13 @@ import net.ion.radon.aclient.ClientConfig;
 import net.ion.radon.aclient.Cookie;
 import net.ion.radon.aclient.NewClient;
 import net.ion.radon.aclient.ProxyServer;
-import net.ion.radon.aclient.ProxyServer.Protocol;
 import net.ion.radon.aclient.Realm;
 import net.ion.radon.aclient.RequestBuilder;
 import net.ion.radon.aclient.Response;
+import net.ion.radon.aclient.StringPart;
 import net.ion.radon.aclient.simple.HeaderConstant;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpHost;
-import org.apache.http.NameValuePair;
-import org.apache.http.annotation.ThreadSafe;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -40,18 +38,14 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
 
-/**
- * The http downloader based on HttpClient.
- */
-@ThreadSafe
+// @ThreadSafe
 public class AClientDownloader extends AbstractDownloader {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final Map<String, NewClient> httpClients = new HashMap<String, NewClient>();
-	private HttpClientGenerator httpClientGenerator = new HttpClientGenerator();
-	
 	private Map<String, List<Cookie>> cookiesPerDomain = MapUtil.newMap() ;
+	private int defaultMaxConnectionPerHost = 3 ;
 
 	private NewClient getHttpClient(Site site) {
 		String domain = site.getDomain();
@@ -61,7 +55,10 @@ public class AClientDownloader extends AbstractDownloader {
 			synchronized (this) {
 				httpClient = httpClients.get(domain);
 				if (httpClient == null) {
-					ClientConfig cconfig = ClientConfig.newBuilder().setRequestTimeoutInMs(site.getTimeOut()).setConnectionTimeoutInMs(site.getTimeOut()).setMaxRequestRetry(site.getRetryTimes()).setUserAgent(site.getUserAgent()).build() ;
+					ClientConfig cconfig = ClientConfig.newBuilder()
+								.setMaximumConnectionsPerHost(defaultMaxConnectionPerHost)
+								.setStrict302Handling(true)
+								.setRequestTimeoutInMs(site.getTimeOut()).setConnectionTimeoutInMs(site.getTimeOut()).setMaxRequestRetry(site.getRetryTimes()).setUserAgent(site.getUserAgent()).build() ;
 					httpClient = NewClient.create(cconfig) ;
 					httpClients.put(domain, httpClient);
 				}
@@ -132,14 +129,17 @@ public class AClientDownloader extends AbstractDownloader {
 					request.putExtra(Request.STATUS_CODE, status) ;
 					
 					if (statusAccept(acceptStatCode, status)) {
-						String charset = site.getCharset();
-						Page page = handleResponse(request, charset, response, task);
+						Page page = handleResponse(request, site, response, task);
 						onSuccess(request);
 						return page;
-					} else {
-						logger.warn("code error " + status + "\t" + request.getUrl());
-						return null;
+					} else if (status == 302) {
+						Page page = handle302Response(request, site, response, task);
+						onSuccess(request);
+						return page ;
 					}
+					
+					logger.warn("code error " + status + "\t" + request.getUrl());
+					return null;
 				}
 				 public void onThrowable(Throwable t){
 					 logger.warn("login page " + request.getUrl() + " error", t);
@@ -158,7 +158,7 @@ public class AClientDownloader extends AbstractDownloader {
 
 	@Override
 	public void setThread(int thread) {
-		httpClientGenerator.setPoolSize(thread);
+		this.defaultMaxConnectionPerHost = thread ;
 	}
 
 	protected boolean statusAccept(Set<Integer> acceptStatCode, int statusCode) {
@@ -177,13 +177,13 @@ public class AClientDownloader extends AbstractDownloader {
 
 		if (site.getHttpProxyPool() != null && site.getHttpProxyPool().isEnable()) {
 			HttpHost proxyHost = site.getHttpProxyFromPool();
-			requestBuilder.setProxyServer(new ProxyServer(Protocol.valueOf(proxyHost.getSchemeName().toUpperCase()), proxyHost.getHostName(), proxyHost.getPort())) ;
+			requestBuilder.setProxyServer(new ProxyServer(proxyHost.getProtocol(), proxyHost.getHostName(), proxyHost.getPort())) ;
 			request.putExtra(Request.PROXY, proxyHost);
 		}
 		
-		NameValuePair[] params = request.getParameters();
+		StringPart[] params = request.getParameters();
 		if (params != null && params.length > 0) {
-			for (NameValuePair pair : params) {
+			for (StringPart pair : params) {
 				requestBuilder.addParameter(pair.getName(), pair.getValue()) ;
 			}
 		}
@@ -209,11 +209,20 @@ public class AClientDownloader extends AbstractDownloader {
 	}
 
 
-	private Page handleResponse(Request request, String charset, Response httpResponse, Task task) throws IOException {
+	private Page handle302Response(Request request, Site site, Response httpResponse, Task task) throws IOException {
+		Page page = new Page();
+		page.setRequest(request);
+		page.setRawText("") ;
+		page.setStatusCode(httpResponse.getStatusCode());
+		
+		return page ;
+	}
+
+	private Page handleResponse(Request request, Site site, Response httpResponse, Task task) throws IOException {
 		String contentType = httpResponse.getHeader(HeaderConstant.HEADER_CONTENT_TYPE);
 		Page page = new Page();
 		if (contentType != null && (contentType.indexOf("text") > -1 || contentType.indexOf("json") > -1 || contentType.indexOf("xml") > -1)) {
-			String content = getContent(charset, httpResponse);
+			String content = getContent(site.getCharset(), httpResponse);
 			page.setRawText(content);
 		} else {
 			BinaryHandler bhandler = task.getSite().getBinaryHandler() ;

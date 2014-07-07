@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.http.HttpHost;
-
 /**    
  * >>>> Proxy lifecycle 
 

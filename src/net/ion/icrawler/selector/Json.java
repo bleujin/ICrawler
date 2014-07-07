@@ -2,13 +2,10 @@ package net.ion.icrawler.selector;
 
 import java.util.List;
 
+import net.ion.framework.parse.gson.JsonParser;
 import net.ion.icrawler.xsoup.xevaluator.XTokenQueue;
 
-import com.alibaba.fastjson.JSON;
 
-/**
- * parse json
- */
 public class Json extends PlainText {
 
 	public Json(List<String> strings) {
@@ -39,14 +36,16 @@ public class Json extends PlainText {
 		if (getFirstSourceText() == null) {
 			return null;
 		}
-		return JSON.parseObject(getFirstSourceText(), clazz);
+		return JsonParser.fromString(getFirstSourceText()).getAsJsonObject().getAsObject(clazz) ;
+//		return JSON.parseObject(getFirstSourceText(), clazz);
 	}
 
 	public <T> List<T> toList(Class<T> clazz) {
 		if (getFirstSourceText() == null) {
 			return null;
 		}
-		return JSON.parseArray(getFirstSourceText(), clazz);
+		return JsonParser.fromString(getFirstSourceText()).getAsJsonArray().asList(clazz) ; 
+//		return JSON.parseArray(getFirstSourceText(), clazz);
 	}
 
 	@Override

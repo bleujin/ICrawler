@@ -1,28 +1,32 @@
 package net.ion.icrawler.proxy;
 
-import net.ion.icrawler.utils.FilePersistentBase;
-import net.ion.icrawler.utils.ProxyUtils;
-
-import org.apache.http.HttpHost;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.DelayQueue;
 
-/**
- * Pooled Proxy Object
- * 
- * @author yxssfxwzy@sina.com <br>
- * @see Proxy
- * @since 0.5.1
- */
+import net.ion.icrawler.utils.FilePersistentBase;
+import net.ion.icrawler.utils.ProxyUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ProxyPool {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
@@ -161,7 +165,7 @@ public class ProxyPool {
 				if (allProxy.containsKey(s[0])) {
 					continue;
 				}
-				HttpHost item = new HttpHost(InetAddress.getByName(s[0]), Integer.valueOf(s[1]));
+				HttpHost item = HttpHost.createByHost(s[0], Integer.valueOf(s[1]));
 				if (!validateWhenInit || ProxyUtils.validateProxy(item)) {
 					Proxy p = new Proxy(item, reuseInterval);
 					proxyQueue.add(p);
