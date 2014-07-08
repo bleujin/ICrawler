@@ -39,20 +39,29 @@ public class PlainLink extends AbstractSelectable {
 	@Override
 	public PlainLink regex(String regex) {
 		RegexSelector regexSelector = Selectors.regex(regex);
-		return selectList(regexSelector, targets);
+		return selectLink(regexSelector, targets);
 	}
 
 	@Override
 	public PlainLink regex(String regex, int group) {
 		RegexSelector regexSelector = Selectors.regex(regex, group);
-		return selectList(regexSelector, targets);
+		return selectLink(regexSelector, targets);
 	}
 	
-	protected PlainLink selectList(Selector selector, List<Link> linkElements) {
+	protected PlainLink selectLink(Selector selector, List<Link> linkElements) {
 		List<Link> results = ListUtil.newList() ;
 		for (Link ele : linkElements) {
 			String result = selector.select(ele.target());
 			if (StringUtils.isNotBlank(result)) results.add(ele);
+		}
+		return new PlainLink(results);
+	}
+	
+	protected PlainLink selectList(Selector selector, List<String> linkElements) {
+		List<Link> results = ListUtil.newList() ;
+		for (String ele : linkElements) {
+			String result = selector.select(ele);
+			if (StringUtils.isNotBlank(result)) results.add(new Link(ele, ""));
 		}
 		return new PlainLink(results);
 	}
