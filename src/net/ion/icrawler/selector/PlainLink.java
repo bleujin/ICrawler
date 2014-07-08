@@ -57,6 +57,7 @@ public class PlainLink extends AbstractSelectable {
 		return new PlainLink(results);
 	}
 	
+	@Override
 	protected PlainLink selectList(Selector selector, List<String> linkElements) {
 		List<Link> results = ListUtil.newList() ;
 		for (String ele : linkElements) {
