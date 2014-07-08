@@ -94,10 +94,8 @@ public class DirClassLoader extends ClassLoader {
 		descriptorList.add(descriptor);
 		// See if we need to store the resource in the java class maps
 		if (resourceName.toLowerCase().endsWith(".class")) {
-			// Prepare java style class name - strip .class from the end
-			String className = resourceName.substring(0, resourceName.length() - 6);
-			// Ensure that all slashes (back and forward) are converted to dots
-			className = StringUtils.replace(className, "/", ".");
+			String className = resourceName.substring(0, resourceName.length() - 6); // Prepare java style class name - strip .class from the end
+			className = StringUtils.replace(className, "/", "."); // Ensure that all slashes (back and forward) are converted to dots
 			classesMap.put(className, descriptor);
 		}
 	}
@@ -111,8 +109,7 @@ public class DirClassLoader extends ClassLoader {
 		while ((entry = jarInputStream.getNextJarEntry()) != null) {
 			byte[] binaryContent = IOUtil.toByteArray(jarInputStream);
 			if (binaryContent != null && binaryContent.length > 0) {
-				// Ensure that all back slashes are converted to forward slashes (just for standartisation)
-				String resourceName = StringUtils.replace(entry.getName(), "\\", "/");
+				String resourceName = StringUtils.replace(entry.getName(), "\\", "/"); // Ensure that all back slashes are converted to forward slashes (just for standartisation)
 				List resourceDescriptorList = (List) resourceNamesMap.get(resourceName);
 				if (resourceDescriptorList == null)
 					resourceNamesMap.put(resourceName, resourceDescriptorList = new ArrayList());
@@ -121,7 +118,7 @@ public class DirClassLoader extends ClassLoader {
 				resourceDescriptor.contentPath = resourceName;
 				try {
 					resourceDescriptor.resourceURL = new URL(jarURL.toString() + "#JarEntry=" + IOUtil.toString(entry.getName().getBytes()));
-				} catch (MalformedURLException e) {
+				} catch (MalformedURLException ignore) {
 					// Ignore as we are trying to fake it
 				}
 				resourceDescriptor.binaryContent = binaryContent;
@@ -147,16 +144,14 @@ public class DirClassLoader extends ClassLoader {
 	 * This method is a part of ClassLoader mechanism. Overridden here to load classes from stored ones
 	 */
 	public Class findClass(String className) throws ClassNotFoundException {
-		// construct the name of the class file to look for
-		ResourceDescriptor descriptor = (ResourceDescriptor) classesMap.get(className);
+		ResourceDescriptor descriptor = (ResourceDescriptor) classesMap.get(className); // construct the name of the class file to look for
 		if (descriptor != null)
 			return defineClass(className, descriptor.binaryContent, 0, descriptor.binaryContent.length);
 		throw new ClassNotFoundException(className);
 	}
 
 	protected URL findResource(String resourceName) {
-		// Supply first resource
-		List resourceDescriptorList = (List) resourceNamesMap.get(resourceName);
+		List resourceDescriptorList = (List) resourceNamesMap.get(resourceName); // Supply first resource
 		if (resourceDescriptorList != null && resourceDescriptorList.size() > 0) {
 			ResourceDescriptor resourceDescriptor = (ResourceDescriptor) resourceDescriptorList.get(0);
 			return resourceDescriptor.resourceURL;
@@ -165,8 +160,7 @@ public class DirClassLoader extends ClassLoader {
 	}
 
 	protected Enumeration findResources(String resourceName) throws IOException {
-		// Supply all resources
-		List urlList = new ArrayList();
+		List urlList = new ArrayList(); // Supply all resources
 		List resourceDescriptorList = (List) resourceNamesMap.get(resourceName);
 		if (resourceDescriptorList != null && resourceDescriptorList.size() > 0) {
 			Iterator descriptorsIter = resourceDescriptorList.iterator();

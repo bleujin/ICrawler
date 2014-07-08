@@ -14,7 +14,7 @@ import org.apache.commons.io.monitor.FileAlterationObserver;
 
 public class TestReloadClassLoad extends TestCase {
 
-	public void testReloadClsLoader() throws Exception {
+	public void testReloadSourceLoader() throws Exception {
 		
 		
 		ReloadSourceClassLoader inner = new ReloadSourceClassLoader(getClass().getClassLoader(), new File[] { new File("./resource/jsrc") }, "UTF-8");
