@@ -55,7 +55,7 @@
 
 	
 	<target name="copy" depends="publish">
-		<copy file="publish/icrawler_${version.number}.${build.number}.jar" todir="${workspaceDir}/IXSS6/ixss/WEB-INF/lib/" />
+		<copy file="publish/icrawler_${version.number}.${build.number}.jar" todir="../niss/lib/ref" />
 	</target>	
 
 </project>
