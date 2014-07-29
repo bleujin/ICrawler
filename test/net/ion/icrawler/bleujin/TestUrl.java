@@ -4,26 +4,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.net.URL;
+
+import junit.framework.TestCase;
+import net.ion.framework.util.Debug;
+import net.ion.framework.util.IOUtil;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.restlet.data.Method;
-
-import net.ion.framework.util.Debug;
-import net.ion.framework.util.IOUtil;
-import net.ion.framework.util.StringUtil;
-import net.ion.radon.aclient.NewClient;
-import net.ion.radon.aclient.Realm;
-import net.ion.radon.aclient.Request;
-import net.ion.radon.aclient.RequestBuilder;
-import net.ion.radon.aclient.Response;
-import net.ion.radon.aclient.Realm.RealmBuilder;
-import junit.framework.TestCase;
 
 public class TestUrl extends TestCase{
 

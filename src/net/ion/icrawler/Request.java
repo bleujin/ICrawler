@@ -14,7 +14,7 @@ import net.ion.radon.aclient.Realm;
 import net.ion.radon.aclient.StringPart;
 import net.ion.radon.aclient.simple.HeaderConstant;
 
-import org.restlet.data.Method;
+import org.jboss.netty.handler.codec.http.HttpMethod;
 
 /**
  * Object contains url to crawl.
@@ -30,7 +30,7 @@ public class Request implements Serializable {
 
 	private String url;
 
-	private Method method = Method.GET;
+	private HttpMethod method = HttpMethod.GET;
 
 	/**
 	 * Store additional information in extras.
@@ -53,7 +53,7 @@ public class Request implements Serializable {
 		this.url = url;
 	}
 
-	public Request(String url, Method method) {
+	public Request(String url, HttpMethod method) {
 		this.url = url;
 		this.method = method ;
 	}
@@ -166,12 +166,12 @@ public class Request implements Serializable {
 	}
 
 
-	public Method getMethod() {
+	public HttpMethod getMethod() {
 		return method;
 	}
 
 	public Request setMethod(String method) {
-		this.method = Method.valueOf(method);
+		this.method = HttpMethod.valueOf(method);
 		return this ;
 	}
 
