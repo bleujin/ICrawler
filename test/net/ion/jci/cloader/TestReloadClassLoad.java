@@ -44,6 +44,7 @@ public class TestReloadClassLoad extends TestCase {
 				}
 			}
 		}.start();
+		
 
 		new InfinityThread().startNJoin();
 

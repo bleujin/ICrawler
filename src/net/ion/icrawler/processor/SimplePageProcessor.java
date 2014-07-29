@@ -25,6 +25,7 @@ public class SimplePageProcessor implements PageProcessor {
 		page.addTargets(requests);// add urls to fetch
 		page.putField("title", page.getHtml().xpath("//title")); // extract by XPath
 		page.putField("html", page.getHtml().toString());
+		
 		page.putField("content", page.getHtml().smartContent()); // extract by Readability
 	}
 }

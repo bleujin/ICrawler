@@ -11,6 +11,7 @@ public class A extends B {
 class D {
 	
 	public void hello(){
-		System.out.println("C Say : Hello");
+		
+		System.out.println("C Say : Hello" + net.ion.jci.cloader.TestReloadClassLoad.class.getClassLoader());
 	}
 }
