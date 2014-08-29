@@ -1,5 +1,6 @@
 package net.ion.icrawler.downloader;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
@@ -39,33 +40,28 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Sets;
 
 // @ThreadSafe
-public class AClientDownloader extends AbstractDownloader {
+public class AClientDownloader extends AbstractDownloader implements Closeable {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	private final Map<String, NewClient> httpClients = new HashMap<String, NewClient>();
+	private NewClient httpClient ;
 	private Map<String, List<Cookie>> cookiesPerDomain = MapUtil.newMap() ;
 	private int defaultMaxConnectionPerHost = 3 ;
 
+	
+	
 	private NewClient getHttpClient(Site site) {
-		String domain = site.getDomain();
-		NewClient httpClient = httpClients.get(domain);
-//		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom().setConnectionRequestTimeout(site.getTimeOut()).setSocketTimeout(site.getTimeOut()).setConnectTimeout(site.getTimeOut()).setCookieSpec(CookieSpecs.BEST_MATCH);
 		if (httpClient == null) {
 			synchronized (this) {
-				httpClient = httpClients.get(domain);
 				if (httpClient == null) {
 					ClientConfig cconfig = ClientConfig.newBuilder()
 								.setMaximumConnectionsPerHost(defaultMaxConnectionPerHost)
 								.setStrict302Handling(true)
 								.setRequestTimeoutInMs(site.getTimeOut()).setConnectionTimeoutInMs(site.getTimeOut()).setMaxRequestRetry(site.getRetryTimes()).setUserAgent(site.getUserAgent()).build() ;
 					httpClient = NewClient.create(cconfig) ;
-					httpClients.put(domain, httpClient);
 				}
 			}
 		}
-		
-		
 		
 		return httpClient;
 	}
@@ -292,5 +288,10 @@ public class AClientDownloader extends AbstractDownloader {
 		logger.debug("Auto get charset: {}", charset);
 		// 3、todo use tools as cpdetector for content decode
 		return charset;
+	}
+	
+	@Override
+	public void close(){
+		if (this.httpClient != null) this.httpClient.close(); 
 	}
 }
