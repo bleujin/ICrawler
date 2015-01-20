@@ -6,15 +6,15 @@ import net.ion.framework.util.ListUtil;
 
 public class Dept {
 
-	private List<Person> persons = ListUtil.newList();
+	private List<PersonSample> persons = ListUtil.newList();
 
 	public Dept addPerson(String name) {
-		persons.add(new Person(name));
+		persons.add(new PersonSample(name));
 		return this;
 	}
 
 	public void printPersons() {
-		for (Person p : persons) {
+		for (PersonSample p : persons) {
 			System.out.println(p.name());
 		}
 	}
@@ -29,11 +29,11 @@ public class Dept {
 }
 
 
-class Person {
+class PersonSample {
 
 	private String name;
 
-	public Person(String name) {
+	public PersonSample(String name) {
 		this.name = name;
 	}
 

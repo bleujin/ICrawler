@@ -1,5 +1,6 @@
 package net.ion.icrawler.downloader;
 
+import net.ion.framework.util.Debug;
 import net.ion.icrawler.Page;
 import net.ion.icrawler.Request;
 import net.ion.icrawler.Site;
@@ -23,6 +24,7 @@ public abstract class AbstractDownloader implements Downloader {
 	}
 
 	protected void onError(Request request) {
+
 	}
 
 	protected Page addToCycleRetry(Request request, Site site) {

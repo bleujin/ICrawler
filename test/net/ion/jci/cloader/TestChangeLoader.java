@@ -50,8 +50,8 @@ class ChangeClassLoader extends ClassLoader {
 					try {
 						String path = name.replace('.', '/');
 						fi = new FileInputStream("./bin/" + path + ".class");
-						if ("net.ion.bleujin.cloader.Person".equals(name)){
-							fi = new FileInputStream("./resource/cloader/Person.class");
+						if ("net.ion.bleujin.cloader.PersonSample".equals(name)){
+							fi = new FileInputStream("./resource/cloader/PersonSample.class");
 						}
 						
 						byte[] classBytes = IOUtil.toByteArray(fi) ;

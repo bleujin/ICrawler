@@ -20,6 +20,7 @@ import net.ion.icrawler.downloader.AClientDownloader;
 import net.ion.icrawler.downloader.Downloader;
 import net.ion.icrawler.pipeline.CollectorPipeline;
 import net.ion.icrawler.pipeline.ConsolePipeline;
+import net.ion.icrawler.pipeline.DebugPipeline;
 import net.ion.icrawler.pipeline.Pipeline;
 import net.ion.icrawler.pipeline.ResultItemsCollectorPipeline;
 import net.ion.icrawler.processor.PageProcessor;
@@ -172,7 +173,7 @@ public class Spider implements Runnable, Task {
 			this.downloader = new AClientDownloader();
 		}
 		if (pipelines.isEmpty()) {
-			pipelines.add(new ConsolePipeline());
+			pipelines.add(new DebugPipeline());
 		}
 		downloader.setThread(threadNum);
 		if (threadPool == null || threadPool.isShutdown()) {

@@ -132,6 +132,11 @@ public class AClientDownloader extends AbstractDownloader implements Closeable {
 						Page page = handle302Response(request, site, response, task);
 						onSuccess(request);
 						return page ;
+					} else if (status >= 200 && status < 599 ){
+						logger.warn("code warn " + status + "\t" + request.getUrl());
+						Page page = handle302Response(request, site, response, task) ;
+						onSuccess(request);
+						return page;
 					}
 					
 					logger.warn("code error " + status + "\t" + request.getUrl());

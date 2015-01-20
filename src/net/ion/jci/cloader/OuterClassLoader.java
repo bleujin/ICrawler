@@ -5,13 +5,13 @@ import java.net.URL;
 
 public class OuterClassLoader extends ClassLoader{
 
-	private ReloadSourceClassLoader delegate;
-	public OuterClassLoader(ReloadSourceClassLoader inner) {
+	private ClassLoader delegate;
+	public OuterClassLoader(ClassLoader inner) {
 		this.delegate = inner ; 
 	}
 
 	
-	void change(ReloadSourceClassLoader delegate){
+	void change(ClassLoader delegate){
 		this.delegate = delegate ;
 	}
 	

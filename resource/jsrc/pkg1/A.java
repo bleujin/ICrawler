@@ -11,6 +11,13 @@ public class A extends B {
 class D {
 	
 	public void hello(){
-		System.out.println("C Say : Hello" + D.class.getClassLoader());
+		System.out.println("C Say : Hello " + D.class.getClassLoader() + ", " + D.class.getClassLoader().getParent());
 	}
+}
+
+class E {
+	public void hi(){
+		System.out.println("New EEE ") ;
+	}
+	
 }
