@@ -72,6 +72,15 @@ public class PlainLink extends AbstractSelectable {
 		throw new UnsupportedOperationException();
 	}
 
+	public PlainLink matches(String regex){
+		List<Link> result = ListUtil.newList() ; 
+		for(Link link : targets){
+			if (link.target().matches(regex)) result.add(link) ;
+		}
+		return new PlainLink(result) ;
+	}
+	
+	
 	@Override
 	public List<Selectable> nodes() {
 		List<Selectable> nodes = new ArrayList<Selectable>(getSourceTexts().size());

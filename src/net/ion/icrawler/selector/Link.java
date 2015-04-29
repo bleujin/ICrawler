@@ -1,5 +1,7 @@
 package net.ion.icrawler.selector;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class Link {
 	private String target ;
 	private String anchor ;
@@ -15,5 +17,9 @@ public class Link {
 	
 	public String anchor(){
 		return anchor ;
+	}
+	
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this) ;
 	}
 }
