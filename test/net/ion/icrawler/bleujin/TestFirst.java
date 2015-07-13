@@ -35,6 +35,7 @@ import net.ion.icrawler.processor.SimplePageProcessor;
 import net.ion.icrawler.scheduler.MaxLimitScheduler;
 import net.ion.icrawler.scheduler.QueueScheduler;
 import net.ion.icrawler.selector.Link;
+import net.ion.radon.aclient.NewClient;
 
 import com.google.common.net.HttpHeaders;
 
@@ -44,7 +45,7 @@ public class TestFirst extends TestCase {
 		Site site = Site.create("http://bleujin.tistory.com").sleepTime(50);
 		
 		SimplePageProcessor processor = new SimplePageProcessor("http://bleujin.tistory.com/*");
-		Spider spider = site.newSpider(processor).scheduler(new MaxLimitScheduler(new QueueScheduler(), 10));
+		Spider spider = site.newSpider(processor);
 
 		spider.addPipeline(new DebugPipeline()).run();
 	}
