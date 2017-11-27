@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk6_45"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk18"/>
 	<classpathentry kind="lib" path="lib/reflib/guava-15.0.jar"/>
 	<classpathentry kind="lib" path="lib/ref/iframework_2.3.jar"/>
 	<classpathentry kind="lib" path="lib/reflib/netty-3.2.7.Final.jar"/>
@@ -10,6 +10,9 @@
 	<classpathentry kind="lib" path="lib/reflib/crawl_jci.jar"/>
 	<classpathentry kind="lib" path="lib/reflib/crawl_parse.jar"/>
 	<classpathentry kind="lib" path="lib/ref/aclient_0.5.jar"/>
+	<classpathentry kind="lib" path="lib/reflib/boilerpipe-1.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/reflib/nekohtml-1.9.13.jar"/>
+	<classpathentry kind="lib" path="lib/reflib/xerces-2.9.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

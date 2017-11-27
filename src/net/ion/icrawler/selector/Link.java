@@ -11,6 +11,8 @@ public class Link {
 		this.anchor = anchor ;
 	}
 	
+	
+	
 	public String target(){
 		return target ;
 	}

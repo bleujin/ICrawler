@@ -34,6 +34,8 @@ public class Page {
 	private ResultItems resultItems = new ResultItems();
 
 	private Html html;
+	
+	private PageContent pageContent ;
 
 	private Json json;
 
@@ -77,6 +79,14 @@ public class Page {
 		}
 		return html;
 	}
+	
+	public PageContent getHtmlContent() {
+		if (pageContent == null) {
+			pageContent = new PageContent(rawText, request.getUrl()) ;
+		}
+		return pageContent ;
+	}
+
 
 	/**
 	 * get json content of page
@@ -234,5 +244,6 @@ public class Page {
 	public String toString() {
 		return "Page{" + "request=" + request + ", resultItems=" + resultItems + ", rawText='" + rawText + '\'' + ", url=" + url + ", statusCode=" + statusCode + ", targetRequests=" + targetRequests + '}';
 	}
+
 
 }

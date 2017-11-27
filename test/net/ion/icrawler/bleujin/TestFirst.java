@@ -13,7 +13,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import sun.org.mozilla.javascript.internal.NativeObject;
 import junit.framework.TestCase;
 import net.ion.framework.parse.gson.stream.JsonWriter;
 import net.ion.framework.util.Debug;
